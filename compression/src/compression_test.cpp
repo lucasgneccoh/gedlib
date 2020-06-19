@@ -1,5 +1,6 @@
 #include <iostream>
-//#define GXL_GEDLIB_SHARED
+#define GXL_GEDLIB_SHARED
+#undef GXL_GEDLIB_SHARED
 #define COMPRESS_EDIT_COST
 #include "/home/lucas/Documents/stage/gedlib/src/env/ged_env.hpp"
 #include "/home/lucas/Documents/stage/gedlib/median/src/median_graph_estimator.hpp"
@@ -709,13 +710,17 @@ std::pair<std::size_t, std::size_t> compression_size(ged::NodeMap node_map,
 	std::size_t v_size=0;
 	std::size_t e_size=0;
 	std::size_t aux=0;
-	// Vertex
+	// Vertex //Eq 44
 	if(g1.num_nodes > g2.num_nodes){
 		aux = b_ni * min(v_d.size(), v_is.size());
 	}
 	v_size = b_ni + b_na*g2.num_nodes - (b_na*v_is.size() - b_ni*(1+v_s.size() - aux));
 
-	// Edges
+	// Edges 
+	//Eq 53
+	e_size = 3*b_ei + b_ei*min(e_ed.size(), e_is.size()) + (b_ei + b_ea)*e_s.size() + (2*b_ni + b_ea)*(g2.num_edges-e_is.size()-e_s.size());
+	//Eq 55
+	/*
 	if(e_ed.size() > e_is.size()){
 		aux = (2*b_ni - b_ei + b_ea) * e_is.size() - 2*b_ei;
 	}
@@ -723,6 +728,8 @@ std::pair<std::size_t, std::size_t> compression_size(ged::NodeMap node_map,
 		aux = (2*b_ni + b_ea) * e_is.size() - b_ei*e_ed.size() - 2*b_ei;	
 	}
 	e_size = b_ei + (2*b_ni + b_ea)*g2.num_edges - ( (2*b_ni - b_ei)*e_s.size() + aux );
+	*/
+
 	return(std::make_pair(v_size, e_size));
 }
 
@@ -793,6 +800,7 @@ int main(int argc, char* argv[]){
 	std::cout<<"b_ei: "<<b_ei<<", b_ea: "<<b_ea<<std::endl;
 
 	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex;
+	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_empty;
 	std::cout<<"--------------SET NORMAL EDIT COST-----------------"<<std::endl;
 	
 	std::vector<double> letter_cost;
@@ -836,13 +844,10 @@ int main(int argc, char* argv[]){
 	std::cout<<env.edge_del_cost(g_ex.edge_list.front().second)<<std::endl;
 	std::cout<<env.edge_rel_cost(g_ex.edge_list.front().second, g_ex.edge_list.back().second)<<std::endl;
 
-	std::cout<<"--------------END FOR NOW-----------------"<<std::endl;
-	return 0;
 
 	std::cout<<"--------------NODE MAP SECTION-----------------"<<std::endl;
 	ged::GEDGraph::GraphID g1_id = 0;
 
-	
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> blobs;
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> aux_env;
 	g_ex  = env.get_graph(g1_id, true, true, true); 
@@ -872,36 +877,51 @@ int main(int argc, char* argv[]){
 
 	blobs = make_blobs<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(aux_env, size, girth, p, distribution, keep_centers, ignore_duplicates);
 
+	
+
 	// blobs has the two graphs
 	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID>ids = blobs.graph_ids();
 	g1_id = ids.first;
 	ged::GEDGraph::GraphID g2_id = ids.second-1;
 	
+	//Add empty graph
+	ged::GEDGraph::GraphID empty_graph_id = blobs.add_graph("empty", "empty");
+
 	// Describe the two graphs:
 	std::cout<<"GRAPH 1: "<<std::endl;
 	g_ex  = blobs.get_graph(g1_id, true, true, true); 
 	describe_graph(g_ex);
-	blobs.save_as_gxl_graph(g1_id, "/home/lucas/Documents/stage_gedlibpy/stage/cpp/data/output/graph1.gxl");
+	blobs.save_as_gxl_graph(g1_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph1.gxl");
 	
 	std::cout<<"GRAPH 2: "<<std::endl;
 	g_ex  = blobs.get_graph(g2_id, true, true, true); 
 	describe_graph(g_ex);
-	blobs.save_as_gxl_graph(g2_id, "/home/lucas/Documents/stage_gedlibpy/stage/cpp/data/output/graph2.gxl");
+	blobs.save_as_gxl_graph(g2_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph2.gxl");
 	
 
+
 	std::cout<<"--------------INIT-----------------"<<std::endl;
-	blobs.set_edit_costs(ged::Options::EditCosts::CONSTANT, {});
-	blobs.init(ged::Options::InitType::EAGER_WITHOUT_SHUFFLED_COPIES);
+	blobs.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
+	//blobs.set_edit_costs(ged::Options::EditCosts::CONSTANT, {});
+	blobs.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
+
+
 	// Set method
 	std::string ipfp_options("--threads 6 --initial-solutions 10 --initialization-method RANDOM");
-	blobs.set_method(ged::Options::GEDMethod::IPFP, ipfp_options);
+	//blobs.set_method(ged::Options::GEDMethod::IPFP, ipfp_options);
+	blobs.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "");
 
 	std::cout<<"--------------RUN METHOD-----------------"<<std::endl;
 	blobs.run_method(g1_id, g2_id);
+	blobs.run_method(empty_graph_id, g2_id);
+
+	
 
 	std::cout<<"--------------GET NODE MAP-----------------"<<std::endl;
 	ged::NodeMap node_map = blobs.get_node_map(g1_id, g2_id);
-	std::cout<<node_map<<std::endl;
+	ged::NodeMap node_map_empty = blobs.get_node_map(empty_graph_id, g2_id);
+	std::cout<<"G_1 to G_2: "<<node_map<<std::endl;
+	std::cout<<"EMPTY to G_2: "<<node_map_empty<<std::endl;
 
 
 	std::cout<<"--------------GET INFO-----------------"<<std::endl;
@@ -909,6 +929,7 @@ int main(int argc, char* argv[]){
 	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex_2;
 	g_ex = blobs.get_graph(g1_id, true, true, true);
 	g_ex_2 = blobs.get_graph(g2_id, true, true, true);
+	g_empty = blobs.get_graph(empty_graph_id, true, true, true);
 	vector<ged::GEDGraph::NodeID> v_d;
 	vector<ged::GEDGraph::NodeID> v_i;
 	vector<ged::GEDGraph::NodeID> v_s;
@@ -926,7 +947,7 @@ int main(int argc, char* argv[]){
 	vector<ged::GXLLabel> phi_s;
 	vector<ged::GXLLabel> phi_is;
 
-	
+	std::cout<<"--------------COMPRESSION FROM G_1 to G_2-----------------"<<std::endl;
 	get_all_compression_sets<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map, v_d, v_i, varphi_i, 
 		v_s, v_is, varphi_s, e_nd,e_ed, e_ni,e_ei, phi_ni, phi_ei, e_s,e_is, phi_s, g_ex, g_ex_2);
 
@@ -997,13 +1018,100 @@ int main(int argc, char* argv[]){
 	}
 	std::cout<<std::endl;
 
+
+	std::cout<<"--------------COMPRESSION FROM EMPTY to G_2-----------------"<<std::endl;
+	get_all_compression_sets<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map_empty, v_d, v_i, varphi_i, 
+		v_s, v_is, varphi_s, e_nd,e_ed, e_ni,e_ei, phi_ni, phi_ei, e_s,e_is, phi_s, g_empty, g_ex_2);
+
+	std::cout<<"--------------NODES-----------------"<<std::endl;
+
+	std::cout<<"Deleted nodes:"<<std::endl;
+	for(auto n : v_d){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"Added nodes:"<<std::endl;
+	for(auto n : v_i){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"Identically substituted nodes:"<<std::endl;
+	for(auto n : v_is){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"NON Identically substituted nodes:"<<std::endl;
+	for(auto n : v_s){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"--------------EDGES-----------------"<<std::endl;
+
+	std::cout<<"Deleted edges, node deletion (e_nd):"<<std::endl;
+	for(auto e : e_nd){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Deleted edges, other (e_ed):"<<std::endl;
+	for(auto e : e_ed){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Added edges, node insertion (e_ni):"<<std::endl;
+	for(auto e : e_ni){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Added edges, other (e_ei):"<<std::endl;
+	for(auto e : e_ei){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Substituted edges, Identically (e_is):"<<std::endl;
+	for(auto e : e_is){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Substituted edges, NOT Identically (e_s):"<<std::endl;
+	for(auto e : e_s){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
 	
 	std::pair<std::size_t, std::size_t> comp_sizes;	
+ 	
+	std::cout<<"--------------FROM G_1 to G_2-----------------"<<std::endl;
  	comp_sizes = compression_size<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map, g_ex, g_ex_2, b_ni,b_na, b_ei, b_ea);
  	std::cout<<"Vertex compression: "<<comp_sizes.first<<std::endl;
  	std::cout<<"Edge compression: "<<comp_sizes.second<<std::endl;
 	std::cout<<"Total compression: "<<comp_sizes.first + comp_sizes.second<<std::endl;
-	std::cout<<"--------------END-----------------"<<std::endl;
+
+	std::cout<<"GED G_1 to G_2: "<<blobs.get_upper_bound(g1_id, g2_id)<<std::endl;
+	
+	std::cout<<"--------------FROM EMPTY to G_2-----------------"<<std::endl;
+	
+	comp_sizes = compression_size<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map_empty, g_empty, g_ex_2, b_ni,b_na, b_ei, b_ea);
+ 	std::cout<<"Vertex compression: "<<comp_sizes.first<<std::endl;
+ 	std::cout<<"Edge compression: "<<comp_sizes.second<<std::endl;
+	std::cout<<"Total compression: "<<comp_sizes.first + comp_sizes.second<<std::endl;
+
+	std::cout<<"GED EMPTY to G_2: "<<blobs.get_upper_bound(empty_graph_id, g2_id)<<std::endl;
+
+	std::cout<<"--------------END FOR NOW-----------------"<<std::endl;
+	return 0;
 	
 }
 
