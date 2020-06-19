@@ -24,7 +24,8 @@ set(CMAKE_MACOSX_RPATH ON)
 
 set(EXEC_NAME compression)
 
-set(GEDLIB /home/lucas/Documents/stage/gedlib)
+#set(GEDLIB /home/lucas/Documents/stage/gedlib)
+set(GEDLIB ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(LIBRARY_OUTPUT_PATH ${GEDLIB}/lib)
 set(LSAPE_HOME ${GEDLIB}/ext/lsape.5)
 set(NOMAD_HOME ${GEDLIB}/ext/nomad.3.8.1)

@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -Wall -Wextra -pedantic -Wredundant-decls -Wdisabled-opti
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /home/lucas/Documents/stage/gedlib -isystem /home/lucas/Documents/stage/gedlib/ext/boost.1.69.0 -isystem /home/lucas/Documents/stage/gedlib/ext/nomad.3.8.1/ext/sgtelib/src -isystem /home/lucas/Documents/stage/gedlib/ext/nomad.3.8.1/src -isystem /home/lucas/Documents/stage/gedlib/ext/lsape.5/include -isystem /home/lucas/Documents/stage/gedlib/ext/eigen.3.3.4/Eigen -isystem /home/lucas/Documents/stage/gedlib/ext/libsvm.3.22 -isystem /home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/include -isystem /include 
+CXX_INCLUDES = -isystem /home/lucas/Documents/stage/gedlib/compression/.. -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/boost.1.69.0 -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/nomad.3.8.1/ext/sgtelib/src -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/nomad.3.8.1/src -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/lsape.5/include -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/eigen.3.3.4/Eigen -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/libsvm.3.22 -isystem /home/lucas/Documents/stage/gedlib/compression/../ext/fann.2.2.0/include -isystem /include 
 

@@ -79,10 +79,10 @@ compression_EXTERNAL_OBJECTS =
 
 src/compression: src/CMakeFiles/compression.dir/compression_test.cpp.o
 src/compression: src/CMakeFiles/compression.dir/build.make
-src/compression: /home/lucas/Documents/stage/gedlib/lib/libgxlgedlib.so
-src/compression: /home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/lib/libdoublefann.so.2.2.0
-src/compression: /home/lucas/Documents/stage/gedlib/ext/libsvm.3.22/libsvm.so
-src/compression: /home/lucas/Documents/stage/gedlib/ext/nomad.3.8.1/lib/libnomad.so
+src/compression: ../../lib/libgxlgedlib.so
+src/compression: ../../ext/fann.2.2.0/lib/libdoublefann.so.2.2.0
+src/compression: ../../ext/libsvm.3.22/libsvm.so
+src/compression: ../../ext/nomad.3.8.1/lib/libnomad.so
 src/compression: src/CMakeFiles/compression.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable compression"
 	cd /home/lucas/Documents/stage/gedlib/compression/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/compression.dir/link.txt --verbose=$(VERBOSE)

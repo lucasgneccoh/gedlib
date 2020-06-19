@@ -10,14 +10,14 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/lucas/Documents/stage/gedlib"
-  "/home/lucas/Documents/stage/gedlib/ext/boost.1.69.0"
-  "/home/lucas/Documents/stage/gedlib/ext/nomad.3.8.1/ext/sgtelib/src"
-  "/home/lucas/Documents/stage/gedlib/ext/nomad.3.8.1/src"
-  "/home/lucas/Documents/stage/gedlib/ext/lsape.5/include"
-  "/home/lucas/Documents/stage/gedlib/ext/eigen.3.3.4/Eigen"
-  "/home/lucas/Documents/stage/gedlib/ext/libsvm.3.22"
-  "/home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/include"
+  "../.."
+  "../../ext/boost.1.69.0"
+  "../../ext/nomad.3.8.1/ext/sgtelib/src"
+  "../../ext/nomad.3.8.1/src"
+  "../../ext/lsape.5/include"
+  "../../ext/eigen.3.3.4/Eigen"
+  "../../ext/libsvm.3.22"
+  "../../ext/fann.2.2.0/include"
   "/include"
   )
 

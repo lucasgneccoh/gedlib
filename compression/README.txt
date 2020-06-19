@@ -1,6 +1,11 @@
-To make execution simpler I created  the file run.sh in the build folder. Just open it, modify variable values and run it in the terminal from the same folder
-bash run.sh
+# To make the codes work:
+1. Install gedlib by runing the install.py file from the gedlib folder
+2. Go to gedlib/compression/build and open a terminal
+3. Execute the following commands:
+	cmake ..
+	make
+4. Now you can execute the compression code using the run.sh file. Change the variable values and run it in the same terminal 
+	bash run.sh
 
-For know this execution file is really dependent on the structure of the code itself, but it works. It will be polished in the near future.
-
+NOTE: The run.sh file has a structure that depends on the code for now. As I have been doing different tests, you will find variables that are not used.
 

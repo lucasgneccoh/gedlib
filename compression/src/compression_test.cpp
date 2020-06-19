@@ -2,8 +2,9 @@
 #define GXL_GEDLIB_SHARED
 #undef GXL_GEDLIB_SHARED
 #define COMPRESS_EDIT_COST
-#include "/home/lucas/Documents/stage/gedlib/src/env/ged_env.hpp"
-#include "/home/lucas/Documents/stage/gedlib/median/src/median_graph_estimator.hpp"
+//#include "/home/lucas/Documents/stage/gedlib/src/env/ged_env.hpp"
+#include "src/env/ged_env.hpp"
+#include "median/src/median_graph_estimator.hpp"
 #undef COMPRESS_EDIT_COST
 #include <random>
 #include <string>
@@ -891,12 +892,12 @@ int main(int argc, char* argv[]){
 	std::cout<<"GRAPH 1: "<<std::endl;
 	g_ex  = blobs.get_graph(g1_id, true, true, true); 
 	describe_graph(g_ex);
-	blobs.save_as_gxl_graph(g1_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph1.gxl");
+	//blobs.save_as_gxl_graph(g1_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph1.gxl");
 	
 	std::cout<<"GRAPH 2: "<<std::endl;
 	g_ex  = blobs.get_graph(g2_id, true, true, true); 
 	describe_graph(g_ex);
-	blobs.save_as_gxl_graph(g2_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph2.gxl");
+	//blobs.save_as_gxl_graph(g2_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph2.gxl");
 	
 
 
@@ -907,7 +908,7 @@ int main(int argc, char* argv[]){
 
 
 	// Set method
-	std::string ipfp_options("--threads 6 --initial-solutions 10 --initialization-method RANDOM");
+	//std::string ipfp_options("--threads 6 --initial-solutions 10 --initialization-method RANDOM");
 	//blobs.set_method(ged::Options::GEDMethod::IPFP, ipfp_options);
 	blobs.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "");
 
