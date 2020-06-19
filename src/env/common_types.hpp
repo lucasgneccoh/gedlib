@@ -163,6 +163,7 @@ struct Options {
 	 * @brief Selects the method.
 	 */
 	enum class GEDMethod {
+	// TODO: If compression, not all methods should be available. Only LSAPE based with proper adaptations
 #ifdef GUROBI
 		F1,                  //!< Selects ged::F1.
 		F2,                  //!< Selects ged::F2.
@@ -196,6 +197,9 @@ struct Options {
 	 * @brief Selects the edit costs.
 	 */
 	enum class EditCosts {
+	#ifdef COMPRESS_EDIT_COST
+		COMPRESSION, //!< Selects ged::Compression.
+	#endif
 		CHEM_1,      //!< Selects ged::CHEM1.
 		CHEM_2,      //!< Selects ged::CHEM2.
 		CMU,         //!< Selects ged::CMU.

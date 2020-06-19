@@ -42,6 +42,7 @@
 #include "../edit_costs/fingerprint.hpp"
 #include "../edit_costs/letter.hpp"
 #include "../edit_costs/constant.hpp"
+#include "../edit_costs/compression.hpp"
 
 namespace ged {
 

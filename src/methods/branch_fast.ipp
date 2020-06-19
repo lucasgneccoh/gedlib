@@ -226,11 +226,12 @@ compute_deletion_cost_(const GEDGraph & g, GEDGraph::NodeID i) const {
 	double cost{this->ged_data_.node_cost(g.get_node_label(i), ged::dummy_label())};
 
 	// Collect edge deletion costs.
+	#ifndef COMPRESS_EDIT_COST
 	auto incident_edges_i = g.incident_edges(i);
 	for (auto ij = incident_edges_i.first; ij != incident_edges_i.second; ij++) {
 		cost += this->ged_data_.edge_cost(g.get_edge_label(*ij), ged::dummy_label()) * 0.5;
 	}
-
+	#endif
 	// Return overall deletion cost.
 	return cost;
 }
