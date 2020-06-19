@@ -1,0 +1,10 @@
+prefix=/home/lucas/Documents/stage/gedlib/ext/fann.2.2.0
+exec_prefix=/home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/bin
+libdir=/home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/lib
+includedir=/home/lucas/Documents/stage/gedlib/ext/fann.2.2.0/include
+ 
+Name: fann
+Description: Fast Artificial Neural Network Library
+Version: 2.2.0
+Libs: -L${libdir} -lm -lfann
+Cflags: -I${includedir}
