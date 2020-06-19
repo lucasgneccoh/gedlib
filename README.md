@@ -1,3 +1,5 @@
+Working with a fork of GEDLIB. This is the original GEDLIB documentation
+
 <!--------------------------------------------------------------------------
 -                                                                          -
 -   Copyright (C) 2018 by David B. Blumenthal                              -
