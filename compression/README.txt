@@ -1,7 +1,7 @@
 # To make the codes work:
 1. Install gedlib by runing the install.py file from the gedlib folder
-2. Go to gedlib/compression/build and open a terminal
-3. Execute the following commands:
+2. Go to gedlib/compression/build and delete everyting but the run.sh file
+3. Open a terminal and execute the following commands:
 	cmake ..
 	make
 4. Now you can execute the compression code using the run.sh file. Change the variable values and run it in the same terminal 
