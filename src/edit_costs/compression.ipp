@@ -20,8 +20,8 @@
 ***************************************************************************/
 
 /*!
- * @file chem_1.ipp
- * @brief ged::CHEM1 class definition.
+ * @file compression.ipp
+ * @brief ged::COMPRESSION class definition.
  */
 
 #ifndef SRC_EDIT_COSTS_COMPRESSION_IPP_
@@ -35,13 +35,14 @@ COMPRESSION<GXLLabel, GXLLabel>::
 
 template<>
 COMPRESSION<GXLLabel, GXLLabel>::
-COMPRESSION(double node_ins_cost, double node_del_cost, double node_rel_cost, double edge_ins_cost, double edge_del_cost, double edge_rel_cost):
+COMPRESSION(double node_ins_cost, double node_del_cost, double node_rel_cost, double edge_ins_cost, double edge_del_cost, double edge_rel_cost,  double edge_rel_cost_id):
 node_ins_cost_{node_ins_cost},
 node_del_cost_{node_del_cost},
 node_rel_cost_{node_rel_cost},
 edge_ins_cost_{edge_ins_cost},
 edge_del_cost_{edge_del_cost},
-edge_rel_cost_{edge_rel_cost} {}
+edge_rel_cost_{edge_rel_cost},
+edge_rel_cost_id_{edge_rel_cost_id} {}
 
 template<>
 double
@@ -126,20 +127,20 @@ template<>
 double
 COMPRESSION<GXLLabel, GXLLabel>::
 edge_rel_cost_fun(const GXLLabel & edge_label_1, const GXLLabel & edge_label_2) const {
-	bool is_zero=true;
+	bool is_id=true;
 	if (edge_label_1.size()!=edge_label_2.size()){
-		is_zero=false;
+		is_id=false;
 	}
 	for(auto const& entry : edge_label_1){
 		if(edge_label_2.count(entry.first)<1){
-			is_zero=false;
+			is_id=false;
 		}
 		if(edge_label_2.at(entry.first) != entry.second){
-			is_zero=false;
+			is_id=false;
 		}
 	}
-	if (is_zero) {
-		return 0.0;
+	if (is_id) {
+		return edge_rel_cost_id_;
 	}
 	return edge_rel_cost_;
 }
@@ -173,4 +174,4 @@ median_edge_label(const std::vector<GXLLabel> & edge_labels) const {
 
 }
 
-#endif /* SRC_EDIT_COSTS_CHEM_1_IPP_ */
+#endif /* SRC_EDIT_COSTS_COMPRESSION_IPP_ */

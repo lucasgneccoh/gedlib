@@ -2,13 +2,13 @@
 <!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
 <gxl xmlns:xlink="http://www.w3.org/1999/xlink">
 <graph id="base" edgeids="false" edgemode="undirected">
-<node id="_0"><attr name="x"><TYPENAME>0.389727</TYPENAME></attr><attr name="y"><TYPENAME>1.50013</TYPENAME></attr></node>
-<node id="_1"><attr name="x"><TYPENAME>1.46072</TYPENAME></attr><attr name="y"><TYPENAME>2.23256</TYPENAME></attr></node>
-<node id="_2"><attr name="x"><TYPENAME>2.63215</TYPENAME></attr><attr name="y"><TYPENAME>0.611235</TYPENAME></attr></node>
-<node id="_3"><attr name="x"><TYPENAME>0.944254</TYPENAME></attr><attr name="y"><TYPENAME>0.954329</TYPENAME></attr></node>
-<node id="_4"><attr name="x"><TYPENAME>1.68218</TYPENAME></attr><attr name="y"><TYPENAME>1.2493</TYPENAME></attr></node>
-<edge from="_0" to="_1"></edge>
+<node id="_0"><attr name="x"><TYPENAME>1.43096</TYPENAME></attr><attr name="y"><TYPENAME>2.46638</TYPENAME></attr></node>
+<node id="_1"><attr name="x"><TYPENAME>0.885269</TYPENAME></attr><attr name="y"><TYPENAME>1.42025</TYPENAME></attr></node>
+<node id="_2"><attr name="x"><TYPENAME>2.03911</TYPENAME></attr><attr name="y"><TYPENAME>1.39096</TYPENAME></attr></node>
+<node id="_3"><attr name="x"><TYPENAME>0.599808</TYPENAME></attr><attr name="y"><TYPENAME>0.796928</TYPENAME></attr></node>
+<node id="_4"><attr name="x"><TYPENAME>2.21352</TYPENAME></attr><attr name="y"><TYPENAME>0.638456</TYPENAME></attr></node>
+<edge from="_3" to="_0"></edge>
+<edge from="_0" to="_4"></edge>
 <edge from="_1" to="_2"></edge>
-<edge from="_3" to="_4"></edge>
 </graph>
 </gxl>

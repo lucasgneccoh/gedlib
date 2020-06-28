@@ -50,7 +50,7 @@ public:
 	 * @param[in] edge_del_cost Cost for deleting edges without deletion of an adjacent node.
 	 * @param[in] edge_rel_cost Cost for relabeling edges.
 	 */
-	COMPRESSION(double node_ins_cost = 1, double node_del_cost = 1, double node_rel_cost = 1, double edge_ins_cost = 1, double edge_del_cost = 1, double edge_rel_cost = 1);
+	COMPRESSION(double node_ins_cost = 1, double node_del_cost = 1, double node_rel_cost = 1, double edge_ins_cost = 1, double edge_del_cost = 1, double edge_rel_cost = 1, double edge_rel_cost_id = 0);
 
 	virtual double node_ins_cost_fun(const UserNodeLabel & node_label) const final;
 
@@ -81,6 +81,8 @@ private:
 	double edge_del_cost_;
 
 	double edge_rel_cost_;
+
+	double edge_rel_cost_id_;
 };
 
 }

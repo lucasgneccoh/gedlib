@@ -261,7 +261,7 @@ compute_deletion_cost_(const GEDGraph & g, GEDGraph::NodeID i, double min_edge_d
 	double cost{this->ged_data_.node_cost(g.get_node_label(i), dummy_label())};
 
 	// Collect edge deletion cost.
-	#ifndef COMPRESSION_EDIT_COST
+	#ifndef COMPRESS_EDIT_COST
 	cost += static_cast<double>(g.degree(i)) * 0.5 * min_edge_del_cost;
 	#endif
 

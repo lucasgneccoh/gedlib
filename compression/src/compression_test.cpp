@@ -661,17 +661,17 @@ void get_all_compression_sets(ged::NodeMap node_map,
 		}
 	}
 	
-	for(auto edge : g2.edge_list){
+	for(auto const &edge2 : g2.edge_list){
 		//std::cout<<"\tEdge "<<edge.first.first<<" - "<<edge.first.second<<std::endl;
 		//std::cout<<"\t"<<node_map.image(edge.first.first)<<" - " <<node_map.image(edge.first.second)<<std::endl;
-		if(node_map.pre_image(edge.first.first)==ged::GEDGraph::dummy_node() || node_map.pre_image(edge.first.second)==ged::GEDGraph::dummy_node()){
-			e_ni.emplace_back(edge.first);
-			phi_ni.emplace_back(edge.second);			
+		if(node_map.pre_image(edge2.first.first)==ged::GEDGraph::dummy_node() || node_map.pre_image(edge2.first.second)==ged::GEDGraph::dummy_node()){
+			e_ni.emplace_back(edge2.first);
+			phi_ni.emplace_back(edge2.second);			
 		}
 		else{
-			if(g1.adj_matrix[node_map.pre_image(edge.first.first)][node_map.pre_image(edge.first.second)]==0){
-				e_ei.emplace_back(edge.first);
-				phi_ei.emplace_back(edge.second);
+			if(g1.adj_matrix[node_map.pre_image(edge2.first.first)][node_map.pre_image(edge2.first.second)]==0){
+				e_ei.emplace_back(edge2.first);
+				phi_ei.emplace_back(edge2.second);
 			}
 		}
 	}
@@ -735,6 +735,181 @@ std::pair<std::size_t, std::size_t> compression_size(ged::NodeMap node_map,
 }
 
 
+void print_compression_sets(
+	vector<ged::GEDGraph::NodeID> &v_d,
+	vector<ged::GEDGraph::NodeID> &v_i,
+	vector<ged::GEDGraph::NodeID> &v_is,
+	vector<ged::GEDGraph::NodeID> &v_s,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_nd,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_ed,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_ni,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_ei,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_is,
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> &e_s
+	){
+	std::cout<<"--------------NODES-----------------"<<std::endl;
+
+	std::cout<<"Deleted nodes:"<<std::endl;
+	for(auto n : v_d){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"Added nodes:"<<std::endl;
+	for(auto n : v_i){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"Identically substituted nodes:"<<std::endl;
+	for(auto n : v_is){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+
+	std::cout<<"NON Identically substituted nodes:"<<std::endl;
+	for(auto n : v_s){
+		std::cout<<n<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"--------------EDGES-----------------"<<std::endl;
+
+	std::cout<<"Deleted edges, node deletion (e_nd):"<<std::endl;
+	for(auto e : e_nd){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Deleted edges, other (e_ed):"<<std::endl;
+	for(auto e : e_ed){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Added edges, node insertion (e_ni):"<<std::endl;
+	for(auto e : e_ni){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Added edges, other (e_ei):"<<std::endl;
+	for(auto e : e_ei){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Substituted edges, Identically (e_is):"<<std::endl;
+	for(auto e : e_is){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+	std::cout<<"Substituted edges, NOT Identically (e_s):"<<std::endl;
+	for(auto e : e_s){
+		std::cout<<e.first<<" -- "<<e.second<<", ";
+	}
+	std::cout<<std::endl;
+
+}
+
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void get_min_edges(
+	std::size_t &root,
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &graph,
+	std::vector<std::vector<double>> &w,
+	std::vector<double> &min_w,
+	std::vector<std::size_t> &prev
+	){
+	// Initialize
+	min_w.clear();
+	prev.clear();
+	for(std::size_t i=0; i<graph.num_nodes; i++){
+		min_w.emplace_back(std::numeric_limits<double>::max());
+		prev.emplace_back(std::numeric_limits<std::size_t>::max());
+	}
+
+	std::pair<std::size_t, std::size_t>e;
+	for(typename std::list<std::pair<std::pair<std::size_t, std::size_t>, UserEdgeLabel>>::iterator iter = graph.edge_list.begin();
+	 iter != graph.edge_list.end(); iter++){
+		e = (*iter).first;
+		if(e.second == root){
+			continue;
+		}
+		if(min_w.at(e.second) > w.at(e.first).at(e.second)){
+			min_w.at(e.second) = w.at(e.first).at(e.second);
+			prev.at(e.second) = e.first; 
+		}
+	}
+	return;
+
+}
+
+int get_cycles(
+	std::size_t num_nodes,
+	std::size_t &root,
+	std::vector<std::size_t> &prev,
+	std::vector<int> &cycle_id
+	){
+
+	int loops=0;
+	std::vector<std::size_t> rev;
+	cycle_id.clear();
+	for(std::size_t i=0; i<num_nodes; i++){
+		cycle_id.emplace_back(-1);
+		rev.emplace_back(-1);
+	}
+	std::size_t vertex;
+	for(std::size_t i=0; i<num_nodes; i++){
+		// Start at each vertex, go back
+		// rev tells us the iteration we are in and the path being followed
+		vertex = i;
+		while(rev.at(vertex) != i && cycle_id.at(vertex) == -1 && vertex != root){
+			rev[vertex] = i;
+			vertex = prev.at(vertex);
+		}
+		// Loop detection
+		if(cycle_id.at(vertex) == -1 && vertex != root){
+			// Mark the loop
+			loops++;
+			for(auto u = prev.at(vertex); u != vertex; u = prev.at(u)){
+				cycle_id.at(u) = loops;
+			}
+			cycle_id.at(vertex) = loops;
+		}
+	}
+	return loops;
+}
+
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void spanning_arborescence_of_minimum_weight(
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &graph,
+	std::vector<std::vector<double>> &w,
+	std::size_t &root
+	){
+	// Initialize
+	std::vector<double> min_w;
+	std::vector<std::size_t> prev;
+	get_min_edges<UserNodeID, UserNodeLabel, UserEdgeLabel>(root, graph, w, min_w, prev);
+	
+	//Look for cycles
+	int num_cycles;
+	std::vector<int> cycle_id;
+	num_cycles = get_cycles(graph.num_nodes,root,prev,cycle_id);
+
+	std::cout<<"Num loops: "<<num_cycles<<std::endl;
+	for(std::size_t i{0}; i<graph.num_nodes; i++){
+		std::cout<<"Vertex "<<i<<": "<<cycle_id.at(i)<<std::endl;
+	}
+	return;
+} 
+	  
+
+
+
 int main(int argc, char* argv[]){
 
 	std::cout<<"MAIN\n";
@@ -748,7 +923,7 @@ int main(int argc, char* argv[]){
 	 *
 	*/
 
-	std::cout<<"--------------START-----------------\n";
+	std::cout<<"--------------START and INPUTS-----------------\n";
 	
 	std::string gedlib_root("/home/lucas/Documents/stage_gedlibpy/gedlib/gedlib");
 	std::string project_root("/home/lucas/Documents/stage_gedlibpy/stage/cpp");
@@ -759,11 +934,23 @@ int main(int argc, char* argv[]){
 	std::string collection_file(gedlib_root + "/data/collections/" + dataset  + class_test +".xml");
 	std::string graph_dir(gedlib_root + "/data/datasets/" + dataset + extra_dir);
 
-	if(argc>8){
-		collection_file = argv[8];
+
+	// add_node, add_edge, transform_node, transform_edge, delete_node, delete_edge 
+
+	if(argc>1){
+		collection_file = argv[1];
 	}
-	if(argc>9){
-		graph_dir = argv[9];
+	if(argc>2){
+		graph_dir = argv[2];
+	}
+
+	int cost_version;
+	if(argc>3){
+		cost_version = std::stoi(argv[3]);
+	}
+	int stdout=0;
+	if(argc>4){
+		stdout = std::stoi(argv[4]);
 	}
 
 	std::cout<<"Collection file: "<<collection_file<<std::endl;
@@ -774,10 +961,13 @@ int main(int argc, char* argv[]){
 
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
 
-		
+	// Add empty graph
+	ged::GEDGraph::GraphID empty_id = env.add_graph("empty","");
+
 	std::vector<ged::GEDGraph::GraphID> graph_ids(env.load_gxl_graphs(graph_dir, collection_file,
 			ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::LABELED, irrelevant_node_attributes(dataset)));
 
+	if(stdout!=0) std::cout<<"Number of graphs: "<<env.num_graphs()<<std::endl;
 	std::map<std::string, std::map<std::string, std::vector<std::string>>> distribution;
 	std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
 	double b_ni;
@@ -800,317 +990,130 @@ int main(int argc, char* argv[]){
 	std::cout<<"b_ni: "<<b_ni<<", b_na: "<<b_na<<std::endl;
 	std::cout<<"b_ei: "<<b_ei<<", b_ea: "<<b_ea<<std::endl;
 
-	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex;
-	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_empty;
-	std::cout<<"--------------SET NORMAL EDIT COST-----------------"<<std::endl;
-	
-	std::vector<double> letter_cost;
-	std::cout<<"setting edit cots... ";
-	env.set_edit_costs(ged::Options::EditCosts::LETTER, letter_cost);
-	
-	std::cout<<"init... ";
-	env.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
-	
-	std::cout<<"get graph... ";
-	g_ex = env.get_graph(0,true,true,true);
 
-	std::cout<<"print cost... ";
-	std::cout<<std::endl;
-	std::cout<<env.node_ins_cost(g_ex.node_labels.at(0))<<std::endl;
-	std::cout<<env.node_del_cost(g_ex.node_labels.at(0))<<std::endl;
-	std::cout<<env.node_rel_cost(g_ex.node_labels.at(0), g_ex.node_labels.at(1))<<std::endl;
-	std::cout<<env.edge_ins_cost(g_ex.edge_list.front().second)<<std::endl;
-	std::cout<<env.edge_del_cost(g_ex.edge_list.front().second)<<std::endl;
-	std::cout<<env.edge_rel_cost(g_ex.edge_list.front().second, g_ex.edge_list.back().second)<<std::endl;
-
-
+	
 	std::cout<<"--------------SET COMPRESSION EDIT COST-----------------"<<std::endl;
-	std::vector<double> comp_costs{b_na, b_ni, b_ni + b_na, 2*b_ni+b_ea, b_ei, b_ei + b_ea};
 
-	std::cout<<"setting edit cots... ";
-	env.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
+	std::vector<double> comp_costs;
+	double c_nd, c_ni, c_ns, c_ed, c_ei, c_es, c_es_id;
 	
-	std::cout<<"init... ";
-	env.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
+	if(cost_version==0 || true){
+		// Compression costs: first version (eq 22 - 25)
+		c_ni = b_na;
+		c_nd = b_ni;
+		c_ns = b_ni + b_na;
+		c_ei = 2*b_ni + b_ea;
+		c_ed = b_ei;
+		c_es = b_ei + b_ea;
+		c_es_id = 0;
+		comp_costs.emplace_back(c_ni);
+		comp_costs.emplace_back(c_nd);
+		comp_costs.emplace_back(c_ns);
+		comp_costs.emplace_back(c_ei);
+		comp_costs.emplace_back(c_ed);
+		comp_costs.emplace_back(c_es);
+		comp_costs.emplace_back(c_es_id);
 	
-	std::cout<<"get graph... ";
-	g_ex = env.get_graph(0,true,true,true);
+	}
+	else{
+		/*
+		// Compression costs: second version (eq 34 - 38)
+		double omega = 9999999999;
 
-	std::cout<<"print cost... ";
-	std::cout<<std::endl;
-	std::cout<<env.node_ins_cost(g_ex.node_labels.at(0))<<std::endl;
-	std::cout<<env.node_del_cost(g_ex.node_labels.at(0))<<std::endl;
-	std::cout<<env.node_rel_cost(g_ex.node_labels.at(0), g_ex.node_labels.at(1))<<std::endl;
-	std::cout<<env.edge_ins_cost(g_ex.edge_list.front().second)<<std::endl;
-	std::cout<<env.edge_del_cost(g_ex.edge_list.front().second)<<std::endl;
-	std::cout<<env.edge_rel_cost(g_ex.edge_list.front().second, g_ex.edge_list.back().second)<<std::endl;
-
-
-	std::cout<<"--------------NODE MAP SECTION-----------------"<<std::endl;
-	ged::GEDGraph::GraphID g1_id = 0;
-
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> blobs;
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> aux_env;
-	g_ex  = env.get_graph(g1_id, true, true, true); 
-
-	g1_id = aux_env.load_exchange_graph(g_ex, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, "base", env.get_graph_class(g1_id));
-
-	// add_node, add_edge, transform_node, transform_edge, delete_node, delete_edge 
-	std::vector<double> p{1,1,1,1,1,1};
-
-	bool keep_centers = true;
-	bool ignore_duplicates=false;
-	int size = 1;
-	int girth = 3;
-	
-
-	if(argc>1){
-		p = std::vector<double>();
-		for(int k=0; k<6;k++){	
-			p.emplace_back(std::stoi(argv[k+1]) + 0.0);
+		if(g_ex.num_nodes > g_ex_2.num_nodes){
+			c_nd = 0;
 		}
+		else{
+			c_nd = omega;
+		}
+
+		if(g_ex.num_nodes < g_ex_2.num_nodes){
+			c_ni = 0;
+			c_ei = 0;
+			c_es = b_ei - 2*b_ni;
+			c_es_id = -(2*b_ni + b_ea);
+
+		}
+		else{
+			c_ni = omega;
+			c_ei = 2*b_ni + b_ea;
+			c_es = b_ei + b_ea;	
+			c_es_id = 0;
+			
+		}
+
+		c_ns = b_ni + b_na;
+		c_ed = b_ei;
+
+		comp_costs.emplace_back(c_ni);
+		comp_costs.emplace_back(c_nd);
+		comp_costs.emplace_back(c_ns);
+		comp_costs.emplace_back(c_ei);
+		comp_costs.emplace_back(c_ed);
+		comp_costs.emplace_back(c_es);
+		comp_costs.emplace_back(c_es_id);
+		*/
+
 	}
-
-	if(argc>7){
-		girth = std::stoi(argv[7]);
-	}
-
-
-	blobs = make_blobs<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(aux_env, size, girth, p, distribution, keep_centers, ignore_duplicates);
-
 	
-
-	// blobs has the two graphs
-	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID>ids = blobs.graph_ids();
-	g1_id = ids.first;
-	ged::GEDGraph::GraphID g2_id = ids.second-1;
 	
-	//Add empty graph
-	ged::GEDGraph::GraphID empty_graph_id = blobs.add_graph("empty", "empty");
-
-	// Describe the two graphs:
-	std::cout<<"GRAPH 1: "<<std::endl;
-	g_ex  = blobs.get_graph(g1_id, true, true, true); 
-	describe_graph(g_ex);
-	//blobs.save_as_gxl_graph(g1_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph1.gxl");
-	
-	std::cout<<"GRAPH 2: "<<std::endl;
-	g_ex  = blobs.get_graph(g2_id, true, true, true); 
-	describe_graph(g_ex);
-	//blobs.save_as_gxl_graph(g2_id, "/home/lucas/Documents/stage/gedlib/compression/data/output/graph2.gxl");
-	
-
-
 	std::cout<<"--------------INIT-----------------"<<std::endl;
-	blobs.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
+	env.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
 	//blobs.set_edit_costs(ged::Options::EditCosts::CONSTANT, {});
-	blobs.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
+	env.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
 
 
 	// Set method
-	//std::string ipfp_options("--threads 6 --initial-solutions 10 --initialization-method RANDOM");
-	//blobs.set_method(ged::Options::GEDMethod::IPFP, ipfp_options);
-	blobs.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "");
+	std::string bu_options("--lsape-model FLWC --threads 6 --greedy-method REFINED --optimal TRUE --centrality-method PAGERANK --max-num-solutions 4");
+	env.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, bu_options);
+	std::vector<std::vector<double>> upper_bounds;
+	std::vector<double> aux_line;
 
 	std::cout<<"--------------RUN METHOD-----------------"<<std::endl;
-	blobs.run_method(g1_id, g2_id);
-	blobs.run_method(empty_graph_id, g2_id);
-
-	
-
-	std::cout<<"--------------GET NODE MAP-----------------"<<std::endl;
-	ged::NodeMap node_map = blobs.get_node_map(g1_id, g2_id);
-	ged::NodeMap node_map_empty = blobs.get_node_map(empty_graph_id, g2_id);
-	std::cout<<"G_1 to G_2: "<<node_map<<std::endl;
-	std::cout<<"EMPTY to G_2: "<<node_map_empty<<std::endl;
-
-
-	std::cout<<"--------------GET INFO-----------------"<<std::endl;
-	
-	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex_2;
-	g_ex = blobs.get_graph(g1_id, true, true, true);
-	g_ex_2 = blobs.get_graph(g2_id, true, true, true);
-	g_empty = blobs.get_graph(empty_graph_id, true, true, true);
-	vector<ged::GEDGraph::NodeID> v_d;
-	vector<ged::GEDGraph::NodeID> v_i;
-	vector<ged::GEDGraph::NodeID> v_s;
-	vector<ged::GEDGraph::NodeID> v_is;
-	vector<ged::GXLLabel> varphi_i;
-	vector<ged::GXLLabel> varphi_s;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_nd;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ed;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ni;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ei;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_s;
-	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_is;
-	vector<ged::GXLLabel> phi_ni;
-	vector<ged::GXLLabel> phi_ei;
-	vector<ged::GXLLabel> phi_s;
-	vector<ged::GXLLabel> phi_is;
-
-	std::cout<<"--------------COMPRESSION FROM G_1 to G_2-----------------"<<std::endl;
-	get_all_compression_sets<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map, v_d, v_i, varphi_i, 
-		v_s, v_is, varphi_s, e_nd,e_ed, e_ni,e_ei, phi_ni, phi_ei, e_s,e_is, phi_s, g_ex, g_ex_2);
-
-	std::cout<<"--------------NODES-----------------"<<std::endl;
-
-	std::cout<<"Deleted nodes:"<<std::endl;
-	for(auto n : v_d){
-		std::cout<<n<<", ";
+	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env.graph_ids();
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
+		aux_line.clear();
+		for(ged::GEDGraph::GraphID j{limits.first}; j<limits.second-1; j++){
+			env.run_method(i,j);
+			aux_line.emplace_back(env.get_upper_bound(i,j));
+			if(stdout!=0){
+				std::cout<<env.get_upper_bound(i,j)<<", ";
+			}
+		}
+		if(stdout!=0){
+			std::cout<<std::endl;
+		}
+		upper_bounds.emplace_back(aux_line);
 	}
-	std::cout<<std::endl;
-
-
-	std::cout<<"Added nodes:"<<std::endl;
-	for(auto n : v_i){
-		std::cout<<n<<", ";
+	if(stdout!=0){
+		std::cout<<std::endl;
 	}
-	std::cout<<std::endl;
 
-
-	std::cout<<"Identically substituted nodes:"<<std::endl;
-	for(auto n : v_is){
-		std::cout<<n<<", ";
+	std::map<std::string, std::string> dummy_label;
+	ged::GEDEnv<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel> aux_env;
+	ged::GEDGraph::GraphID collection_graph_id = aux_env.add_graph("Collection","");
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
+		aux_env.add_node(collection_graph_id, i , dummy_label);
 	}
-	std::cout<<std::endl;
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
+		for(ged::GEDGraph::GraphID j{limits.first}; j<limits.second-1; j++){
+			if(i==j || j==empty_id){
+				continue;
+			}
+			else{
+				aux_env.add_edge(collection_graph_id, i, j, dummy_label, true);
+			}
 
-
-	std::cout<<"NON Identically substituted nodes:"<<std::endl;
-	for(auto n : v_s){
-		std::cout<<n<<", ";
+		}
 	}
-	std::cout<<std::endl;
-
-	std::cout<<"--------------EDGES-----------------"<<std::endl;
-
-	std::cout<<"Deleted edges, node deletion (e_nd):"<<std::endl;
-	for(auto e : e_nd){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Deleted edges, other (e_ed):"<<std::endl;
-	for(auto e : e_ed){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Added edges, node insertion (e_ni):"<<std::endl;
-	for(auto e : e_ni){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Added edges, other (e_ei):"<<std::endl;
-	for(auto e : e_ei){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Substituted edges, Identically (e_is):"<<std::endl;
-	for(auto e : e_is){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Substituted edges, NOT Identically (e_s):"<<std::endl;
-	for(auto e : e_s){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
 
 
-	std::cout<<"--------------COMPRESSION FROM EMPTY to G_2-----------------"<<std::endl;
-	get_all_compression_sets<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map_empty, v_d, v_i, varphi_i, 
-		v_s, v_is, varphi_s, e_nd,e_ed, e_ni,e_ei, phi_ni, phi_ei, e_s,e_is, phi_s, g_empty, g_ex_2);
-
-	std::cout<<"--------------NODES-----------------"<<std::endl;
-
-	std::cout<<"Deleted nodes:"<<std::endl;
-	for(auto n : v_d){
-		std::cout<<n<<", ";
-	}
-	std::cout<<std::endl;
-
-
-	std::cout<<"Added nodes:"<<std::endl;
-	for(auto n : v_i){
-		std::cout<<n<<", ";
-	}
-	std::cout<<std::endl;
-
-
-	std::cout<<"Identically substituted nodes:"<<std::endl;
-	for(auto n : v_is){
-		std::cout<<n<<", ";
-	}
-	std::cout<<std::endl;
-
-
-	std::cout<<"NON Identically substituted nodes:"<<std::endl;
-	for(auto n : v_s){
-		std::cout<<n<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"--------------EDGES-----------------"<<std::endl;
-
-	std::cout<<"Deleted edges, node deletion (e_nd):"<<std::endl;
-	for(auto e : e_nd){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Deleted edges, other (e_ed):"<<std::endl;
-	for(auto e : e_ed){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Added edges, node insertion (e_ni):"<<std::endl;
-	for(auto e : e_ni){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Added edges, other (e_ei):"<<std::endl;
-	for(auto e : e_ei){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Substituted edges, Identically (e_is):"<<std::endl;
-	for(auto e : e_is){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	std::cout<<"Substituted edges, NOT Identically (e_s):"<<std::endl;
-	for(auto e : e_s){
-		std::cout<<e.first<<" -- "<<e.second<<", ";
-	}
-	std::cout<<std::endl;
-
-	
-	std::pair<std::size_t, std::size_t> comp_sizes;	
- 	
-	std::cout<<"--------------FROM G_1 to G_2-----------------"<<std::endl;
- 	comp_sizes = compression_size<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map, g_ex, g_ex_2, b_ni,b_na, b_ei, b_ea);
- 	std::cout<<"Vertex compression: "<<comp_sizes.first<<std::endl;
- 	std::cout<<"Edge compression: "<<comp_sizes.second<<std::endl;
-	std::cout<<"Total compression: "<<comp_sizes.first + comp_sizes.second<<std::endl;
-
-	std::cout<<"GED G_1 to G_2: "<<blobs.get_upper_bound(g1_id, g2_id)<<std::endl;
-	
-	std::cout<<"--------------FROM EMPTY to G_2-----------------"<<std::endl;
-	
-	comp_sizes = compression_size<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(node_map_empty, g_empty, g_ex_2, b_ni,b_na, b_ei, b_ea);
- 	std::cout<<"Vertex compression: "<<comp_sizes.first<<std::endl;
- 	std::cout<<"Edge compression: "<<comp_sizes.second<<std::endl;
-	std::cout<<"Total compression: "<<comp_sizes.first + comp_sizes.second<<std::endl;
-
-	std::cout<<"GED EMPTY to G_2: "<<blobs.get_upper_bound(empty_graph_id, g2_id)<<std::endl;
-
+	ged::ExchangeGraph<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel>  collection_graph = aux_env.get_graph(collection_graph_id, true, true, true);
+	std::size_t root = 0;
+	spanning_arborescence_of_minimum_weight<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel>(collection_graph,upper_bounds,root);
+	// verificar aristas
+	// Terminar algoritmo para spanning bla bla
+	// Simplificar talvez?? Recibir solamente la matriz de pesos y deducir el número de vertices??
 	std::cout<<"--------------END FOR NOW-----------------"<<std::endl;
 	return 0;
 	
