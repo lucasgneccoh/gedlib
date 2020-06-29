@@ -6,12 +6,14 @@
 #include "src/env/ged_env.hpp"
 #include "median/src/median_graph_estimator.hpp"
 #undef COMPRESS_EDIT_COST
+#include "compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.C"
 #include <random>
 #include <string>
 #include <cmath>
 #define BITS_IN_BYTE 8
 #define bytes(num) ceil(log2(num+1)/BITS_IN_BYTE)
 
+// For the spanning arborescence
 
 void describe_graph(ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> exchange_graph){
 	std::cout<<"NODES:"<<std::endl;
@@ -677,6 +679,35 @@ void get_all_compression_sets(ged::NodeMap node_map,
 	}
 }
 	
+std::pair<std::size_t, std::size_t> simplified_compression_size_from_empty_graph(
+	std::size_t num_nodes, std::size_t num_edges, 
+	double &b_ni, double &b_na,
+	double &b_ei, double &b_ea){
+
+	std::size_t v_size=0;
+	std::size_t e_size=0;
+	// Vertex //Eq 44
+
+	v_size = 2 * b_ni + b_na*num_nodes;
+
+	// Edges 
+	//Eq 53
+	e_size = 3 * b_ei  + (2*b_ni + b_ea) * num_edges;
+	//Eq 55
+	/*
+	if(e_ed.size() > e_is.size()){
+		aux = (2*b_ni - b_ei + b_ea) * e_is.size() - 2*b_ei;
+	}
+	else{
+		aux = (2*b_ni + b_ea) * e_is.size() - b_ei*e_ed.size() - 2*b_ei;	
+	}
+	e_size = b_ei + (2*b_ni + b_ea)*g2.num_edges - ( (2*b_ni - b_ei)*e_s.size() + aux );
+	*/
+
+	return(std::make_pair(v_size, e_size));
+
+}
+
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 std::pair<std::size_t, std::size_t> compression_size(ged::NodeMap node_map,
 	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &g1,
@@ -816,26 +847,25 @@ void print_compression_sets(
 
 }
 
-template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+// Not used
 void get_min_edges(
 	std::size_t &root,
-	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &graph,
+	std::vector<std::pair<std::size_t, std::size_t>> &edges,
 	std::vector<std::vector<double>> &w,
 	std::vector<double> &min_w,
 	std::vector<std::size_t> &prev
 	){
 	// Initialize
+	std::size_t num_nodes = w.size();
 	min_w.clear();
 	prev.clear();
-	for(std::size_t i=0; i<graph.num_nodes; i++){
+	for(std::size_t i=0; i<num_nodes; i++){
 		min_w.emplace_back(std::numeric_limits<double>::max());
 		prev.emplace_back(std::numeric_limits<std::size_t>::max());
 	}
 
 	std::pair<std::size_t, std::size_t>e;
-	for(typename std::list<std::pair<std::pair<std::size_t, std::size_t>, UserEdgeLabel>>::iterator iter = graph.edge_list.begin();
-	 iter != graph.edge_list.end(); iter++){
-		e = (*iter).first;
+	for(auto const& e:edges){
 		if(e.second == root){
 			continue;
 		}
@@ -848,6 +878,7 @@ void get_min_edges(
 
 }
 
+// Not used
 int get_cycles(
 	std::size_t num_nodes,
 	std::size_t &root,
@@ -884,28 +915,181 @@ int get_cycles(
 	return loops;
 }
 
-template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 void spanning_arborescence_of_minimum_weight(
-	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &graph,
+	std::vector<std::size_t> &tree,
+	double &cost,
+	std::vector<std::pair<std::size_t, std::size_t>> edges,
 	std::vector<std::vector<double>> &w,
-	std::size_t &root
+	std::size_t &root,
+	int stdout = 0
 	){
+
+	/* For own implemetation later
 	// Initialize
+	
+	std::size_t num_nodes = w.size();
 	std::vector<double> min_w;
 	std::vector<std::size_t> prev;
-	get_min_edges<UserNodeID, UserNodeLabel, UserEdgeLabel>(root, graph, w, min_w, prev);
+	get_min_edges(root, edges, w, min_w, prev);
 	
 	//Look for cycles
 	int num_cycles;
 	std::vector<int> cycle_id;
-	num_cycles = get_cycles(graph.num_nodes,root,prev,cycle_id);
+
+	num_cycles = get_cycles(num_nodes,root,prev,cycle_id);
 
 	std::cout<<"Num loops: "<<num_cycles<<std::endl;
-	for(std::size_t i{0}; i<graph.num_nodes; i++){
+	for(std::size_t i{0}; i<num_nodes; i++){
 		std::cout<<"Vertex "<<i<<": "<<cycle_id.at(i)<<std::endl;
 	}
+
+	*/
+
+	// FROM FISCHETTI 1993
+	//https://github.com/frangio68/Minimal-Spanning-Arborescence
+	if(stdout!=0) std::cout<<"START"<<std::endl;
+	MSA_di_unipi_it::MSArbor::Index n = w.size();
+	if(stdout!=0) std::cout<<"Create csts"<<std::endl;
+	MSA_di_unipi_it::MSArbor::CRow csts = new MSA_di_unipi_it::MSArbor::CNumber[ n * ( n - 1 ) ];
+
+	if(stdout!=0) std::cout<<"Fill csts"<<std::endl;
+	for( MSA_di_unipi_it::MSArbor::Index i = 0 ; i < n ; i++ ){
+		for( MSA_di_unipi_it::MSArbor::Index j = 0 ; j < n-1 ; j++ ){
+			if(i == j){
+				csts[ n * j + i ] = MSA_di_unipi_it::MSArbor::C_INF;
+			}
+			else{
+				csts[ n * j + i ] = w.at(i).at(j);
+			}
+		}
+	}
+	if(stdout!=0) std::cout<<"csts filled"<<std::endl;
+
+	MSA_di_unipi_it::MSArbor MSA( n );
+
+	cost = MSA.Solve( csts );
+
+	if(stdout!=0) std::cout<<"Solving"<<std::endl;
+	if(stdout!=0) std::cout << MSA.GetN() << "\t" << cost << endl;
+
+
+	tree.clear();
+	if(stdout!=0) std::cout<<"Results"<<std::endl;
+		for( int i = 0 ; i < n - 1 ; i++ ){
+		 	if(stdout!=0) std::cout << MSA.ReadPred()[ i ] << " ";
+		 	tree.emplace_back(MSA.ReadPred()[ i ]);
+		}
+
+	if(stdout!=0) std::cout << std::endl;
+	
+
+	delete[] csts;
+
 	return;
 } 
+
+void get_arborescence_info(std::vector<std::size_t> arborescence, std::size_t root, std::size_t num_nodes){
+	std::map<std::size_t, std::vector<std::size_t>> children;
+	std::map<std::size_t, std::vector<std::size_t>> depth_degrees;
+	std::list<std::pair<std::size_t,std::size_t>> todo_depth;
+
+
+	for(std::size_t i=0; i<num_nodes; i++){
+		children.emplace(std::make_pair(i, std::vector<std::size_t>()));
+	}	
+
+	for(std::size_t i=0; i<arborescence.size(); i++){
+		children.at(arborescence.at(i)).emplace_back(i);			
+	}
+
+	double avg_degree=0;
+	std::size_t min_degree= std::numeric_limits<std::size_t>::max();
+	std::size_t max_degree=0;
+	double avg_depth=0;
+	std::size_t max_depth=0;
+	std::size_t leafs=0;
+
+	for(auto const &entry : children){
+		if(entry.second.size()==0){
+			leafs++;
+		}
+		else{
+			avg_degree += entry.second.size();
+			if(entry.second.size()>max_degree) max_degree = entry.second.size();
+			if(entry.second.size()<min_degree) min_degree = entry.second.size();	
+		}
+		
+	}
+	avg_degree = avg_degree/(arborescence.size()-leafs);
+
+
+	std::size_t parent;
+	std::size_t depth;
+
+	for(std::size_t i=0; i<arborescence.size(); i++){
+		parent = i;
+		depth = 0;
+		while(parent != root){
+			parent = arborescence.at(parent);
+			depth++;
+		}
+		avg_depth+=depth;
+		if(depth>max_depth) max_depth = depth;
+	}
+
+	for(std::size_t i=0; i<max_depth; i++){
+		depth_degrees.emplace(std::make_pair(i, std::vector<std::size_t>()));
+	}
+
+	todo_depth.push_front(std::make_pair(root, 0));
+	std::pair<std::size_t,std::size_t> aux;
+	while(! todo_depth.empty()){
+		aux = todo_depth.front();
+		todo_depth.pop_front();
+		if(children.at(aux.first).size()==0){
+			//leaf
+			continue;
+		}
+		else{
+			for(auto const &c : children.at(aux.first)){
+				todo_depth.push_front(std::make_pair(c, aux.second+1));
+			}
+			depth_degrees.at(aux.second).emplace_back(children.at(aux.first).size());	
+		}
+		
+
+
+	}
+
+
+	avg_depth = avg_depth/arborescence.size();
+
+	std::cout<<"Number of nodes :"<<num_nodes<<std::endl;
+	std::cout<<std::endl;
+	std::cout<<"Number of leafs: "<<leafs<<std::endl;
+	std::cout<<"Avg degree (no leafs): "<<avg_degree<<std::endl;
+	std::cout<<"Min degree: "<<min_degree<<std::endl;
+	std::cout<<"Max degree: "<<max_degree<<std::endl;
+	std::cout<<"Root degree: "<<children.at(root).size();
+
+	std::cout<<std::endl;
+	std::cout<<"Avg depth: "<<avg_depth<<std::endl;
+	std::cout<<"Max depth: "<<max_depth<<std::endl;
+	std::cout<<std::endl;
+
+	std::cout<<"Avg degree by depth: "<<avg_depth<<std::endl;
+	double sum=0;
+	for(auto const &entry : depth_degrees){
+		sum=0;
+
+		for(auto const &d : entry.second){
+			sum += d;
+		}
+		std::cout<<"Depth "<< entry.first <<" : "<< sum/entry.second.size() << std::endl;
+
+	}
+
+}
 	  
 
 
@@ -924,6 +1108,8 @@ int main(int argc, char* argv[]){
 	*/
 
 	std::cout<<"--------------START and INPUTS-----------------\n";
+	ged::Seconds runtime;
+	auto start = std::chrono::high_resolution_clock::now();
 	
 	std::string gedlib_root("/home/lucas/Documents/stage_gedlibpy/gedlib/gedlib");
 	std::string project_root("/home/lucas/Documents/stage_gedlibpy/stage/cpp");
@@ -944,13 +1130,11 @@ int main(int argc, char* argv[]){
 		graph_dir = argv[2];
 	}
 
-	int cost_version;
-	if(argc>3){
-		cost_version = std::stoi(argv[3]);
-	}
+	int cost_version=0;
+
 	int stdout=0;
-	if(argc>4){
-		stdout = std::stoi(argv[4]);
+	if(argc>3){
+		stdout = std::stoi(argv[3]);
 	}
 
 	std::cout<<"Collection file: "<<collection_file<<std::endl;
@@ -961,11 +1145,13 @@ int main(int argc, char* argv[]){
 
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
 
-	// Add empty graph
-	ged::GEDGraph::GraphID empty_id = env.add_graph("empty","");
+	
 
 	std::vector<ged::GEDGraph::GraphID> graph_ids(env.load_gxl_graphs(graph_dir, collection_file,
 			ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::LABELED, irrelevant_node_attributes(dataset)));
+
+	// Add empty graph at the end
+	ged::GEDGraph::GraphID empty_id = env.add_graph("empty","");
 
 	if(stdout!=0) std::cout<<"Number of graphs: "<<env.num_graphs()<<std::endl;
 	std::map<std::string, std::map<std::string, std::vector<std::string>>> distribution;
@@ -978,11 +1164,11 @@ int main(int argc, char* argv[]){
 	get_graphs_structure<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(env, distribution, alphabets, b_ni, b_na, b_ei, b_ea);
 
 	std::cout<<"Structure:"<<std::endl;
-	std::cout<<"Nodes: "<<b_ni<<", "<<b_na<<std::endl;
+	std::cout<<"Nodes: "<<std::endl;
 	for(auto const& a: alphabets.at("node_attr")){
 		std::cout<<"\t"<<a.first<<": "<<a.second.size()<<" values"<<std::endl;	
 	}
-	std::cout<<"Edges: "<<b_ei<<", "<<b_ea<<std::endl;
+	std::cout<<"Edges: "<<std::endl;
 	for(auto const& a: alphabets.at("edge_attr")){
 		std::cout<<"\t"<<a.first<<": "<<a.second.size()<<" values"<<std::endl;	
 	}
@@ -1073,12 +1259,18 @@ int main(int argc, char* argv[]){
 	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env.graph_ids();
 	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
 		aux_line.clear();
-		for(ged::GEDGraph::GraphID j{limits.first}; j<limits.second-1; j++){
-			env.run_method(i,j);
-			aux_line.emplace_back(env.get_upper_bound(i,j));
-			if(stdout!=0){
-				std::cout<<env.get_upper_bound(i,j)<<", ";
+		for(ged::GEDGraph::GraphID j{limits.first}; j<limits.second-1-1; j++){
+			if(i==j){
+				aux_line.emplace_back(std::numeric_limits<double>::max());
 			}
+			else{
+				env.run_method(i,j);
+				aux_line.emplace_back(env.get_upper_bound(i,j)+ 3*b_ni+2*b_ei );
+				if(stdout!=0){
+					std::cout<<env.get_upper_bound(i,j)<<", ";
+				}	
+			}
+			
 		}
 		if(stdout!=0){
 			std::cout<<std::endl;
@@ -1089,32 +1281,70 @@ int main(int argc, char* argv[]){
 		std::cout<<std::endl;
 	}
 
-	std::map<std::string, std::string> dummy_label;
-	ged::GEDEnv<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel> aux_env;
-	ged::GEDGraph::GraphID collection_graph_id = aux_env.add_graph("Collection","");
-	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
-		aux_env.add_node(collection_graph_id, i , dummy_label);
-	}
+
+	std::vector<std::pair<std::size_t,std::size_t>>  collection_graph;
 	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
 		for(ged::GEDGraph::GraphID j{limits.first}; j<limits.second-1; j++){
 			if(i==j || j==empty_id){
 				continue;
 			}
 			else{
-				aux_env.add_edge(collection_graph_id, i, j, dummy_label, true);
+				collection_graph.emplace_back(std::make_pair(i,j));
 			}
 
 		}
 	}
+	auto start_arb = std::chrono::high_resolution_clock::now();
+	runtime = start_arb - start;
+	std::cout<<"GEDLIB time: "<<runtime.count()<<std::endl;
+
+	// Free up memory before passing to the next section
+	// Just before, get the "total" cost
+	std::size_t total_cost_compression = 0;
+	std::pair<std::size_t,std::size_t> aux_pair;
+	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex;
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second-1; i++){
+		if(i!=empty_id){
+			g_ex = env.get_graph(i);
+			aux_pair = simplified_compression_size_from_empty_graph(g_ex.num_nodes, g_ex.num_edges, b_ni, b_na, b_ei, b_ea);
+			total_cost_compression += (aux_pair.first + aux_pair.second);
+		}
+	}
+	env = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>();
 
 
-	ged::ExchangeGraph<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel>  collection_graph = aux_env.get_graph(collection_graph_id, true, true, true);
-	std::size_t root = 0;
-	spanning_arborescence_of_minimum_weight<ged::GEDGraph::GraphID , ged::GXLLabel, ged::GXLLabel>(collection_graph,upper_bounds,root);
-	// verificar aristas
-	// Terminar algoritmo para spanning bla bla
-	// Simplificar talvez?? Recibir solamente la matriz de pesos y deducir el número de vertices??
+
+	std::cout<<"--------------SPANNING ARBORESCENCE OF MINIMUM WEIGHT-----------------"<<std::endl;
+	std::size_t root = upper_bounds.size()-1;
+
+	std::vector<std::size_t> arborescence;
+	double cost_arb = 0;
+
+	spanning_arborescence_of_minimum_weight(arborescence, cost_arb, collection_graph, upper_bounds,root, stdout);
+	
+	std::cout<<"Cost of arborescence: "<<cost_arb<<std::endl;
+
+	get_arborescence_info(arborescence, root, root+1);
+
+	std::cout<<"--------------TO COMPARE-----------------"<<std::endl;
+
+	
+	std::cout<<"Total compression cost: "<<total_cost_compression<<std::endl;
+	double sum=0;
+	for(auto v : upper_bounds.back()){
+		sum += v;
+	}
+	std::cout<<"Verification: "<<sum<<std::endl;
+
+	std::cout<<"Compression ratio: "<<cost_arb/total_cost_compression<<std::endl;	
+
+	auto end = std::chrono::high_resolution_clock::now();
+	std::cout<<"GEDLIB time: "<<runtime.count()<<std::endl;
+	runtime = end-start_arb;
+	std::cout<<"Spanning arborescence time: "<<runtime.count()<<std::endl;
+
 	std::cout<<"--------------END FOR NOW-----------------"<<std::endl;
+	
 	return 0;
 	
 }

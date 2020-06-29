@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../../compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.C
+MSArbor.h
+../../compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.h
+iostream
+-
+
+../../compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.h
+
 ../../ext/boost.1.69.0/boost/any.hpp
 algorithm
 -
@@ -19345,6 +19353,8 @@ src/env/ged_env.hpp
 /home/lucas/Documents/stage/gedlib/compression/src/src/env/ged_env.hpp
 median/src/median_graph_estimator.hpp
 /home/lucas/Documents/stage/gedlib/compression/src/median/src/median_graph_estimator.hpp
+compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.C
+/home/lucas/Documents/stage/gedlib/compression/src/compression/ext/frangio68/Minimal-Spanning-Arborescence-master/MSArbor.C
 random
 -
 string
