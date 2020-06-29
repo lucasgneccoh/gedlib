@@ -1098,15 +1098,6 @@ int main(int argc, char* argv[]){
 
 	std::cout<<"MAIN\n";
 
-	/* Test # 2 work with library edit_graph
-	 *	Get graph structure and domain - works
-	 *	Edit graph operations
-	 *	Make_blobs
-	 * 	Calculate median for blob
-	 *	Calculate ged between blob and center, blob and median, median and center
-	 *
-	*/
-
 	std::cout<<"--------------START and INPUTS-----------------\n";
 	ged::Seconds runtime;
 	auto start = std::chrono::high_resolution_clock::now();
@@ -1119,9 +1110,6 @@ int main(int argc, char* argv[]){
 
 	std::string collection_file(gedlib_root + "/data/collections/" + dataset  + class_test +".xml");
 	std::string graph_dir(gedlib_root + "/data/datasets/" + dataset + extra_dir);
-
-
-	// add_node, add_edge, transform_node, transform_edge, delete_node, delete_edge 
 
 	if(argc>1){
 		collection_file = argv[1];
@@ -1299,7 +1287,7 @@ int main(int argc, char* argv[]){
 	std::cout<<"GEDLIB time: "<<runtime.count()<<std::endl;
 
 	// Free up memory before passing to the next section
-	// Just before, get the "total" cost
+	// Just before, get the "total" cost for reference
 	std::size_t total_cost_compression = 0;
 	std::pair<std::size_t,std::size_t> aux_pair;
 	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g_ex;
