@@ -98,11 +98,11 @@ class MSArbor
 /*---------------------------- PUBLIC TYPES --------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-  typedef unsigned short  Index;          ///< arc or node index ( >= 0 )
+  typedef unsigned int  Index;          ///< arc or node index ( >= 0 )
   typedef Index          *Index_Set;      ///< set (array) of indices
   typedef const Index    cIndex;          ///< a read-only Index
   typedef cIndex        *cIndex_Set;      ///< read-only array
-  static cIndex InINF = 65535;            ///< the largest Index
+  static cIndex InINF = std::numeric_limits<unsigned int>::max();            ///< the largest Index
 
   typedef unsigned int           CNumber;        /**< type of arc costs: since the
 					     cost matrix is re-used to store

@@ -27,7 +27,7 @@ target_link_libraries(
 
         ${EXEC_NAME}
 		
-		${GEDLIB}/lib/libgxlgedlib.so
+#		${GEDLIB}/lib/libgxlgedlib.so
         ${FANN_HOME}/lib/libdoublefann.so.2.2.0
 		${LIBSVM_HOME}/libsvm.so
 		${NOMAD_HOME}/lib/libnomad.so

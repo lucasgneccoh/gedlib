@@ -79,7 +79,6 @@ compression_EXTERNAL_OBJECTS =
 
 src/compression: src/CMakeFiles/compression.dir/compression_test.cpp.o
 src/compression: src/CMakeFiles/compression.dir/build.make
-src/compression: ../../lib/libgxlgedlib.so
 src/compression: ../../ext/fann.2.2.0/lib/libdoublefann.so.2.2.0
 src/compression: ../../ext/libsvm.3.22/libsvm.so
 src/compression: ../../ext/nomad.3.8.1/lib/libnomad.so
