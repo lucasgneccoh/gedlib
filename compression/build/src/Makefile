@@ -125,32 +125,32 @@ compression/fast:
 	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/build
 .PHONY : compression/fast
 
-compression_test.o: compression_test.cpp.o
+registers.o: registers.cpp.o
 
-.PHONY : compression_test.o
+.PHONY : registers.o
 
 # target to build an object file
-compression_test.cpp.o:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/compression_test.cpp.o
-.PHONY : compression_test.cpp.o
+registers.cpp.o:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.o
+.PHONY : registers.cpp.o
 
-compression_test.i: compression_test.cpp.i
+registers.i: registers.cpp.i
 
-.PHONY : compression_test.i
+.PHONY : registers.i
 
 # target to preprocess a source file
-compression_test.cpp.i:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/compression_test.cpp.i
-.PHONY : compression_test.cpp.i
+registers.cpp.i:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.i
+.PHONY : registers.cpp.i
 
-compression_test.s: compression_test.cpp.s
+registers.s: registers.cpp.s
 
-.PHONY : compression_test.s
+.PHONY : registers.s
 
 # target to generate assembly for a file
-compression_test.cpp.s:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/compression_test.cpp.s
-.PHONY : compression_test.cpp.s
+registers.cpp.s:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.s
+.PHONY : registers.cpp.s
 
 # Help Target
 help:
@@ -161,9 +161,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... compression"
-	@echo "... compression_test.o"
-	@echo "... compression_test.i"
-	@echo "... compression_test.s"
+	@echo "... registers.o"
+	@echo "... registers.i"
+	@echo "... registers.s"
 .PHONY : help
 
 

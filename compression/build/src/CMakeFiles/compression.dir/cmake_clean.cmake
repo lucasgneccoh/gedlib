@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/compression.dir/compression_test.cpp.o"
+  "CMakeFiles/compression.dir/registers.cpp.o"
   "compression"
   "compression.pdb"
 )

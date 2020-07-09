@@ -57,27 +57,27 @@ include src/CMakeFiles/compression.dir/progress.make
 # Include the compile flags for this target's objects.
 include src/CMakeFiles/compression.dir/flags.make
 
-src/CMakeFiles/compression.dir/compression_test.cpp.o: src/CMakeFiles/compression.dir/flags.make
-src/CMakeFiles/compression.dir/compression_test.cpp.o: ../src/compression_test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/compression.dir/compression_test.cpp.o"
-	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compression.dir/compression_test.cpp.o -c /home/lucas/Documents/stage/gedlib/compression/src/compression_test.cpp
+src/CMakeFiles/compression.dir/registers.cpp.o: src/CMakeFiles/compression.dir/flags.make
+src/CMakeFiles/compression.dir/registers.cpp.o: ../src/registers.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/compression.dir/registers.cpp.o"
+	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compression.dir/registers.cpp.o -c /home/lucas/Documents/stage/gedlib/compression/src/registers.cpp
 
-src/CMakeFiles/compression.dir/compression_test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compression.dir/compression_test.cpp.i"
-	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucas/Documents/stage/gedlib/compression/src/compression_test.cpp > CMakeFiles/compression.dir/compression_test.cpp.i
+src/CMakeFiles/compression.dir/registers.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compression.dir/registers.cpp.i"
+	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucas/Documents/stage/gedlib/compression/src/registers.cpp > CMakeFiles/compression.dir/registers.cpp.i
 
-src/CMakeFiles/compression.dir/compression_test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compression.dir/compression_test.cpp.s"
-	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucas/Documents/stage/gedlib/compression/src/compression_test.cpp -o CMakeFiles/compression.dir/compression_test.cpp.s
+src/CMakeFiles/compression.dir/registers.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compression.dir/registers.cpp.s"
+	cd /home/lucas/Documents/stage/gedlib/compression/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucas/Documents/stage/gedlib/compression/src/registers.cpp -o CMakeFiles/compression.dir/registers.cpp.s
 
 # Object files for target compression
 compression_OBJECTS = \
-"CMakeFiles/compression.dir/compression_test.cpp.o"
+"CMakeFiles/compression.dir/registers.cpp.o"
 
 # External object files for target compression
 compression_EXTERNAL_OBJECTS =
 
-src/compression: src/CMakeFiles/compression.dir/compression_test.cpp.o
+src/compression: src/CMakeFiles/compression.dir/registers.cpp.o
 src/compression: src/CMakeFiles/compression.dir/build.make
 src/compression: ../../ext/fann.2.2.0/lib/libdoublefann.so.2.2.0
 src/compression: ../../ext/libsvm.3.22/libsvm.so

@@ -19346,7 +19346,7 @@ misc.ipp
 
 ../../src/util/misc.ipp
 
-/home/lucas/Documents/stage/gedlib/compression/src/compression_test.cpp
+/home/lucas/Documents/stage/gedlib/compression/src/registers.cpp
 iostream
 -
 src/env/ged_env.hpp

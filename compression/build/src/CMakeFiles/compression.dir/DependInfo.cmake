@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/lucas/Documents/stage/gedlib/compression/src/compression_test.cpp" "/home/lucas/Documents/stage/gedlib/compression/build/src/CMakeFiles/compression.dir/compression_test.cpp.o"
+  "/home/lucas/Documents/stage/gedlib/compression/src/registers.cpp" "/home/lucas/Documents/stage/gedlib/compression/build/src/CMakeFiles/compression.dir/registers.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

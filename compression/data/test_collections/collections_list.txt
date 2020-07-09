@@ -1,11 +1,6 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_one.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_K.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_X.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_Z.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_H.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_W.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_X.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_Z.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_very_short.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_short.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/acyclic.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/AIDS.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/mao.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/pah.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Protein.xml

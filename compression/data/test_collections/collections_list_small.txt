@@ -1,3 +1,8 @@
 /home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_one.xml
 /home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_two.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_Z.xml
 /home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_very_short.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_short.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_short.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample.xml

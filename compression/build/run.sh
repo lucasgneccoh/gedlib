@@ -1,29 +1,21 @@
 #From build dir
 exec_path="src/"
 exec_name="compression"
-size="100"
-girth="1"
-# add_node, add_edge, rel_node, rel_edge, delete_node, delete_edge
-prob="0 1 0 0 0 0"
-keep_c="0"
-stdout="0"
-cost_version="0"
-print_normal="0"
-print_empty="0"
-print_itself="0"
-#collection="/home/lamsade/lgnecco/stage/gedlib/data/collections/Mutagenicity.xml"
-collection="../../data/collections/Letter_A_Z.xml"
-graph_dir="../../../data/datasets/Letter/MED"
-output_file="../../data/output/results_compression.csv"
-#graph_dir="/home/lamsade/lgnecco/stage/gedlib/compression/data/datasets/Mutagenicity/data"
-#echo "Cmake"
-#cmake ..
-#echo "make"
-#make
+collection="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_letters.txt"
+graph_dir="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_letters.txt"
+output_file="/home/lucas/Documents/stage/gedlib/compression/data/output/results_compression_test_letters.csv"
+stdout="true"
+ged_method="branch_fast"
+ged_method_options="10"
+ged_method_refinement="branch_uniform"
+ged_method_refinement_options="10"
+refinement_size="999"
+train_set="/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter-50g.xml"
+train_path="/home/lucas/Documents/stage/gedlib/compression/data/training"
+output_description_file="/home/lucas/Documents/stage/gedlib/compression/data/output"
+output_file_name="alphabets.data"
 echo -ne '\007'
 echo "execute"
-#eval "./bin/Debug/stage_cpp" $size $girth $prob $keep_c $stdout
-#eval "./"$exec_path$exec_name $prob $girth $collection $graph_dir $cost_version $print_normal $print_empty $print_itself
-eval "./"$exec_path$exec_name $collection $graph_dir $stdout
+eval "./"$exec_path$exec_name $collection $graph_dir $output_file $stdout $ged_method $ged_method_options $ged_method_refinement $ged_method_refinement_options $refinement_size $train_set $train_path $output_description_file $output_file_name
 echo -ne '\007'
 

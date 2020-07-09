@@ -20,7 +20,7 @@
 ############################################################################
 
 
-add_executable(${EXEC_NAME} compression_test.cpp)
+add_executable(${EXEC_NAME} registers.cpp)
 
 #SHARED LIBRARY
 target_link_libraries(
