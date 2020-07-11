@@ -1,0 +1,3 @@
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_50g.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_100g.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_500g.xml

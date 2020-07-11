@@ -615,7 +615,7 @@ void get_all_compression_sets(ged::NodeMap node_map,
 	v_s.clear();
 	v_is.clear();
 	varphi_s.clear();
-	for(auto assignment : relation){
+	for(auto const assignment : relation){
 		if(assignment.second == ged::GEDGraph::dummy_node()){
 			v_d.emplace_back(assignment.first);
 		}
@@ -644,7 +644,12 @@ void get_all_compression_sets(ged::NodeMap node_map,
 	e_s.clear();
 	e_is.clear();
 	phi_s.clear();
-	for(auto const &edge : g1.edge_list){
+
+	std::pair<std::pair<std::size_t, std::size_t>, UserEdgeLabel> edge;
+	typename std::list<std::pair<std::pair<std::size_t, std::size_t>, UserEdgeLabel>>::iterator iter;
+	
+	for(iter = g1.edge_list.begin(); iter != g1.edge_list.end(); iter ++ ){
+		edge = *iter;
 		if(node_map.image(edge.first.first)==ged::GEDGraph::dummy_node() || node_map.image(edge.first.second)==ged::GEDGraph::dummy_node()){
 			e_nd.emplace_back(edge.first);
 		}
@@ -664,9 +669,9 @@ void get_all_compression_sets(ged::NodeMap node_map,
 		}
 	}
 	
-	for(auto const &edge2 : g2.edge_list){
-		//std::cout<<"\tEdge "<<edge.first.first<<" - "<<edge.first.second<<std::endl;
-		//std::cout<<"\t"<<node_map.image(edge.first.first)<<" - " <<node_map.image(edge.first.second)<<std::endl;
+	std::pair<std::pair<std::size_t, std::size_t>, UserEdgeLabel> edge2;
+	for(iter = g2.edge_list.begin(); iter != g2.edge_list.end(); iter ++ ){
+		edge2 = *iter;
 		if(node_map.pre_image(edge2.first.first)==ged::GEDGraph::dummy_node() || node_map.pre_image(edge2.first.second)==ged::GEDGraph::dummy_node()){
 			e_ni.emplace_back(edge2.first);
 			phi_ni.emplace_back(edge2.second);			
@@ -753,7 +758,7 @@ std::pair<double, double> compression_size(ged::NodeMap node_map,
 	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_is;
 	vector<UserEdgeLabel> phi_s;
 
-	get_all_compression_sets(node_map,v_d,
+	get_all_compression_sets<UserNodeID, UserNodeLabel, UserEdgeLabel>(node_map,v_d,
 		v_i,varphi_i,
 		v_s,v_is,varphi_s,
 		e_nd,e_ed,
@@ -1079,6 +1084,191 @@ std::string init_options(const std::string & path, const std::string & data_suff
 
 
 
+
+
+
+
+
+void write_to_file(std::ofstream &file, std::vector<std::string> &values){
+	
+	for(std::size_t j=0; j<values.size(); j++){
+		file << values.at(j);
+		if(j < values.size()-1){
+			file << ","; 	
+		} 
+		else{
+			file << "\n"; 	
+		}
+	}
+}  
+
+
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env_coded, 
+	std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> &encoded_attributes,	
+	std::string &path, 
+	std::string &file_name, 
+	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env, 
+	std::map<std::string, std::map<std::string, std::set<std::string>>> &alphabets){
+
+	// Write alphabets in order and transform graphs
+	std::ofstream ofile;
+	std::cout<<path + "/" + file_name<<std::endl;
+	ofile.open(path + "/" + file_name, ios::out | ios::binary);
+	std::size_t cont=0;
+
+	encoded_attributes.emplace("graphs", std::map<std::string, std::map<std::string,std::string>> ());
+	encoded_attributes.emplace("node_attr", std::map<std::string, std::map<std::string,std::string>> ());
+	encoded_attributes.emplace("edge_attr", std::map<std::string, std::map<std::string,std::string>> ());
+	
+	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits;
+	limits = env.graph_ids();
+	
+	if(ofile.is_open()){
+		ofile<<"#graph_names"<<"\n";
+		encoded_attributes.at("graphs").emplace("name", std::map<std::string,std::string> ());
+		cont=0;
+		for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
+			encoded_attributes.at("graphs").at("name").emplace(env.get_graph_name(i), std::to_string(cont));
+			ofile<<env.get_graph_name(i)<<"\n";
+			cont++;
+		}
+		
+		ofile<<"#node_attr"<<"\n";		
+		for(auto const attr : alphabets.at("node_attr")){
+			ofile<<"#"<<attr.first<<"\n";			
+			encoded_attributes.at("node_attr").emplace(attr.first, std::map<std::string,std::string> ());
+			cont=0;
+			for(auto const val : attr.second){
+				ofile<<val<<"\n";
+				encoded_attributes.at("node_attr").at(attr.first).emplace(val, std::to_string(cont));
+				cont++;
+			}
+		}
+
+		ofile<<"#edge_attr"<<"\n";		
+		for(auto const attr : alphabets.at("edge_attr")){
+			ofile<<"#"<<attr.first<<"\n";
+			encoded_attributes.at("edge_attr").emplace(attr.first, std::map<std::string,std::string> ());
+			cont=0;
+			for(auto const val : attr.second){
+				ofile<<val<<"\n";
+				encoded_attributes.at("edge_attr").at(attr.first).emplace(val, std::to_string(cont));
+				cont++;
+			}
+			
+		}
+		ofile.close();	
+	}
+	else{
+		std::cout<<"Error when opening output file"<<std::endl;
+		exit(1);
+	}
+
+
+	
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g;
+	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge;
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
+		g = env.get_graph(i, true, true, true);
+		for(std::size_t n=0; n< g.node_labels.size(); n++){
+			for(auto label: g.node_labels.at(n)){
+				g.node_labels.at(n).at(label.first) = encoded_attributes.at("node_attr").at(label.first).at(label.second);
+			}
+		}
+
+		typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter;
+		
+		for(iter = g.edge_list.begin(); iter != g.edge_list.end(); iter++){
+			edge = *iter;
+			for(auto const label: edge.second){
+				edge.second.at(label.first) = encoded_attributes.at("edge_attr").at(label.first).at(label.second);
+			}
+		}
+
+		env_coded.load_exchange_graph(g, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, env.get_graph_name(i)+"_coded", env.get_graph_class(i));
+
+	}
+
+}
+
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void encode_arborescence(
+	std::string path,
+	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env_coded,
+	std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> &encoded_attributes,
+	std::vector<std::size_t> &arborescence,
+	std::size_t root){
+
+	std::ofstream ofile;
+	
+
+	std::map<std::size_t, std::vector<std::size_t>> children;
+	std::size_t num_nodes = arborescence.size()+1; 
+	for(std::size_t i=0; i<num_nodes; i++){
+		children.emplace(std::make_pair(i, std::vector<std::size_t> ()));
+	}	
+
+	for(std::size_t i=0; i<arborescence.size(); i++){
+		children.at(arborescence.at(i)).emplace_back(i);			
+	}
+
+	
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g1;
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g2;
+
+	vector<ged::GEDGraph::NodeID> v_d;
+	vector<ged::GEDGraph::NodeID> v_i;
+	vector<UserNodeLabel> varphi_i;
+	vector<ged::GEDGraph::NodeID> v_s;
+	vector<ged::GEDGraph::NodeID> v_is;
+	vector<UserNodeLabel> varphi_s;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_nd;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ed;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ni;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_ei;
+	vector<UserEdgeLabel> phi_ni;
+	vector<UserEdgeLabel> phi_ei;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_s;
+	vector<std::pair<ged::GEDGraph::NodeID, ged::GEDGraph::NodeID>> e_is;
+	vector<UserEdgeLabel> phi_s;
+
+	for(auto const &parent : children){
+		for(auto const &child: parent.second){
+			ged::NodeMap node_map = env_coded.get_node_map(parent.first, child);
+			g1 = env_coded.get_graph(parent.first, true, true, true);
+			g2 = env_coded.get_graph(child, true, true, true);
+			get_all_compression_sets<UserNodeID, UserNodeLabel, UserEdgeLabel>(node_map,v_d,v_i,varphi_i,v_s,v_is,varphi_s,e_nd,e_ed,e_ni,e_ei,
+				phi_ni,phi_ei,e_s,e_is,phi_s,g1,g2);
+			
+			// Write the file corresponding to the child graph	
+			ofile.open(path + "/" + env_coded.get_graph_name(child) + "_" + std::to_string(child) + ".graph", ios::out | ios::binary);
+			
+			if(parent.first==root){
+				// Coding a root graph
+
+					// Use the number of the graph acording to the encoding
+				ofile<<"#from:"<<"empty"<<"\n";
+				
+			}		
+			else{
+				ofile<<"#from:"<<std::to_string(parent.first)<<"\n";
+			}	
+
+			//write record here
+
+			ofile.close();
+		}
+	}
+
+}
+
+
+
+
+
+
+
 /*
 args should have the following fields:
 
@@ -1092,14 +1282,12 @@ ged_refine_method: ged method for the refinement step. See GEDLIB documentation
 refinement_size: number of parents to include in the refinement step for each node.
 */
 
+//TODO: add template
 void 
 get_compression_data(
 	std::vector<std::string> &headers,
 	std::vector<std::string> &values,
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> &env,
-	std::vector<std::size_t> &arborescence_ans,
-	std::map<std::string, std::map<std::string, std::set<std::string>>> &alphabets,
-	std::map<std::string, std::string> args
+	std::map<std::string, std::string> &args
 	){
 
 	bool stdout=false;
@@ -1144,6 +1332,10 @@ get_compression_data(
 
 	if(stdout) std::cout<<"--------------LOAD GRAPHS, GET GRAPH STRUCTURE-----------------"<<std::endl;	
 
+	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
+	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_coded;
+	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_uncoded;
+
 	std::vector<ged::GEDGraph::GraphID> graph_ids(env.load_gxl_graphs(graph_dir, collection_file,
 			ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::LABELED, irrelevant_node_attributes("")));
 
@@ -1152,7 +1344,9 @@ get_compression_data(
 
 	if(stdout) std::cout<<"Number of graphs: "<<env.num_graphs()<<std::endl;
 	std::map<std::string, std::map<std::string, std::vector<std::string>>> distribution;
-	//std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
+	std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
+	std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> encoded_attributes;
+
 	double b_ni;
 	double b_na;
 	double b_ei; 
@@ -1174,11 +1368,46 @@ get_compression_data(
 		std::cout<<"b_ni: "<<b_ni<<", b_na: "<<b_na<<std::endl;
 		std::cout<<"b_ei: "<<b_ei<<", b_ea: "<<b_ea<<std::endl;
 
-
-		
-		std::cout<<"--------------SET COMPRESSION EDIT COST-----------------"<<std::endl;
 	}
 
+	std::string encoded_file_path = "";
+	std::string encoded_file_name = "";
+
+	if(args.count("encode")>0){
+		if(args.at("encode")=="true"){
+
+			if(stdout) std::cout<<"--------------ENCODE COLLECTION-----------------"<<std::endl;
+
+			
+
+			if(args.count("encoded_file_path")>0){
+				encoded_file_path = args.at("encoded_file_path");
+			}
+			else{
+				std::cout<<"No field encoded_file_path in args. Stopping execution"<<std::endl;
+				return;
+			}
+
+			if(args.count("encoded_file_name")>0){
+				encoded_file_name = args.at("encoded_file_name");
+			}
+			else{
+				std::cout<<"No field encoded_file_name in args. Stopping execution"<<std::endl;
+				return;
+			}
+
+			encode_environment<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
+			env_coded, encoded_attributes, encoded_file_path, encoded_file_name, env, alphabets);
+			env_uncoded = env;
+			env = env_coded;
+
+
+		}
+	}
+	
+
+
+	if(stdout) std::cout<<"--------------SET COMPRESSION EDIT COST-----------------"<<std::endl;
 	headers.emplace_back("b_ni");
 	values.emplace_back(std::to_string(b_ni));
 
@@ -1439,38 +1668,26 @@ get_compression_data(
 				}
 				else{
 					if(args.at("ged_refine_method") == "ring"){
-						// Must tune
-						// Initialize environment.
-						std::string ged_method_train_set="";
-						if(args.count("ged_method_train_set")>0){
-							ged_method_train_set = args.at("ged_method_train_set");
+
+						std::string ring_train_path="";
+						if(args.count("ring_train_path")>0){
+							ring_train_path = args.at("ged_method_train_path");
 						}
 
-						std::string ged_method_train_path="";
-						if(args.count("ged_method_train_path")>0){
-							ged_method_train_path = args.at("ged_method_train_path");
+						std::string ring_led_method="";
+						if(args.count("ring_led_method")>0){
+							ring_led_method = args.at("ring_led_method");
 						}
 
+						std::string ring_suffix="";
+						if(args.count("ring_suffix")>0){
+							ring_suffix = args.at("ring_suffix");
+						}
 
-						ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_train;
-						std::vector<ged::GEDGraph::GraphID> graph_ids_train(env_train.load_gxl_graphs(graph_dir, 
-						 ged_method_train_set,
-						  ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::UNLABELED));
-
-						env_train.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
-						env_train.init(ged::Options::InitType::EAGER_WITHOUT_SHUFFLED_COPIES);
-
-						// Learn the parameters.
-						std::string led_method = "LSAPE_OPTIMAL";					
-						env_train.set_method(ged::Options::GEDMethod::RING, init_options(ged_method_train_path, led_method, true, false, std::stoi(ged_refine_method_options)) +  " --led-method " + led_method);
-						env_train.init_method();
-
-						if(stdout) std::cout<<"Finished ring training"<<std::endl;
-
-						env.set_method(ged::Options::GEDMethod::RING, init_options(ged_method_train_path, led_method, false, true, std::stoi(ged_refine_method_options)) +  " --led-method " + led_method);
+						// Train data must be in the ring_train_path folder. Its name is ring_method_suffix
+						env.set_method(ged::Options::GEDMethod::RING, init_options(ring_train_path, ring_led_method + "_" + ring_suffix, false, true, std::stoi(ged_refine_method_options)) +  " --led-method " + ring_led_method);
 						env.init_method();
 
-						env_train = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
 					}
 					else{
 						std::cout<<"No valid ged_method in args. Setting it to BRANCH_UNIFORM"<<std::endl;
@@ -1600,102 +1817,36 @@ get_compression_data(
 	values.emplace_back(std::to_string(ref_arb_time));
 	if(stdout) std::cout<<"Spanning arborescence time (refinement): "<<ref_arb_time<<std::endl;
 
-	arborescence_ans = arborescence_ref;
+	if(args.count("encode")>0){
+		if(args.at("encode")=="true"){
+			
+			if(stdout) std::cout<<"--------------ENCODE COLLECTION-----------------"<<std::endl;
 
-}
 
-void write_to_file(std::ofstream &file, std::vector<std::string> &values){
+			if(args.count("encoded_file_path")>0){
+				encoded_file_path = args.at("encoded_file_path");
+			}
+			else{
+				std::cout<<"No field encoded_file_path in args. Stopping execution"<<std::endl;
+				return;
+			}
+
+			if(args.count("encoded_file_name")>0){
+				encoded_file_name = args.at("encoded_file_name");
+			}
+			else{
+				std::cout<<"No field encoded_file_name in args. Stopping execution"<<std::endl;
+				return;
+			}
+
+			encode_arborescence<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(encoded_file_path, env, encoded_attributes,	arborescence_ref,root);
+
+
+		}
+	}
 	
-	for(std::size_t j=0; j<values.size(); j++){
-		file << values.at(j);
-		if(j < values.size()-1){
-			file << ","; 	
-		} 
-		else{
-			file << "\n"; 	
-		}
-	}
-}  
-
-
-void write_main_file(ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> &env_coded, 
-	std::string &path, 
-	std::string &file_name, 
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> &env, 
-	std::map<std::string, std::map<std::string, std::set<std::string>>> &alphabets){
-
-	// Write alphabets in order and transform graphs
-	std::ofstream ofile;
-	ofile.open(path + "/" + file_name, ios::out | ios::binary);
-	std::size_t cont=0;
-
-	std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> encode_attributes;
-	encode_attributes.emplace("node_attr", std::map<std::string, std::map<std::string,std::string>> ());
-	encode_attributes.emplace("edge_attr", std::map<std::string, std::map<std::string,std::string>> ());
-
-	if(ofile.is_open()){
-		// Alphabet
-		ofile<<"node_attr:\n";
-		
-		for(auto const attr : alphabets.at("node_attr")){
-			ofile<<attr.first<<":\n";
-			encode_attributes.at("node_attr").emplace(attr.first, std::map<std::string,std::string> ());
-			cont=0;
-			for(auto const val : attr.second){
-				ofile<<std::to_string(cont)<<";"<<val<<"\n";
-				encode_attributes.at("node_attr").at(attr.first).emplace(val, std::to_string(cont));
-				cont++;
-			}
-			
-		}
-		ofile<<"edge_attr:\n";
-		
-		for(auto const attr : alphabets.at("edge_attr")){
-			ofile<<attr.first<<":\n";
-			encode_attributes.at("edge_attr").emplace(attr.first, std::map<std::string,std::string> ());
-			cont=0;
-			for(auto const val : attr.second){
-				ofile<<std::to_string(cont)<<";"<<val<<"\n";
-				encode_attributes.at("edge_attr").at(attr.first).emplace(val, std::to_string(cont));
-				cont++;
-			}
-			
-		}
-
-		ofile.close();	
-	}
-	else{
-		std::cout<<"Error when opening output file"<<std::endl;
-		exit(1);
-	}
-
-
-	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env.graph_ids();
-	ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g;
-	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge;
-	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
-		g = env.get_graph(i, true, true, true);
-		for(std::size_t n=0; n< g.node_labels.size(); n++){
-			for(auto label: g.node_labels.at(n)){
-				g.node_labels.at(n).at(label.first) = encode_attributes.at("node_attr").at(label.first).at(label.second);
-			}
-		}
-
-		typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter;
-		
-		for(iter = g.edge_list.begin(); iter != g.edge_list.end(); iter++){
-			edge = *iter;
-			for(auto const label: edge.second){
-				edge.second.at(label.first) = encode_attributes.at("edge_attr").at(label.first).at(label.second);
-			}
-		}
-
-		env_coded.load_exchange_graph(g, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, env.get_graph_name(i)+"_coded", env.get_graph_class(i));
-
-	}
 
 }
-
 
 
 int main(int argc, char* argv[]){
@@ -1717,8 +1868,8 @@ int main(int argc, char* argv[]){
 	std::string input_refinement_size;
 	std::string input_ged_method_train_set;
 	std::string input_ged_method_train_path;
-	std::string input_path;
-	std::string input_file_name; 
+	std::string input_encoded_file_path;
+	std::string input_encoded_file_name; 
 
 	if(argc>1) input_collection_file = argv[1];
 	if(argc>2) input_graph_dir = argv[2];
@@ -1731,8 +1882,8 @@ int main(int argc, char* argv[]){
 	if(argc>9) input_refinement_size = argv[9];
 	if(argc>10) input_ged_method_train_set = argv[10];
 	if(argc>11) input_ged_method_train_path = argv[11];
-	if(argc>12) input_path = argv[12];
-	if(argc>13) input_file_name = argv[13];
+	if(argc>12) input_encoded_file_path = argv[12];
+	if(argc>13) input_encoded_file_name = argv[13];
 
 	args.emplace(std::make_pair("stdout",input_stdout));
 	args.emplace(std::make_pair("collection_file",input_collection_file));
@@ -1747,7 +1898,10 @@ int main(int argc, char* argv[]){
 	args.emplace(std::make_pair("ged_method_train_set",input_ged_method_train_set));
 	args.emplace(std::make_pair("ged_method_train_path",input_ged_method_train_path));
 	
+	args.emplace(std::make_pair("encode","true"));
 
+	args.emplace(std::make_pair("encoded_file_path",input_encoded_file_path));
+	args.emplace(std::make_pair("encoded_file_name",input_encoded_file_name));
 
 	std::ifstream in_file_collections(input_collection_file.c_str());
 	std::ifstream in_file_graphs(input_graph_dir.c_str());
@@ -1760,38 +1914,19 @@ int main(int argc, char* argv[]){
     
     std::ofstream output_file;
     
-	bool first=true;
-
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
-	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_coded;
-	env = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
-	std::vector<std::size_t> arborescence_ans;
-	std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
 
     while (in_file_collections >> input_collection_file) {
         in_file_graphs >> input_graph_dir;
+
         args.at("collection_file") = input_collection_file;
         args.at("graph_dir") = input_graph_dir;
     	headers.clear();
-		values.clear();
-		std::cout<<"****************************************************"<<std::endl;
-		std::cout<<"************   GET COMPRESSION DATA   **************"<<std::endl;
-		std::cout<<"****************************************************"<<std::endl<<std::endl;		
-		get_compression_data(headers, values, env, arborescence_ans, alphabets, args); 
+		values.clear();	
 
-		std::cout<<"****************************************************"<<std::endl;
-		std::cout<<"************   WRITE ALPHABETS FILE   **************"<<std::endl;
-		std::cout<<"****************************************************"<<std::endl<<std::endl;
-		write_main_file(env_coded, input_path, input_file_name, env, alphabets);
+		get_compression_data(headers, values, args); 
 
 
-		std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env_coded.graph_ids();
-		ged::ExchangeGraph<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> g;
-		for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
-			describe_graph(env_coded.get_graph(i));
-		}
-
-
+		/*
 		std::cout<<"****************************************************"<<std::endl;
 		std::cout<<"************    WRITE RESULTS FILE    **************"<<std::endl;
 		std::cout<<"****************************************************"<<std::endl<<std::endl;
@@ -1808,6 +1943,7 @@ int main(int argc, char* argv[]){
 			std::cout<<"Error when opening output file"<<std::endl;
 			exit(1);
 		}
+		*/
 		
     }
    

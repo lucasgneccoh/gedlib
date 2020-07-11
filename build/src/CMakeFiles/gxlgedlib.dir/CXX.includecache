@@ -18780,6 +18780,14 @@ cmu.ipp
 
 /home/lucas/Documents/stage/gedlib/src/edit_costs/cmu.ipp
 
+/home/lucas/Documents/stage/gedlib/src/edit_costs/compression.hpp
+edit_costs.hpp
+/home/lucas/Documents/stage/gedlib/src/edit_costs/edit_costs.hpp
+compression.ipp
+/home/lucas/Documents/stage/gedlib/src/edit_costs/compression.ipp
+
+/home/lucas/Documents/stage/gedlib/src/edit_costs/compression.ipp
+
 /home/lucas/Documents/stage/gedlib/src/edit_costs/constant.hpp
 edit_costs.hpp
 /home/lucas/Documents/stage/gedlib/src/edit_costs/edit_costs.hpp
@@ -18957,6 +18965,8 @@ node_map.hpp
 /home/lucas/Documents/stage/gedlib/src/edit_costs/letter.hpp
 ../edit_costs/constant.hpp
 /home/lucas/Documents/stage/gedlib/src/edit_costs/constant.hpp
+../edit_costs/compression.hpp
+/home/lucas/Documents/stage/gedlib/src/edit_costs/compression.hpp
 ged_data.ipp
 /home/lucas/Documents/stage/gedlib/src/env/ged_data.ipp
 

@@ -1758,6 +1758,8 @@ src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/chem_2.hpp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/chem_2.ipp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/cmu.hpp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/cmu.ipp
+src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/compression.hpp
+src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/compression.ipp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/constant.hpp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/constant.ipp
 src/CMakeFiles/gxlgedlib.dir/env/ged_env.gxl.cpp.o: ../src/edit_costs/edit_costs.hpp

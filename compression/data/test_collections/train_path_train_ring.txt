@@ -1,0 +1,3 @@
+/home/lucas/Documents/stage/gedlib/compression/data/training
+/home/lucas/Documents/stage/gedlib/compression/data/training
+/home/lucas/Documents/stage/gedlib/compression/data/training
