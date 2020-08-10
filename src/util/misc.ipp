@@ -47,7 +47,8 @@ init_adj_matrix(const GEDGraph & graph, DMatrix & adj_matrix) {
 
 void
 parse_config_file(const std::string & filename, std::map<std::string, std::string> & options) {
-	std::ifstream config_file(filename);
+
+	std::ifstream config_file(filename.c_str());
 	std::string line;
 	std::size_t line_nr{1};
 	while(std::getline(config_file, line)) {

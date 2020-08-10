@@ -1437,43 +1437,49 @@ void get_compression_data(
 					env.set_method(ged::Options::GEDMethod::BRANCH_TIGHT, "--threads " + ged_refine_method_options);
 				}
 				else{
-					if(args.at("ged_refine_method") == "ring"){
-						// Must tune
-						// Initialize environment.
-						std::string ged_method_train_set="";
-						if(args.count("ged_method_train_set")>0){
-							ged_method_train_set = args.at("ged_method_train_set");
-						}
-
-						std::string ged_method_train_path="";
-						if(args.count("ged_method_train_path")>0){
-							ged_method_train_path = args.at("ged_method_train_path");
-						}
-
-
-						ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_train;
-						std::vector<ged::GEDGraph::GraphID> graph_ids_train(env_train.load_gxl_graphs(graph_dir, 
-						 ged_method_train_set,
-						  ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::UNLABELED));
-
-						env_train.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
-						env_train.init(ged::Options::InitType::EAGER_WITHOUT_SHUFFLED_COPIES);
-
-						// Learn the parameters.
-						std::string led_method = "LSAPE_OPTIMAL";					
-						env_train.set_method(ged::Options::GEDMethod::RING, init_options(ged_method_train_path, led_method, true, false, std::stoi(ged_refine_method_options)) +  " --led-method " + led_method);
-						env_train.init_method();
-
-						if(stdout) std::cout<<"Finished ring training"<<std::endl;
-
-						env.set_method(ged::Options::GEDMethod::RING, init_options(ged_method_train_path, led_method, false, true, std::stoi(ged_refine_method_options)) +  " --led-method " + led_method);
-						env.init_method();
-
-						env_train = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
+					if(args.at("ged_refine_method") == "ipfp"){
+						env.set_method(ged::Options::GEDMethod::IPFP, "--threads " + ged_refine_method_options);
 					}
 					else{
-						std::cout<<"No valid ged_method in args. Setting it to BRANCH_UNIFORM"<<std::endl;
-						env.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "--threads " + ged_refine_method_options);	
+						if(args.at("ged_refine_method") == "ring"){
+							// Must tune
+							// Initialize environment.
+							
+							std::string ged_method_train_set="";
+							if(args.count("ged_method_train_set")>0){
+								ged_method_train_set = args.at("ged_method_train_set");
+							}
+
+							
+							std::string ged_method_train_path="";
+							if(args.count("ged_method_train_path")>0){
+								ged_method_train_path = args.at("ged_method_train_path");
+							}
+
+							// Learn the parameters.
+							std::string led_method = "LSAPE_OPTIMAL";	
+
+							
+							if(args.count("ring_method")>0){
+								led_method = args.at("ring_method");
+							}				
+							
+							std::string ring_options = init_options(ged_method_train_path, led_method + "_" + ged_method_train_set, false, true, std::stoi(ged_refine_method_options)) +  " --led-method " + led_method;
+							if(stdout) std::cout<<"Ring options: "<<ring_options<<std::endl;
+
+							env.set_method(ged::Options::GEDMethod::RING, ring_options);
+							if(stdout) std::cout<<"Ring method loaded"<<std::endl;
+							env.init();
+							if(stdout) std::cout<<"Env initializated"<<std::endl;
+							env.init_method();
+							if(stdout) std::cout<<"Method initializated"<<std::endl;
+
+							
+						}
+						else{
+							std::cout<<"No valid ged_method in args. Setting it to BRANCH_UNIFORM"<<std::endl;
+							env.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "--threads " + ged_refine_method_options);	
+						}
 					}
 				}
 			}
@@ -1637,6 +1643,7 @@ int main(int argc, char* argv[]){
 	std::string input_refinement_size;
 	std::string input_ged_method_train_set;
 	std::string input_ged_method_train_path;
+	std::string input_ring_method;
 
 	if(argc>1) input_collection_file = argv[1];
 	if(argc>2) input_graph_dir = argv[2];
@@ -1649,6 +1656,7 @@ int main(int argc, char* argv[]){
 	if(argc>9) input_refinement_size = argv[9];
 	if(argc>10) input_ged_method_train_set = argv[10];
 	if(argc>11) input_ged_method_train_path = argv[11];
+	if(argc>14) input_ring_method = argv[14];
 
 	args.emplace(std::make_pair("stdout",input_stdout));
 	args.emplace(std::make_pair("collection_file",input_collection_file));
@@ -1662,6 +1670,9 @@ int main(int argc, char* argv[]){
 	args.emplace(std::make_pair("refinement_size",input_refinement_size));
 	args.emplace(std::make_pair("ged_method_train_set",input_ged_method_train_set));
 	args.emplace(std::make_pair("ged_method_train_path",input_ged_method_train_path));
+	std::cout<<input_ring_method<<std::endl;
+	args.emplace(std::make_pair("ring_method",input_ring_method));
+
 	
 
 

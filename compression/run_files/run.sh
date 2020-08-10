@@ -1,21 +1,33 @@
 #From build dir
 exec_path="src/"
 exec_name="compression"
-collection="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_letters.txt"
-graph_dir="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_letters.txt"
-output_file="/home/lucas/Documents/stage/gedlib/compression/data/output/results_compression_test_letters.csv"
-stdout="true"
+
+stdout="false"
+
+collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list.txt"
+graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list.txt"
+output_root_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/output_root.txt"
+dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset.txt"
+
+output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/compressed/results_compression.csv"
+
 ged_method="branch_uniform"
 ged_method_options="24"
-ged_method_refinement="branch_uniform"
+ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
 refinement_size="999"
-train_set="/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter-50g.xml"
+
+encode="true"
+decode="true"
+write_decoded="true"
+
+# for the ring method
+train_set="Letter-500g"
 train_path="/home/lucas/Documents/stage/gedlib/compression/data/training"
-encoded_path="/home/lucas/Documents/stage/gedlib/compression/data/output/encoded"
-encoded_name="letters_three.encoded"
+ring_method="LSAPE_OPTIMAL"
+
 echo -ne '\007'
 echo "execute"
-eval "./"$exec_path$exec_name $collection $graph_dir $output_file $stdout $ged_method $ged_method_options $ged_method_refinement $ged_method_refinement_options $refinement_size $train_set $train_path $encoded_path $encoded_name
+eval "./"$exec_path$exec_name $stdout $collection_file $graph_dir_file $output_root_file $dataset_file $output_results_file $ged_method $ged_method_options $ged_method_refinement $ged_method_refinement_options $refinement_size $encode $decode $write_decoded $train_set $train_path $ring_method
 echo -ne '\007'
 

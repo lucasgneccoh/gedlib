@@ -4,3 +4,4 @@
 /home/lucas/Documents/stage/gedlib/compression/data/collections/pah.xml
 /home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity.xml
 /home/lucas/Documents/stage/gedlib/compression/data/collections/Protein.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter.xml

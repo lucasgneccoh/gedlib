@@ -190,7 +190,7 @@ set_edit_costs_(Options::EditCosts edit_costs, const std::vector<double> & edit_
 			throw Error("Wrong number of constants for selected edit costs ged::Options::EditCosts::CONSTANT. Expected: 6 or 0; actual: " + std::to_string(edit_cost_constants.size()) + ".");
 		}
 		break;
-	#ifdef COMPRESS_EDIT_COST
+	//#ifdef COMPRESS_EDIT_COST
 	case Options::EditCosts::COMPRESSION:
 		if(edit_cost_constants.size()==7){
 			edit_costs_ = new COMPRESSION<GXLLabel, GXLLabel>(edit_cost_constants.at(0), edit_cost_constants.at(1), edit_cost_constants.at(2), edit_cost_constants.at(3), edit_cost_constants.at(4), edit_cost_constants.at(5), edit_cost_constants.at(6));
@@ -202,7 +202,7 @@ set_edit_costs_(Options::EditCosts edit_costs, const std::vector<double> & edit_
 			throw Error("Wrong number of constants for selected edit costs ged::Options::EditCosts::COMPRESSION. Expected: 7 or 0; actual: " + std::to_string(edit_cost_constants.size()) + ".");
 		}
 		break;
-	#endif
+	//#endif
 
 	}
 	delete_edit_costs_ = true;
@@ -600,14 +600,14 @@ compute_induced_cost(const GEDGraph & g, const GEDGraph & h, NodeMap & node_map)
 	// collect edge costs
 	for (auto ij = g.edges().first; ij != g.edges().second; ij++) {
 		#ifdef COMPRESS_EDIT_COST
-		if((node_map.image(g.tail(*ij))!=GEDGraph::dummy_node()) && (node_map.image(g.head(*ij))!=GEDGraph::dummy_node())){
-			cost += edge_cost(g.get_edge_label(*ij), h.get_edge_label(node_map.image(g.tail(*ij)), node_map.image(g.head(*ij))));
-		}
-		else{
-			cost += 0;	
-		}
+			if((node_map.image(g.tail(*ij))!=GEDGraph::dummy_node()) && (node_map.image(g.head(*ij))!=GEDGraph::dummy_node())){
+				cost += edge_cost(g.get_edge_label(*ij), h.get_edge_label(node_map.image(g.tail(*ij)), node_map.image(g.head(*ij))));
+			}
+			else{
+				cost += 0;	
+			}
 		#else
-		cost += edge_cost(g.get_edge_label(*ij), h.get_edge_label(node_map.image(g.tail(*ij)), node_map.image(g.head(*ij))));
+			cost += edge_cost(g.get_edge_label(*ij), h.get_edge_label(node_map.image(g.tail(*ij)), node_map.image(g.head(*ij))));
 		#endif
 	}
 	for (auto kl = h.edges().first; kl != h.edges().second; kl++) {

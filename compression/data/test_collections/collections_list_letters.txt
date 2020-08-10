@@ -1,1 +1,1 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_three.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_mixed.xml

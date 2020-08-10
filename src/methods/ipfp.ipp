@@ -771,12 +771,14 @@ quadratic_cost_qape_(std::size_t row_1, std::size_t col_1, std::size_t row_2, st
 			return_val += ipfp_->ged_data_.edge_cost(dummy_label(), h_->get_edge_label(edge_h));
 		}
 	}
+	#ifndef COMPRESS_EDIT_COST
 	else if (row_1 < num_nodes_g_ and row_2 < num_nodes_g_) {
 		GEDGraph::EdgeID edge_g(g_->get_edge(row_1, row_2));
 		if (edge_g != GEDGraph::dummy_edge()) {
 			return_val += ipfp_->ged_data_.edge_cost(g_->get_edge_label(edge_g), dummy_label());
 		}
 	}
+	#endif
 	else if (col_1 < num_nodes_h_ and col_2 < num_nodes_h_) {
 		GEDGraph::EdgeID edge_h(h_->get_edge(col_1, col_2));
 		if (edge_h != GEDGraph::dummy_edge()) {

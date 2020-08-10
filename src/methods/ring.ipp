@@ -885,7 +885,7 @@ Ring<UserNodeLabel, UserEdgeLabel>::
 read_params_from_file_() {
 	std::map<std::string, std::string> options;
 	util::parse_config_file(infile_, options);
-	num_layers_ = std::stoul(options.at("num_layers"));
+	num_layers_ = std::stoul(options.at("num_layers"));	
 	alpha_.clear();
 	for (std::size_t i{0}; i < 3; i++) {
 		alpha_.push_back(std::stod(options.at("alpha_" + std::to_string(i))));

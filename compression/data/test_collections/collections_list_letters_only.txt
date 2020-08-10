@@ -1,0 +1,5 @@
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_Z.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_Z.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_X.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter_A_W.xml
