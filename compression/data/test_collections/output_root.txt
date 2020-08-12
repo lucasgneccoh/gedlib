@@ -1,7 +1,2 @@
 /home/lucas/Documents/stage/gedlib/compression/data/output/compressed
 /home/lucas/Documents/stage/gedlib/compression/data/output/compressed
-/home/lucas/Documents/stage/gedlib/compression/data/output/compressed
-/home/lucas/Documents/stage/gedlib/compression/data/output/compressed
-/home/lucas/Documents/stage/gedlib/compression/data/output/compressed
-/home/lucas/Documents/stage/gedlib/compression/data/output/compressed
-/home/lucas/Documents/stage/gedlib/compression/data/output/compressed

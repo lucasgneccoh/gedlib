@@ -2,12 +2,12 @@
 exec_path="src/"
 exec_name="compression"
 
-stdout="false"
+stdout="1"
 
-collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list.txt"
-graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list.txt"
-output_root_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/output_root.txt"
-dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset.txt"
+collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_lucas.txt"
+graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_lucas.txt"
+output_root_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/output_root_lucas.txt"
+dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset_lucas.txt"
 
 output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/compressed/results_compression.csv"
 
@@ -15,7 +15,7 @@ ged_method="branch_uniform"
 ged_method_options="24"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
-refinement_size="999"
+refinement_size="0"
 
 encode="true"
 decode="true"

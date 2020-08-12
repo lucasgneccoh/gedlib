@@ -2,7 +2,7 @@
 exec_path="src/"
 exec_name="compression"
 
-stdout="false"
+stdout="0"
 
 collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list.txt"
 graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list.txt"
@@ -15,7 +15,7 @@ ged_method="branch_uniform"
 ged_method_options="24"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
-refinement_size="999"
+refinement_size="0"
 
 encode="true"
 decode="true"

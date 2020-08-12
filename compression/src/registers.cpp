@@ -650,6 +650,70 @@ void write_to_file(std::ofstream &file, std::vector<std::string> &values){
 	}
 }  
 
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void translate_env(std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> &encoded_attributes,
+	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env_orig,
+	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env_coded,
+	int stdout = 0){
+
+	// code the environment into a new one
+	// Fix: Sometimes there are attributes that appear in some but not all nodes or edges.
+	// We are going to add default values when the attribute is not there.
+	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits;
+	limits = env_orig.graph_ids();
+	
+	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g;
+	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge;
+
+	ged::ProgressBar progress(limits.second);
+	
+	if (stdout >0) std::cout << "\rTranslating graphs: " << progress << std::flush;
+	
+	
+
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
+		g = env_orig.get_graph(i, true, true, true);
+		if (stdout > 1) std::cout<<"translate NODES"<<std::endl;
+		for(std::size_t n=0; n< g.node_labels.size(); n++){			
+			for(const auto dict : encoded_attributes.at("node_attr")){
+				if(g.node_labels.at(n).count(dict.first)>0){
+					if (stdout >3) std::cout<<"Node "<<n<<": "<<dict.first<<" -> "<<dict.second.at(g.node_labels.at(n).at(dict.first))<<std::endl;
+					g.node_labels.at(n).at(dict.first) = dict.second.at(g.node_labels.at(n).at(dict.first));
+				}
+				else{
+					// Add default value
+					if (stdout >3) std::cout<<"Node "<<n<<": "<<dict.first<<" -> default"<<std::endl;
+					g.node_labels.at(n).emplace(std::make_pair(dict.first, "default"));
+				}
+			}
+		}
+
+		typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter;
+		if (stdout>1) std::cout<<"translate EDGES"<<std::endl;
+		for(iter = g.edge_list.begin(); iter != g.edge_list.end(); iter++){
+			edge = (*iter);			
+			for(const auto dict : encoded_attributes.at("edge_attr")){
+				if((*iter).second.count(dict.first)>0){
+					if (stdout>3) std::cout<<"Edge "<<(*iter).first.first<<","<<(*iter).first.second<<": "<<dict.first<<" -> "<<dict.second.at((*iter).second.at(dict.first))<<std::endl;
+					(*iter).second.at(dict.first) = dict.second.at((*iter).second.at(dict.first));
+				}
+				else{
+					// Add default value
+					if (stdout >3) std::cout<<"Edge "<<(*iter).first.first<<","<<(*iter).first.second<<": "<<dict.first<<" -> default"<<std::endl;
+					(*iter).second.emplace(std::make_pair(dict.first, "default"));
+				}
+			}
+
+		}
+
+		env_coded.load_exchange_graph(g, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, env_orig.get_graph_name(i)+"_coded", env_orig.get_graph_class(i));
+		progress.increment();
+		if (stdout >0) std::cout << "\rTranslating graphs: " << progress << std::flush;
+	}
+
+}
+
+
 
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env_coded, 
@@ -660,13 +724,16 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 	std::map<std::string, std::map<std::string, std::set<std::string>>> &alphabets,
 	std::vector<std::size_t> &arborescence,
 	std::size_t root,
+	int stdout = 0,
 	char escape_char = '#',
 	char separator = '\n'
+	
 	){
 
 
 
 	// Write alphabets in order and transform graphs
+	if(stdout>0) std::cout<<"encode_environment: info file"<<std::endl;
 	std::ofstream ofile;
 	ofile.open(path + "/" + dataset + ".info_file", ios::out | ios::binary);
 	std::size_t cont=0;
@@ -694,6 +761,7 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 		//ofile<<"#graph_names"<<"\n";
 		encoded_attributes.at("graphs").emplace("name", std::map<std::string,std::string> ());
 		cont=0;
+		if(stdout>1) std::cout<<"encode_environment: graph_names"<<std::endl;
 		for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
 			if(i == root) continue;
 			encoded_attributes.at("graphs").at("name").emplace(env.get_graph_name(i), std::to_string(cont));
@@ -702,6 +770,7 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 		}
 
 		// arborescence
+		if(stdout>1) std::cout<<"encode_environment: Arborescence"<<std::endl;
 		for(std::size_t k=0; k<arborescence.size();k++){
 			ofile<<arborescence.at(k)<<separator;
 		}
@@ -722,7 +791,8 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 		}
 
 		// Alphabets
-		//ofile<<"#node_attr"<<"\n";		
+		//ofile<<"#node_attr"<<"\n";
+		if(stdout>1) std::cout<<"encode_environment: alphabets, nodes"<<std::endl;
 		for(auto const attr : alphabets.at("node_attr")){
 			// attr name
 			ofile<<escape_char<<attr.first<<separator;
@@ -736,6 +806,7 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 		}
 
 		//ofile<<"#edge_attr"<<"\n";		
+		if(stdout>1) std::cout<<"encode_environment: alphabets, edges"<<std::endl;
 		for(auto const attr : alphabets.at("edge_attr")){
 			ofile<< escape_char <<attr.first<<separator;
 			encoded_attributes.at("edge_attr").emplace(attr.first, std::map<std::string,std::string> ());
@@ -756,35 +827,35 @@ void encode_environment(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &e
 
 
 	// code the environment into a new one
-	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g;
-	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge;
-	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
-		g = env.get_graph(i, true, true, true);
-		for(std::size_t n=0; n< g.node_labels.size(); n++){
-			for(auto label: g.node_labels.at(n)){
-				g.node_labels.at(n).at(label.first) = encoded_attributes.at("node_attr").at(label.first).at(label.second);
-			}
-		}
-
-		typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter;
-		
-		for(iter = g.edge_list.begin(); iter != g.edge_list.end(); iter++){
-			edge = (*iter);
-			for(auto const l: edge.second){
-				(*iter).second.at(l.first) = encoded_attributes.at("edge_attr").at(l.first).at(l.second);
-			}
-		}
-
-		env_coded.load_exchange_graph(g, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, env.get_graph_name(i)+"_coded", env.get_graph_class(i));
-
-	}
+	// Fix: Sometimes there are attributes that appear in some but not all nodes or edges.
+	// We are going to add default values when the attribute is not there.
+	if(stdout>0) std::cout<<"translate_env"<<std::endl;
+	translate_env(encoded_attributes, env, env_coded, stdout);
+	if(stdout>0) std::cout<<"end___translate_env"<<std::endl;
 
 }
 
 /*
 	Get the canonical node map used to decompress
 */
-ged::NodeMap get_aux_node_map(std::size_t v1, std::size_t v2, vector<ged::GEDGraph::NodeID> &v_d, vector<ged::GEDGraph::NodeID> &v_i){
+ged::NodeMap get_aux_node_map(std::size_t v1, std::size_t v2, vector<ged::GEDGraph::NodeID> &v_d, vector<ged::GEDGraph::NodeID> &v_i, int stdout=0){
+	
+	if(stdout>1){
+		std::cout<<"get_aux_node_map: "<<v1 <<" to "<<v2<<std::endl;
+		std::cout<<"v_d: "<<std::endl;
+		for(std::size_t i=0; i<v_d.size(); i++){
+			std::cout<<v_d.at(i)<<", ";
+		}
+		std::cout<<std::endl;
+
+		std::cout<<"v_i: "<<std::endl;
+		for(std::size_t i=0; i<v_i.size(); i++){
+			std::cout<<v_i.at(i)<<", ";
+		}
+		std::cout<<std::endl;
+	}
+	
+
 	if(v_d.size()>0){
 		std::sort(v_d.begin(), v_d.end());
 	}
@@ -815,14 +886,18 @@ ged::NodeMap get_aux_node_map(std::size_t v1, std::size_t v2, vector<ged::GEDGra
 }
 
 
-ged::NodeMap get_id_node_map(std::size_t  num_nodes, ged::NodeMap node_map, ged::NodeMap node_map_aux, ged::NodeMap node_map_id){
-	std::cout<<"get_id_node_map"<<std::endl;
-	std::cout<<"node_map"<<std::endl;
-	std::cout<<node_map<<std::endl;
-	std::cout<<"node_map_aux"<<std::endl;
-	std::cout<<node_map_aux<<std::endl;
-	std::cout<<"node_map_id"<<std::endl;
-	std::cout<<node_map_id<<std::endl;
+ged::NodeMap get_id_node_map(std::size_t  num_nodes, ged::NodeMap node_map, ged::NodeMap node_map_aux, ged::NodeMap node_map_id, int stdout=0){
+	
+	if(stdout>1){
+		std::cout<<"get_id_node_map"<<std::endl;
+		std::cout<<"node_map"<<std::endl;
+		std::cout<<node_map<<std::endl;
+		std::cout<<"node_map_aux"<<std::endl;
+		std::cout<<node_map_aux<<std::endl;
+		std::cout<<"node_map_id"<<std::endl;
+		std::cout<<node_map_id<<std::endl;
+	}
+	
 	ged::NodeMap res = ged::NodeMap(num_nodes,num_nodes);
 	std::vector<ged::GEDGraph::GraphID> v_i;
 	std::size_t cont=0;
@@ -840,8 +915,11 @@ ged::NodeMap get_id_node_map(std::size_t  num_nodes, ged::NodeMap node_map, ged:
 		cont++;
 
 	}
-	std::cout<<"res"<<std::endl;
-	std::cout<<res<<std::endl;
+	
+	if(stdout>1){
+		std::cout<<"res"<<std::endl;
+		std::cout<<res<<std::endl;
+	}
 	return res;
 }
 
@@ -895,15 +973,16 @@ void encode_arborescence(
 	std::map<std::string, std::map<std::string, std::map<std::string,std::string>>> &encoded_attributes,
 	std::vector<std::size_t> &arborescence,
 	std::size_t root,
-	bool stdout=false,
+	int stdout=0,
 	char escape_char = '#',
 	char separator = '\n'
 	){
 
+	if(stdout>0) std::cout<<"START: encode_arborescence"<<std::endl;
 	std::ofstream ofile;
 	std::ofstream ocollection;
 	
-	if(stdout) std::cout<<"Create children"<<std::endl;
+	if(stdout>0) std::cout<<"Create children"<<std::endl;
 	std::map<std::size_t, std::vector<std::size_t>> children;
 	std::size_t num_nodes = arborescence.size()+1; 
 	for(std::size_t i=0; i<num_nodes; i++){
@@ -964,18 +1043,18 @@ void encode_arborescence(
 		exit(1);
 
 	}
-	if(stdout) std::cout<<"Write collection file:"<<std::endl;
+	if(stdout>0) std::cout<<"Write collection file:"<<std::endl;
 	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
 		if(i==root) continue;
 		graph_file_name = path + "/encoded/" + env_coded.get_graph_name(i) + "_" + std::to_string(i) + ".graph";
 		graph_file_names.emplace_back(graph_file_name);
 		ocollection<<graph_file_name<<separator;
-		if(stdout) std::cout<<"File: "<<graph_file_name<<std::endl;
+		if(stdout>1) std::cout<<"File: "<<graph_file_name<<std::endl;
 	}
 	ocollection.close();
 
 
-	if(stdout) std::cout<<"Start encode arborescence"<<std::endl;
+	if(stdout>0) std::cout<<"Start encode arborescence"<<std::endl;
 	std::list<std::size_t> to_do;
 	std::size_t parent_num;
 	to_do.emplace_front(root);
@@ -987,43 +1066,53 @@ void encode_arborescence(
 		for(auto const child : children.at(parent_num)){
 			//std::cout<<"START FOR: "<<child<<std::endl;
 		to_do.emplace_front(child);
-			//if(stdout) std::cout<<"Get NodeMap"<<std::endl;
+			if(stdout>1) std::cout<<"Get NodeMap"<<std::endl;
 			ged::NodeMap node_map = env_coded.get_node_map(parent_num, child);
-			//if(stdout) std::cout<<"Get g1"<<std::endl;
+			if(stdout>1) std::cout<<"Get g1"<<std::endl;
 			g1 = env_coded.get_graph(parent_num, true, true, true);
-			//if(stdout) std::cout<<"Get g2"<<std::endl;
+			if(stdout>1) std::cout<<"Get g2"<<std::endl;
 			g2 = env_coded.get_graph(child, true, true, true);
-			
-			if(stdout) std::cout<<"Get compression sets Firts time"<<std::endl;
+
+
+			if (stdout>1) {
+				std::cout<<std::endl<<"START ENCODING OF GRAPHS-------------------------"<<std::endl;
+				std::cout<<parent_num<<" -> "<<child<<std::endl;
+				std::cout<< node_map<<std::endl;
+				std::cout<<std::endl;
+			}
+
+			if(stdout>1) std::cout<<"Get compression sets Firts time"<<std::endl;
 
 			get_all_compression_sets<UserNodeID, UserNodeLabel, UserEdgeLabel>(node_map,v_d,v_i,varphi_i,v_s,v_is,varphi_s,e_nd,e_ed,e_ni,e_ei,
 				phi_ni,phi_ei,e_s,e_is,phi_s,g1,g2);
-			if (stdout) print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
+			if (stdout>2) print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
 
 
-			std::cout<<std::endl<<"START-------------------------"<<std::endl;
-			std::cout<<parent_num<<" -> "<<child<<std::endl;
+			
 
 
 			node_map_id_before = graph_permutations.at(parent_num);
 			node_map_aux.clear();
 
-			if(stdout) std::cout<<"Get aux node map"<<std::endl;
+			if(stdout>1) std::cout<<"Get aux node map"<<std::endl;
 			permute_nodes(node_map_id_before, v_d); // Now in the compressed version
+			if(stdout>1) std::cout<<"*** v_d transformed"<<std::endl;
 			permute_nodes(node_map_id_before, v_s); // Now in the compressed version
+			if(stdout>1) std::cout<<"*** v_s transformed"<<std::endl;
 			permute_nodes(node_map_id_before, v_is); // Now in the compressed version
+			if(stdout>1) std::cout<<"*** v_is transformed"<<std::endl;
 
-			if(stdout) std::cout<<"With modified vertex"<<std::endl;
-			if (stdout) print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
+			if(stdout>1) std::cout<<"With modified vertex"<<std::endl;
+			if (stdout>2) print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
 
 			node_map_aux = get_aux_node_map(g1.num_nodes, g2.num_nodes, v_d, v_i); // Between the compressed versions	
 
-			if(stdout) std::cout<<"Get id node map"<<std::endl;
+			if(stdout>1) std::cout<<"Get id node map"<<std::endl;
 			node_map_id = get_id_node_map(g2.num_nodes, node_map, node_map_aux, node_map_id_before);
 			graph_permutations.emplace(std::make_pair(child, node_map_id));
 
-			if(stdout) std::cout<<"Id BEFORE: "<<node_map_id_before<<std::endl;
-			if(stdout) std::cout<<"Id CURRENT: "<<node_map_id<<std::endl;
+			if(stdout>1) std::cout<<"Id BEFORE: "<<node_map_id_before<<std::endl;
+			if(stdout>1) std::cout<<"Id CURRENT: "<<node_map_id<<std::endl;
 			
 			// Check that deletions and insertions are mutually exclusive
 			if(v_d.size()>0 && v_i.size()>0) std::cout<<"ERROR: Vertex deletions and insertions at the same time"<<std::endl;
@@ -1032,31 +1121,16 @@ void encode_arborescence(
 
 			// Now the compression sets are in terms of the compression graphs
 			graph_file_name = graph_file_names.at(child);
-			if(stdout) std::cout<< "File: " << graph_file_name << std::endl;
+			if(stdout>1) std::cout<< "File: " << graph_file_name << std::endl;
 
 			ofile.open(graph_file_name, ios::out | ios::binary);
 			if(! ofile.is_open()){
 				std::cout<< "Unable to open file " << graph_file_name << std::endl;
 				exit(1);				
 			}
-			//if(stdout) std::cout<<"Start writing to file"<<std::endl;
-			
-			// Arborescence is now in the info_file
-			/*
-			if(parent.first==root){
-				// Coding a root graph
-					// Use the number of the graph acording to the encoding
-				ofile<<"#from:"<<"empty"<<"\n";
-				
-			}		
-			else{
-				ofile<<"#from:"<<std::to_string(parent.first)<<"\n";
-			}
-			*/	
-
 			//Eq 46 and 47
 			//Rec V
-			//if(stdout) std::cout<<"REC V"<<std::endl;
+			if(stdout>1) std::cout<<"REC V"<<std::endl;
 			ofile<<g2.num_nodes<<separator;
 			ofile<<v_s.size()<<separator;
 
@@ -1220,10 +1294,10 @@ void encode_arborescence(
 				}
 			}
 			ofile.close();
-			if(stdout) std::cout<<"Wrote: "<<graph_file_name<<std::endl;
+			if(stdout>1) std::cout<<"Wrote: "<<graph_file_name<<std::endl;
 		}
 	}
-	if(stdout) std::cout<<"End encode arborescence"<<std::endl;
+	if(stdout>0) std::cout<<"End encode arborescence"<<std::endl;
 }
 
 
@@ -1231,6 +1305,7 @@ template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 void decode_collection(
 	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env,
 	std::map<std::string, std::string> &args,
+	int stdout=0,
 	char escape_char = '#'
 	){
 
@@ -1238,10 +1313,9 @@ void decode_collection(
 	std::string path = args.at("output_root_file") + "/" + args.at("dataset_file"); 
 	std::string file_name = args.at("dataset_file"); 
 
-	bool stdout = false;
-	if(args.count("stdout")>0 && args.at("stdout") == "true") stdout = true;
+	if(args.count("stdout")>0) stdout = std::stoi(args.at("stdout"));
 
-	if(stdout) std::cout<<"Start DECODING"<<std::endl;
+	if(stdout>0) std::cout<<"decode_collection: Start DECODING"<<std::endl;
 
 	
 	// Read info_file to get the decoding structure
@@ -1263,6 +1337,7 @@ void decode_collection(
 
 	int cont=0;
 	int cont2=0;
+	if(stdout>0) std::cout<<"decode_collection: info_file"<<std::endl;
 	std::string info_file = path + "/" + file_name + ".info_file";
 	in.open(info_file.c_str());
 
@@ -1270,17 +1345,17 @@ void decode_collection(
 		
 		// 1. dataset name
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		dataset = line;
 
 		// 2. # of graphs 
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		num_graphs = std::stoi(line);
 
 		// 3. Type of edges
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		type_edges = std::stoi(line);
 		type_edges++;
 
@@ -1288,7 +1363,7 @@ void decode_collection(
 		decoded_attributes.at("graphs").emplace("name", std::map<std::string,std::string> ());
 		for(std::size_t i=0; i<num_graphs; i++){
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			decoded_attributes.at("graphs").at("name").emplace(std::to_string(i), line);
 		}
 
@@ -1296,31 +1371,31 @@ void decode_collection(
 		arborescence.clear();
 		for(std::size_t i=0; i<num_graphs; i++){ // no empty graph in env
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			arborescence.emplace_back(std::stoi(line));
 		}
 
 		// # of attributes
 		//nodes
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		num_node_attr = std::stoi(line);
 		//edges
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		num_edge_attr = std::stoi(line);
 		
 
 		// type of attr
 		for(int i=0; i<num_node_attr; i++){ // no empty graph in env
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			// Type of node attribute i
 		}
 
 		for(int i=0; i<num_edge_attr; i++){ // no empty graph in env
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			// Type of edge attribute i
 		}
 
@@ -1329,7 +1404,7 @@ void decode_collection(
 		cont2=0;
 		value_map.clear();
 		in>>line;
-		if(stdout) std::cout<<line<<std::endl;
+		if(stdout>1) std::cout<<line<<std::endl;
 		value_map.clear();
 		while(cont<num_node_attr){
 
@@ -1351,7 +1426,7 @@ void decode_collection(
 			}
 
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			
 		}		
 
@@ -1377,7 +1452,7 @@ void decode_collection(
 			}
 
 			in>>line;
-			if(stdout) std::cout<<line<<std::endl;
+			if(stdout>1) std::cout<<line<<std::endl;
 			
 		}		
 
@@ -1389,20 +1464,7 @@ void decode_collection(
 		exit(1);
 	}
 
-	/*
-	std::cout<<"Print decoding structure"<<std::endl;
-	for(auto const &header: decoded_attributes){
-		std::cout<<header.first<<std::endl;
-		for(auto const &attr: header.second){
-			std::cout<<attr.first<<std::endl;
-			for(auto const &line: attr.second){
-				std::cout<<line.first<<" -> "<<line.second<<std::endl;
-			}
-		}
-	}
-	*/
-
-
+	if(stdout>0) std::cout<<"decode_collection: children structure"<<std::endl;
 	// Get children structure
 	std::map<std::size_t, std::vector<std::size_t>> children;
 	std::size_t num_nodes = arborescence.size()+1; 
@@ -1489,24 +1551,25 @@ void decode_collection(
 	}
 	else{
 		std::cout<<"Unable to open collection file "<<info_file<<std::endl;
+		exit(1);
 	}
 
 
 	while(!to_do.empty()){
-		if(stdout) std::cout<<"START WHILE"<<std::endl;
+		if(stdout>1) std::cout<<"START WHILE"<<std::endl;
 		parent_num = to_do.front();
 		to_do.pop_front();
-		if(stdout) std::cout<<"Parent: "<<parent_num<<std::endl;
-		if(stdout) std::cout<<"children: "<<children.at(parent_num).size()<<std::endl;
+		if(stdout>1) std::cout<<"Parent: "<<parent_num<<std::endl;
+		if(stdout>1) std::cout<<"children: "<<children.at(parent_num).size()<<std::endl;
 		if(children.at(parent_num).size()<1){
-			if(stdout) std::cout<<"skip"<<std::endl;
+			if(stdout>1) std::cout<<"skip"<<std::endl;
 		} 
-		if(stdout) std::cout<<"star for"<<std::endl;
+		if(stdout>1) std::cout<<"star for"<<std::endl;
 		for(auto const child : children.at(parent_num)){
 			//std::cout<<"START FOR: "<<child<<std::endl;
 			to_do.emplace_front(child);
 			
-			if(stdout){
+			if(stdout>2){
 				std::cout<<".............Current pos to id map: ........."<<std::endl;
 				for(auto const &entry: pos_to_id){
 					std::cout<<entry.first<<" -> "<<entry.second<<std::endl;
@@ -1515,9 +1578,9 @@ void decode_collection(
 			}
 			
 					
-			if(stdout) std::cout<<"Parent: "<<parent_num<<", Child: "<<child<<std::endl;
+			if(stdout>0) std::cout<<"Parent: "<<parent_num<<", Child: "<<child<<std::endl;
 			graph_file = graph_files.at(child);
-			if(stdout) std::cout<<"File: "<<graph_file<<std::endl;
+			if(stdout>1) std::cout<<"File: "<<graph_file<<std::endl;
 			graph_in.open(graph_file.c_str());
 			if(graph_in.is_open()){
 
@@ -1558,7 +1621,7 @@ void decode_collection(
 					g1 = env.get_graph(pos_to_id.at(parent_num), true, true, true);
 					g2 = env.get_graph(pos_to_id.at(parent_num), true, true, true);
 				}
-				if(stdout){
+				if(stdout>2){
 					std::cout<<" ____________ BEGIN SOURCE GRAPH ______________"<<std::endl;
 					describe_graph(g1);
 					std::cout<<" ____________ END SOURCE GRAPH ______________"<<std::endl;					
@@ -1567,12 +1630,12 @@ void decode_collection(
 				// V
 				// Line 1: # of vertices
 				graph_in >> line;
-				if(stdout) std::cout<<"1. "<<line<<std::endl;
+				if(stdout>2) std::cout<<"1. "<<line<<std::endl;
 				num_nodes = std::stoi(line);
 
 				//Line 2: # subs
 				graph_in >> line;
-				if(stdout) std::cout<<"2. "<<line<<std::endl;
+				if(stdout>2) std::cout<<"2. "<<line<<std::endl;
 				num_subs = std::stoi(line);
 
 				// Determine the situation							
@@ -1587,7 +1650,7 @@ void decode_collection(
 				else{
 					type_read = 3; // insertions
 				}
-				if(stdout) std::cout<<"Type read: "<<type_read<<std::endl;
+				if(stdout>2) std::cout<<"Type read: "<<type_read<<std::endl;
 
 				cont=0;
 				// Read either v_d or v_is or insertions
@@ -1597,7 +1660,7 @@ void decode_collection(
 						for (std::size_t i = 0; i < g1.num_nodes - num_nodes; i++)
 						{
 							graph_in >> line;
-							if(stdout) std::cout<<line<<std::endl;
+							if(stdout>2) std::cout<<line<<std::endl;
 							v_d.emplace_back(std::stoi(line));
 							v_rest.emplace_back(std::stoi(line));
 						}
@@ -1608,7 +1671,7 @@ void decode_collection(
 						for (std::size_t i = 0; i < num_nodes - num_subs; i++)
 						{
 							graph_in >> line;
-							if(stdout) std::cout<<line<<std::endl;
+							if(stdout>2) std::cout<<line<<std::endl;
 							v_is.emplace_back(std::stoi(line));
 							v_rest.emplace_back(std::stoi(line));
 						} 
@@ -1617,15 +1680,15 @@ void decode_collection(
 					case 3:
 						// Read insertions
 					
-						if(stdout) std::cout<<"Insertions "<<num_nodes - g1.num_nodes<<std::endl;
-						if(stdout) std::cout<<g1.num_nodes<<" to "<< num_nodes<<std::endl;
+						if(stdout>1) std::cout<<"Insertions "<<num_nodes - g1.num_nodes<<std::endl;
+						if(stdout>1) std::cout<<g1.num_nodes<<" to "<< num_nodes<<std::endl;
 						
 						
 						for (std::size_t i = 0; i < num_nodes - g1.num_nodes; i++)
 						{
 							
 							graph_in >> line; // index
-							if(stdout) std::cout<<line<<std::endl;
+							if(stdout>2) std::cout<<line<<std::endl;
 							second = line.substr(1);
 							v_i.emplace_back(std::stoi(second));
 							map_indices.emplace(std::stoi(second), aux_node_ids.size());
@@ -1633,7 +1696,7 @@ void decode_collection(
 							label.clear();
 							for(int a = 0; a < num_node_attr; a++){
 								graph_in >> line;	
-								if(stdout) std::cout<<line<<std::endl;
+								if(stdout>2) std::cout<<line<<std::endl;
 								pos = line.find(":");
 								first = line.substr(0,pos);
 								second = line.substr(pos+1);
@@ -1649,13 +1712,13 @@ void decode_collection(
 
 
 				// Read substitutions
-				if(stdout) std::cout<<"Substitutions "<<num_subs<<std::endl;
+				if(stdout>1) std::cout<<"Substitutions "<<num_subs<<std::endl;
 				
 				for (std::size_t i = 0; i < num_subs; i++)
 				{
 
 					graph_in >> line; // index
-					if(stdout) std::cout<<line<<std::endl;
+					if(stdout>2) std::cout<<line<<std::endl;
 					second = line.substr(1);
 					v_s.emplace_back(std::stoi(second));
 					v_rest.emplace_back(std::stoi(second));
@@ -1667,7 +1730,7 @@ void decode_collection(
 					
 					for(int a = 0; a < num_node_attr; a++){
 						graph_in >> line;
-						if(stdout) std::cout<<line<<std::endl;
+						if(stdout>2) std::cout<<line<<std::endl;
 						pos = line.find(":");
 						first = line.substr(0,pos);
 						second = line.substr(pos+1);
@@ -1681,14 +1744,14 @@ void decode_collection(
 
 				// End V
 
-				if(stdout) std::cout<< "Deduce v_d os v_is"<<std::endl;
+				if(stdout>1) std::cout<< "Deduce v_d os v_is"<<std::endl;
 				// Now deduce v_d to create the auxiliary node map
 				if(type_read!=3){ // V > V'
 					if(type_read==2){
 						for(std::size_t n = 0; n<g1.num_nodes; n++){
 							if(std::find(v_rest.begin(), v_rest.end(), n) == v_rest.end()){
 								v_d.emplace_back(n);
-								if(stdout) std::cout<< n << " to v_d"<<std::endl;
+								if(stdout>2) std::cout<< n << " to v_d"<<std::endl;
 							}
 						}
 					}
@@ -1698,17 +1761,17 @@ void decode_collection(
 					for(std::size_t n = 0; n<g1.num_nodes; n++){
 						if(std::find(v_rest.begin(), v_rest.end(), n) == v_rest.end()){
 							v_is.emplace_back(n);
-							if(stdout) std::cout<< n << " to v_is"<<std::endl;
+							if(stdout>2) std::cout<< n << " to v_is"<<std::endl;
 						}
 					}
 				}
 
-				if(stdout) std::cout<< "Get auxiliary node map"<<std::endl;
+				if(stdout>1) std::cout<< "Get auxiliary node map"<<std::endl;
 				node_map_aux = get_aux_node_map(g1.num_nodes, num_nodes, v_d, v_i);
-				if(stdout) std::cout<< node_map_aux<<std::endl;
+				if(stdout>1) std::cout<< node_map_aux<<std::endl;
 
 
-				if(stdout) std::cout<< "Index correction"<<std::endl;
+				if(stdout>1) std::cout<< "Index correction"<<std::endl;
 				// Correct the indices
 				g2.node_labels.clear();
 				g2.original_node_ids.clear();
@@ -1719,9 +1782,9 @@ void decode_collection(
 				g2.original_node_ids = std::vector<UserNodeID>(num_nodes, "");
 
 
-				if(stdout) std::cout<< " ==== V_S ==="<<std::endl;
+				if(stdout>1) std::cout<< " ==== V_S ==="<<std::endl;
 				for(auto const &v : v_s){
-					if(stdout) std::cout<< v << " -> "<< node_map_aux.image(v) << " - > " << map_indices.at(v) <<std::endl;
+					if(stdout>2) std::cout<< v << " -> "<< node_map_aux.image(v) << " - > " << map_indices.at(v) <<std::endl;
 					// AQUI
 					g2.node_labels.at(node_map_aux.image(v)) = aux_node_labels.at(map_indices.at(v));
 					//g2.node_labels.at(v) = aux_node_labels.at(map_indices.at(v));
@@ -1729,9 +1792,9 @@ void decode_collection(
 					//g2.original_node_ids.at(v) = aux_node_ids.at(map_indices.at(v));
 				}
 
-				if(stdout) std::cout<< " ==== V_IS ==="<<std::endl;
+				if(stdout>1) std::cout<< " ==== V_IS ==="<<std::endl;
 				for(auto const &v : v_is){
-					if(stdout) std::cout<< v << " -> "<< node_map_aux.image(v) << " - > " << v <<std::endl;
+					if(stdout>2) std::cout<< v << " -> "<< node_map_aux.image(v) << " - > " << v <<std::endl;
 					// AQUI
 					g2.node_labels.at(node_map_aux.image(v)) = g1.node_labels.at(v);
 					//g2.node_labels.at(v) = g1.node_labels.at(v);
@@ -1739,9 +1802,9 @@ void decode_collection(
 					//g2.original_node_ids.at(v) = g1.original_node_ids.at(node_map_aux.pre_image(v));
 				}				
 
-				if(stdout) std::cout<< " ==== V_I ==="<<std::endl;
+				if(stdout>1) std::cout<< " ==== V_I ==="<<std::endl;
 				for(auto const &v : v_i){
-					if(stdout) std::cout<< v << " -> "<< map_indices.at(v)<<std::endl;
+					if(stdout>2) std::cout<< v << " -> "<< map_indices.at(v)<<std::endl;
 					g2.node_labels.at(v) = aux_node_labels.at(map_indices.at(v));
 					g2.original_node_ids.at(v) = aux_node_ids.at(map_indices.at(v));
 				}
@@ -1758,13 +1821,13 @@ void decode_collection(
 				aux_edges.clear();
 				// -------------------------------------------------------------------
 				// E
-				if(stdout) std::cout<<"---------edges-------------------"<<std::endl;
+				if(stdout>1) std::cout<<"---------edges-------------------"<<std::endl;
 
 				// init. Get current edges and labels
-				if(stdout) std::cout<<"-------- Existing edges"<<std::endl;				
+				if(stdout>2) std::cout<<"-------- Existing edges"<<std::endl;				
 				for(iter = g1.edge_list.begin(); iter != g1.edge_list.end(); iter++){
 					edge = (*iter);
-					if(stdout) {
+					if(stdout>2) {
 						std::cout<<"Edge (in g1 tilde): "<<edge.first.first << " - "<< edge.first.second<<std::endl;
 						label.clear();
 						for(auto const & ll : edge.second){
@@ -1772,7 +1835,7 @@ void decode_collection(
 							label.emplace(ll.first, ll.second);
 						}
 					}
-					if(stdout) std::cout<<"Edge (in g2 tilde): "<<node_map_aux.image(edge.first.first) << " - "<< node_map_aux.image(edge.first.second)<<std::endl;
+					if(stdout>2) std::cout<<"Edge (in g2 tilde): "<<node_map_aux.image(edge.first.first) << " - "<< node_map_aux.image(edge.first.second)<<std::endl;
 					//from = node_map_aux.image(edge.first.first);
 					//to = node_map_aux.image(edge.first.second);
 					// marker in g1 tilde
@@ -1781,9 +1844,9 @@ void decode_collection(
 					marker.emplace(std::make_pair(std::make_pair(from, to), true));
 					marker_labels.emplace(std::make_pair(std::make_pair(from, to), label));
 				}
-				if(stdout) std::cout<<"-------- end Existing edges"<<std::endl;
+				if(stdout>2) std::cout<<"-------- end Existing edges"<<std::endl;
 
-				if(stdout){
+				if(stdout>2){
 					std::cout<<"-------- marker"<<std::endl;
 					for( auto const & mm : marker){
 						std::cout<<mm.first.first<< " -- "<< mm.first.second<<" = "<<mm.second<<std::endl;
@@ -1802,38 +1865,38 @@ void decode_collection(
 
 				// Line 1: # edges
 				graph_in >> line;
-				if(stdout) std::cout<<line<<std::endl;
+				if(stdout>2) std::cout<<line<<std::endl;
 				num_edges = std::stoi(line);
 
 				// Line 2: # subs
 				graph_in >> line;
-				if(stdout) std::cout<<line<<std::endl;
+				if(stdout>2) std::cout<<line<<std::endl;
 				num_subs = std::stoi(line);
 
 				//Line 3: type
 				graph_in >> line;
-				if(stdout) std::cout<<line<<std::endl;
+				if(stdout>2) std::cout<<line<<std::endl;
 				type_read = std::stoi(line);
 
 				//Line 4: size of the set to read (either e_ed or e_is)
 				graph_in >> line;
-				if(stdout) std::cout<<line<<std::endl;
+				if(stdout>2) std::cout<<line<<std::endl;
 				size_read = std::stoi(line);
 
 				
 
 				// Read either e_ed or e_is or insertions
-				if(stdout) std::cout<<"Read e_ed or e_is"<<std::endl;
+				if(stdout>1) std::cout<<"Read e_ed or e_is"<<std::endl;
 				for (std::size_t i = 0; i < size_read; i++)
 				{
 					graph_in >> line;
-					if(stdout) std::cout<<line<<std::endl;
+					if(stdout>2) std::cout<<line<<std::endl;
 
 					// Reading in g2 tilde
 					pos = line.find(",");
 					first = line.substr(1,pos-1);
 					second = line.substr(pos+1);	
-					if(stdout) std::cout<<first<<" -> "<<second<<std::endl;	
+					if(stdout>2) std::cout<<first<<" -> "<<second<<std::endl;	
 					
 					if(type_read == 0){
 						//e_ed.emplace_back(std::stoi(line));	// edge index						
@@ -1843,6 +1906,25 @@ void decode_collection(
 						//e_is.emplace_back(std::stoi(line));  // edge index					
 						e_is_v.emplace_back(std::make_pair(std::stoi(first),std::stoi(second)));
 						e_is.emplace_back(0);  // For the limits in the other loops
+						// add information in the temp vectors
+						
+						from = node_map_aux.pre_image(std::stoi(first));
+						to = node_map_aux.pre_image(std::stoi(second));
+						aux_edges.emplace_back(std::make_pair(from,to));
+						if(marker_labels.count(std::make_pair(from,to))>0){
+							aux_edge_labels.emplace_back(marker_labels.at(std::make_pair(from,to)));
+						}
+						else{
+							if(marker_labels.count(std::make_pair(to,from))>0){
+								aux_edge_labels.emplace_back(marker_labels.at(std::make_pair(to,from)));
+							}
+							else{
+								std::cout<<"Edge not found: "<<from<<" -> "<<to<<std::endl;
+								exit(1);
+							}
+						}
+						
+
 					}
 					from = node_map_aux.pre_image(std::stoi(first));
 					to = node_map_aux.pre_image(std::stoi(second));
@@ -1864,12 +1946,12 @@ void decode_collection(
 				}
 
 				// Read substitutions
-				if(stdout) std::cout<<"Substitutions "<<num_subs<<std::endl;
+				if(stdout>1) std::cout<<"Substitutions "<<num_subs<<std::endl;
 
 				for (std::size_t i = 0; i < num_subs; i++)
 				{		
 					graph_in >> line; //index			
-					if(stdout) std::cout<<line<<std::endl;
+					if(stdout>2) std::cout<<line<<std::endl;
 					/*
 					second = line.substr(1);	
 					e_s.emplace_back(std::stoi(second));
@@ -1884,7 +1966,7 @@ void decode_collection(
 					pos = line.find(",");
 					first = line.substr(1,pos-1);
 					second = line.substr(pos+1);	
-					if(stdout) std::cout<<first<<" -> "<<second<<std::endl;	
+					if(stdout>2) std::cout<<first<<" -> "<<second<<std::endl;	
 					from = std::stoi(first);
 					to = std::stoi(second);
 					
@@ -1911,7 +1993,7 @@ void decode_collection(
 					label.clear();
 					for(int a = 0; a < num_edge_attr; a++){
 						graph_in >> line;	
-						if(stdout) std::cout<<line<<std::endl;
+						if(stdout>2) std::cout<<line<<std::endl;
 						pos = line.find(":");
 						first = line.substr(0,pos);
 						second = line.substr(pos+1);
@@ -1923,13 +2005,13 @@ void decode_collection(
 				}
 
 				// Delete edges by node deletion
-				if(stdout) std::cout<<"Deletions by node deletion "<<std::endl;
+				if(stdout>1) std::cout<<"Deletions by node deletion "<<std::endl;
 				cont=0;
 				for(iter = g1.edge_list.begin(); iter != g1.edge_list.end(); iter++){
 					edge = (*iter);
 					for(auto const & v: v_d){
 						if(edge.first.first == v || edge.first.second == v){
-							if(stdout) std::cout<<"Edge deleted in g1 tilde: "<<edge.first.first << " - "<< edge.first.second<<std::endl;
+							if(stdout>2) std::cout<<"Edge deleted in g1 tilde: "<<edge.first.first << " - "<< edge.first.second<<std::endl;
 							e_ed.emplace_back(cont);
 							//marker.at(cont)=false;
 							from = node_map_aux.image(edge.first.first);
@@ -1960,10 +2042,10 @@ void decode_collection(
 
 
 				// Deduce the set that was not read
-				if(stdout) std::cout<<"Deduce other sets "<<std::endl;
+				if(stdout>1) std::cout<<"Deduce other sets "<<std::endl;
 				cont=0;
 				if(type_read == 0){
-					if(stdout) std::cout<<"deduce IS "<<marker.size()<<std::endl;
+					if(stdout>2) std::cout<<"deduce IS "<<marker.size()<<std::endl;
 					// Now deduce IS
 					/*
 					for(iter = g1.edge_list.begin(); iter != g1.edge_list.end(); iter++){
@@ -1985,12 +2067,12 @@ void decode_collection(
 					for(const auto & m : marker){
 						
 						if(m.second){
-							if(stdout) std::cout<< "Edge in IS in g1 tilde: "<<m.first.first << " - " << m.first.second << std::endl;
+							if(stdout>2) std::cout<< "Edge in IS in g1 tilde: "<<m.first.first << " - " << m.first.second << std::endl;
 							
 							from = node_map_aux.image(m.first.first);
 							to = node_map_aux.image(m.first.second);
 
-							if(stdout) std::cout<<" - after node_map_aux: " << from << " - " << to << std::endl;	
+							if(stdout>2) std::cout<<" - after node_map_aux: " << from << " - " << to << std::endl;	
 
 							marker.at(std::make_pair(m.first.first, m.first.second))=false;
 							
@@ -2004,13 +2086,13 @@ void decode_collection(
 						}
 					}
 
-					if(stdout) std::cout<<"END ______ deduce IS "<<std::endl;
+					if(stdout>1) std::cout<<"END ______ deduce IS "<<std::endl;
 
 
 
 				}
 				else{
-					if(stdout) std::cout<<"deduce ED "<<std::endl;
+					if(stdout>1) std::cout<<"deduce ED "<<std::endl;
 					// Now deduce ED
 					/*
 					for(iter = g1.edge_list.begin(); iter != g1.edge_list.end(); iter++){
@@ -2027,7 +2109,7 @@ void decode_collection(
 					for(const auto & m : marker){
 						
 						if(m.second){
-							if(stdout) std::cout<<"Edge in ED: "<<m.first.first << " - "<< m.first.second<<std::endl;
+							if(stdout>2) std::cout<<"Edge in ED: "<<m.first.first << " - "<< m.first.second<<std::endl;
 							from = node_map_aux.image(m.first.first);
 							to = node_map_aux.image(m.first.second);
 							marker.at(std::make_pair(m.first.first,m.first.second))=false;
@@ -2036,22 +2118,22 @@ void decode_collection(
 						}
 					}
 
-					if(stdout) std::cout<<"END ______ deduce ED "<<std::endl;
+					if(stdout>1) std::cout<<"END ______ deduce ED "<<std::endl;
 					
 				}
 
 				// Read insertions
 				if(num_edges > num_subs + e_is.size()){ 
-					if(stdout) std::cout<<"Insertions: "<< num_edges - num_subs - e_is.size() <<std::endl;
+					if(stdout>1) std::cout<<"Edge Insertions: "<< num_edges - num_subs - e_is.size() <<std::endl;
 					
 					for (std::size_t i = 0; i < num_edges - num_subs - e_is.size(); i++)
 					{		
 						graph_in >> line; // index			
-						if(stdout) std::cout<<line<<std::endl;
+						if(stdout>2) std::cout<<line<<std::endl;
 						pos = line.find(",");
 						first = line.substr(1,pos-1);
 						second = line.substr(pos+1);	
-						if(stdout) std::cout<<first<<" -> "<<second<<std::endl;
+						if(stdout>2) std::cout<<first<<" -> "<<second<<std::endl;
 						//map_indices.emplace_back(std::stoi(second), aux_edges.size());
 						aux_edges.emplace_back(std::make_pair(std::stoi(first),std::stoi(second)));
 						
@@ -2060,11 +2142,11 @@ void decode_collection(
 						
 						for(int a = 0; a < num_edge_attr; a++){
 							graph_in >> line;	
-							if(stdout) std::cout<<line<<std::endl;
+							if(stdout>2) std::cout<<line<<std::endl;
 							pos = line.find(":");
 							first = line.substr(0,pos);
 							second = line.substr(pos+1);
-							if(stdout) std::cout<<"Edge label: "<<first << " - "<< second <<"."<<std::endl;
+							if(stdout>2) std::cout<<"Edge label: "<<first << " - "<< second <<"."<<std::endl;
 							label.emplace(first, second);						
 						}
 
@@ -2076,7 +2158,7 @@ void decode_collection(
 				
 
 				g2.edge_list.clear();
-				if (stdout) std::cout<<"BUILD EDGES: "<<aux_edges.size()<<", "<<aux_edge_labels.size()<<std::endl;
+				if (stdout>1) std::cout<<"Build edges: "<<aux_edges.size()<<", "<<aux_edge_labels.size()<<std::endl;
 				for(std::size_t i =0; i<aux_edges.size(); i++){
 					g2.edge_list.push_front(std::make_pair(aux_edges.at(i), aux_edge_labels.at(i)));
 				}
@@ -2084,14 +2166,14 @@ void decode_collection(
 				g2.num_edges = g2.edge_list.size();
 				
 				// End E
-				if(stdout){
+				if(stdout>2){
 					std::cout<<" ____________ BEGIN RESULTING GRAPH ______________"<<std::endl;
 					describe_graph(g2);
 					std::cout<<" ____________ END RESULTING GRAPH ______________"<<std::endl;					
 				}
 
 				graph_id = env.load_exchange_graph(g2, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, decoded_attributes.at("graphs").at("name").at(std::to_string(child)), "class");
-				if (stdout) std::cout<<"Done: "<<env.num_graphs()<<std::endl;
+				if (stdout>1) std::cout<<"Done: "<<env.num_graphs()<<std::endl;
 				all_ids.emplace_back(graph_id);
 				pos_to_id.emplace(child, graph_id);
 				graph_in.close();
@@ -2104,12 +2186,12 @@ void decode_collection(
 		//std::cout<<"END FOR"<<std::endl;
 		}
 
-	if(stdout) std::cout<<"END WHILE"<<std::endl;
+	if(stdout>1) std::cout<<"END WHILE"<<std::endl;
 	}
 
 	// Decode environement
 	
-	if(stdout) 
+	if(stdout>2) 
 	{
 		std::cout<<"Decode environement"<<std::endl;
 	
@@ -2127,51 +2209,19 @@ void decode_collection(
 	
 	ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> env_decoded;
 	
-	if(stdout) std::cout<<"Num graphs: "<<env.num_graphs()<<std::endl;
+	if(stdout>0) std::cout<<"Num graphs: "<<env.num_graphs()<<std::endl;
 	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> g;
 	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge_gxl;
 	limits = env.graph_ids();
 
 
-
-	for(ged::GEDGraph::GraphID i = limits.first; i<limits.second; i++){
-		if(i == root) continue;
-		if(stdout) std::cout<<"Graph: "<<i<<std::endl;
-		g = env.get_graph(i, true, true, true);
-		
-		if(stdout){
-			std::cout<<"describe .............. "<<std::endl;
-			describe_graph(g);
-			std::cout<<"end ............. "<<std::endl;
-		}
-		for(std::size_t n=0; n< g.node_labels.size(); n++){
-			for(auto const l: g.node_labels.at(n)){
-				if(stdout) std::cout<<l.first<<" -> "<<l.second<<std::endl;
-				if(stdout) std::cout<<decoded_attributes.at("node_attr").at(l.first).at(l.second)<<std::endl;
-				g.node_labels.at(n).at(l.first) = decoded_attributes.at("node_attr").at(l.first).at(l.second);
-			}
-		}
-
-		typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter_gxl;
-		
-		for(iter_gxl = g.edge_list.begin(); iter_gxl != g.edge_list.end(); iter_gxl++){
-			edge_gxl = (*iter_gxl);
-			for(auto const l: edge_gxl.second){
-				if(stdout) std::cout<<l.first<<" -> "<<l.second<<std::endl;
-				if(stdout) std::cout<<decoded_attributes.at("edge_attr").at(l.first).at(l.second)<<std::endl;
-				(*iter_gxl).second.at(l.first) = decoded_attributes.at("edge_attr").at(l.first).at(l.second);
-			}
-		}
-
-		env_decoded.load_exchange_graph(g, ged::undefined(), ged::Options::ExchangeGraphType::EDGE_LIST, env.get_graph_name(i), env.get_graph_class(i));
-
-		
-	}
+	if(stdout>0) std::cout<<"translate_env"<<std::endl;
+	translate_env(decoded_attributes, env, env_decoded);
 
 
 	//end
 	env = env_decoded;
-	if(stdout) std::cout<<"END DECODE"<<std::endl;
+	if(stdout>0) std::cout<<"END DECODE"<<std::endl;
 
 }
 
@@ -2182,17 +2232,13 @@ void
 get_compression_data(
 	std::vector<std::string> &headers,
 	std::vector<std::string> &values,
-	std::map<std::string, std::string> &args
+	std::map<std::string, std::string> &args,
+	int stdout=0
 	){
 
-	bool stdout=false;
-	if(args.count("stdout")>0){
-		if(args.at("stdout")=="true"){
-			stdout = true;
-		}
-	}
+	if(args.count("stdout")>0) stdout = std::stoi(args.at("stdout"));
 
-	if(stdout) std::cout<<"--------------START and INPUTS-----------------\n";
+	if(stdout>0) std::cout<<"--------------START and INPUTS-----------------\n";
 	ged::Seconds runtime;
 	auto start = std::chrono::high_resolution_clock::now();
 
@@ -2221,11 +2267,11 @@ get_compression_data(
 	headers.emplace_back("graph_dir");
 	values.emplace_back(graph_dir);
 
-	if(stdout) std::cout<<"Collection file: "<<collection_file<<std::endl;
-	if(stdout) std::cout<<"Graph directory: "<<graph_dir<<std::endl;
+	if(stdout>0) std::cout<<"Collection file: "<<collection_file<<std::endl;
+	if(stdout>0) std::cout<<"Graph directory: "<<graph_dir<<std::endl;
 
 
-	if(stdout) std::cout<<"--------------LOAD GRAPHS, GET GRAPH STRUCTURE-----------------"<<std::endl;	
+	if(stdout>0) std::cout<<"--------------LOAD GRAPHS, GET GRAPH STRUCTURE-----------------"<<std::endl;	
 
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
 
@@ -2235,7 +2281,7 @@ get_compression_data(
 	// Add empty graph at the end
 	ged::GEDGraph::GraphID empty_id = env.add_graph("empty","");
 
-	if(stdout) std::cout<<"Number of graphs: "<<env.num_graphs()<<std::endl;
+	if(stdout>0) std::cout<<"Number of graphs: "<<env.num_graphs()<<std::endl;
 	std::map<std::string, std::map<std::string, std::vector<std::string>>> distribution;
 	std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
 	
@@ -2247,7 +2293,7 @@ get_compression_data(
 
 	get_graphs_structure<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(env, distribution, alphabets, b_ni, b_na, b_ei, b_ea);
 
-	if(stdout){
+	if(stdout>1){
 		std::cout<<"Structure:"<<std::endl;
 		std::cout<<"Nodes: "<<std::endl;
 		for(auto const& a: alphabets.at("node_attr")){
@@ -2293,7 +2339,7 @@ get_compression_data(
 				return;
 			}
 
-			if(stdout){
+			if(stdout>2){
 				std::cout<<"############   Collection BEFORE encoding   ################"<<std::endl;
 				for(auto i : graph_ids){
 					std::cout<<std::endl;
@@ -2307,13 +2353,14 @@ get_compression_data(
 			std::vector<std::size_t> dummy;
 			// First encoding just to generate the coded environment. 
 			// In the second encoding we will create the actual files
+			if(stdout>0) std::cout<< "encode_environment" <<std::endl;
 			encode_environment<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
-			env_coded, encoded_attributes, output_root_path + "/" + dataset_name, dataset_name, env, alphabets, dummy, empty_id);
+			env_coded, encoded_attributes, output_root_path + "/" + dataset_name, dataset_name, env, alphabets, dummy, empty_id,stdout, '#','\n');
 
 			env_uncoded = env;
 			env = env_coded;
 
-			if(stdout && env.num_graphs()<10){
+			if(stdout >2){
 				std::cout<<"Uncoded collection"<<std::endl;
 				for(auto i : graph_ids){
 					std::cout<<env_uncoded.get_graph_name(i)<<std::endl;
@@ -2331,7 +2378,7 @@ get_compression_data(
 	}
 
 
-	if(stdout) std::cout<<"--------------SET COMPRESSION EDIT COST-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------SET COMPRESSION EDIT COST-----------------"<<std::endl;
 
 	headers.emplace_back("b_ni");
 	values.emplace_back(std::to_string(b_ni));
@@ -2364,7 +2411,7 @@ get_compression_data(
 	comp_costs.emplace_back(c_es);
 	comp_costs.emplace_back(c_es_id);
 
-	if(stdout) std::cout<<"--------------ENV INIT-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------ENV INIT-----------------"<<std::endl;
 	env.set_edit_costs(ged::Options::EditCosts::COMPRESSION, comp_costs);
 	env.init(ged::Options::InitType::LAZY_WITHOUT_SHUFFLED_COPIES);
 
@@ -2403,11 +2450,11 @@ get_compression_data(
 	
 	
 
-	if(stdout) std::cout<<"--------------RUN METHOD-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------RUN METHOD-----------------"<<std::endl;
 	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env.graph_ids();
 
-	if(stdout) std::cout<<"Limits (no of graphs): "<<limits.first<<", "<<limits.second-1<<std::endl;
-	if(stdout) std::cout<<"Empty graph id: "<<empty_id<<std::endl;
+	if(stdout>0) std::cout<<"Limits (no of graphs): "<<limits.first<<", "<<limits.second-1<<std::endl;
+	if(stdout>0) std::cout<<"Empty graph id: "<<empty_id<<std::endl;
 	
 	std::vector<std::vector<double>> upper_bounds;
 	std::vector<std::vector<double>> upper_bounds_refined;
@@ -2440,7 +2487,7 @@ get_compression_data(
 	}
 
 
-	if(stdout && upper_bounds.size()<10){
+	if(stdout >2){
 		std::cout<<"Cost matrix: "<<upper_bounds.size()<<" x "<<upper_bounds.at(0).size()<<std::endl;
 		for(std::size_t i=0; i<upper_bounds.size(); i++){
 			for(std::size_t j=0; j<upper_bounds.at(i).size(); j++){
@@ -2473,9 +2520,9 @@ get_compression_data(
 	//env = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>();
 
 
-	if(stdout) std::cout<<"--------------SPANNING ARBORESCENCE OF MINIMUM WEIGHT-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------SPANNING ARBORESCENCE OF MINIMUM WEIGHT-----------------"<<std::endl;
 	std::size_t root = upper_bounds.size()-1; // empty id
-	if(stdout) std::cout<<"Root: "<<root<<std::endl;
+	if(stdout>0) std::cout<<"Root: "<<root<<std::endl;
 	
 
 	std::vector<std::size_t> arborescence;
@@ -2483,8 +2530,8 @@ get_compression_data(
 
 	spanning_arborescence_of_minimum_weight(arborescence, cost_arb, collection_graph, upper_bounds,root, false);
 	
-	if(stdout) std::cout<<"Cost of arborescence: "<<cost_arb<<std::endl;
-	if(stdout){
+	if(stdout>0) std::cout<<"Cost of arborescence: "<<cost_arb<<std::endl;
+	if(stdout>2){
 		std::cout<<"Arborescence: "<<std::endl;
 		for(std::size_t i =0; i<arborescence.size(); i++){
 			std::cout<<arborescence.at(i)<<", ";
@@ -2508,7 +2555,7 @@ get_compression_data(
 	double arb_time = runtime.count();
 	
 
-	if(stdout) std::cout<<"--------------REFINEMENT-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------REFINEMENT-----------------"<<std::endl;
 
 
 	// Set method
@@ -2518,7 +2565,7 @@ get_compression_data(
 	}
 
 	if(args.count("ged_method_refinement")>0){
-		if(stdout) std::cout<<"GED method (refinement): "<<args.at("ged_method_refinement")<<std::endl;
+		if(stdout>0) std::cout<<"GED method (refinement): "<<args.at("ged_method_refinement")<<std::endl;
 		if(args.at("ged_method_refinement") == "branch_uniform"){
 			env.set_method(ged::Options::GEDMethod::BRANCH_UNIFORM, "--threads " + ged_method_refinement_options);
 		}
@@ -2584,7 +2631,7 @@ get_compression_data(
 		std::cout<<"No field refinement_size in args. Setting it to 0"<<std::endl;
 	}	
 
-	if(stdout) std::cout<<"Refinement size: "<<refinement_size<<std::endl;
+	if(stdout>0) std::cout<<"Refinement size: "<<refinement_size<<std::endl;
 
 	std::size_t step;
 	std::size_t node;
@@ -2600,7 +2647,7 @@ get_compression_data(
 	}
 
 
-	if(stdout && upper_bounds_refined.size()<15){
+	if(stdout >2){
 		std::cout<<"Cost matrix (refined): "<<upper_bounds_refined.size()<<" x "<<upper_bounds_refined.at(0).size()<<std::endl;
 		for(std::size_t i=0; i<upper_bounds_refined.size(); i++){
 			for(std::size_t j=0; j<upper_bounds_refined.at(i).size(); j++){
@@ -2620,8 +2667,8 @@ get_compression_data(
 
 	spanning_arborescence_of_minimum_weight(arborescence_ref, cost_arb_ref, collection_graph, upper_bounds_refined,root, false);
 
-	if(stdout) std::cout<<"Cost of arborescence (refined): "<<cost_arb_ref<<std::endl;
-	if(stdout && arborescence_ref.size()<15){
+	if(stdout>0) std::cout<<"Cost of arborescence (refined): "<<cost_arb_ref<<std::endl;
+	if(stdout>2){
 		std::cout<<"Arborescence (refined): "<<std::endl;
 		for(std::size_t i =0; i<arborescence_ref.size(); i++){
 			std::cout<<arborescence_ref.at(i)<<", ";
@@ -2640,7 +2687,7 @@ get_compression_data(
 	double ref_arb_time = runtime.count();
 
 
-	if(stdout) std::cout<<"--------------TO COMPARE-----------------"<<std::endl;
+	if(stdout>0) std::cout<<"--------------TO COMPARE-----------------"<<std::endl;
 
 	double sum=0;
 	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
@@ -2660,10 +2707,10 @@ get_compression_data(
 	headers.emplace_back("compression_ratio_refined");
 	values.emplace_back(std::to_string(compression_ratio_ref));
 
-	if(stdout) std::cout<<"Total cost 1: "<<base_compression_cost<<std::endl;
-	if(stdout) std::cout<<"Total cost 2 (GED from empty graph): "<<sum<<std::endl;
-	if(stdout) std::cout<<"Compression ratio: "<<compression_ratio<<std::endl;
-	if(stdout) std::cout<<"Compression ratio (refined): "<<compression_ratio_ref<<std::endl;
+	if(stdout>0) std::cout<<"Total cost 1: "<<base_compression_cost<<std::endl;
+	if(stdout>0) std::cout<<"Total cost 2 (GED from empty graph): "<<sum<<std::endl;
+	if(stdout>0) std::cout<<"Compression ratio: "<<compression_ratio<<std::endl;
+	if(stdout>0) std::cout<<"Compression ratio (refined): "<<compression_ratio_ref<<std::endl;
 	
 	headers.emplace_back("gedlib_runtime_initial");
 	values.emplace_back(std::to_string(gedlib_time));
@@ -2671,27 +2718,27 @@ get_compression_data(
 	headers.emplace_back("gedlib_runtime_refinement");
 	values.emplace_back(std::to_string(ref_time));
 
-	if(stdout) std::cout<<"GEDLIB time (initial): "<<gedlib_time<<std::endl;
-	if(stdout) std::cout<<"GEDLIB time (refinement): "<<ref_time<<std::endl;
+	if(stdout>0) std::cout<<"GEDLIB time (initial): "<<gedlib_time<<std::endl;
+	if(stdout>0) std::cout<<"GEDLIB time (refinement): "<<ref_time<<std::endl;
 	
 	headers.emplace_back("spanning_arb_runtime");
 	values.emplace_back(std::to_string(arb_time));
-	if(stdout) std::cout<<"Spanning arborescence time: "<<arb_time<<std::endl;
+	if(stdout>0) std::cout<<"Spanning arborescence time: "<<arb_time<<std::endl;
 
 	headers.emplace_back("refine_arb_runtime");
 	values.emplace_back(std::to_string(ref_arb_time));
-	if(stdout) std::cout<<"Spanning arborescence time (refinement): "<<ref_arb_time<<std::endl;
+	if(stdout>0) std::cout<<"Spanning arborescence time (refinement): "<<ref_arb_time<<std::endl;
 
 
 
 	if(args.count("encode")>0){
 		if(args.at("encode")=="true"){
 			
-			if(stdout) std::cout<<"--------------ENCODE COLLECTION-----------------"<<std::endl;
+			if(stdout>0) std::cout<<"--------------ENCODE COLLECTION-----------------"<<std::endl;
 
 			// Re encode to get the arborescence right
 			encode_environment<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
-			env_dummy, encoded_attributes, output_root_path + "/" + dataset_name, dataset_name, env_uncoded, alphabets, arborescence_ref, empty_id);
+			env_dummy, encoded_attributes, output_root_path + "/" + dataset_name, dataset_name, env_uncoded, alphabets, arborescence_ref, empty_id, stdout, '#','\n');
 			
 			encode_arborescence<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(output_root_path + "/" + dataset_name, dataset_name,
 			 env, encoded_attributes, arborescence_ref, root, stdout);
@@ -2705,6 +2752,9 @@ void treat_dataset(std::map<std::string, std::string> args){
 	std::vector<std::string> values;
 	std::vector<std::string> gxl_file_names;
 	std::vector<std::string> graph_classes;
+
+	int stdout=0;
+	if(args.count("stdout")>0) stdout = std::stoi(args.at("stdout"));
 
 	std::cout<<"**********    GET COMPRESSION DATA AND ENCODE   ************"<<std::endl;
 	get_compression_data(headers, values, args);	
@@ -2738,7 +2788,7 @@ void treat_dataset(std::map<std::string, std::string> args){
 		std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> graph_ids;
 		graph_ids = env_decoded.graph_ids();
 
-		if(args.count("stdout")>0 && args.at("stdout")=="true"){
+		if(stdout>2){
 			std::cout<<"############   Collection AFTER decoding   ################"<<std::endl;
 			for(std::size_t i=graph_ids.first; i<graph_ids.second; i++){
 				std::cout<<std::endl;
@@ -2810,7 +2860,7 @@ int main(int argc, char* argv[]){
 
 
     if (!in_file_collections || !in_file_graphs || !in_file_output_root || !in_file_dataset) {
-        std::cout << "Unable to open files";
+        std::cout << "main: Unable to open files"<<endl;
         exit(1); // terminate with error
     }
 
@@ -2831,8 +2881,9 @@ int main(int argc, char* argv[]){
         args.at("graph_dir_file") = input_graph_dir;
         args.at("output_root_file") = input_output_root;
         args.at("dataset_file") = input_dataset;
-
+        std::cout<<"START: "<<input_dataset<<"_________________"<<std::endl;
 		treat_dataset(args); 
+		std::cout<<"END: "<<input_dataset<<"_________________"<<std::endl;
 		args.at("first_iteration") = "false";
 		
     }

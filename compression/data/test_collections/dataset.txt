@@ -1,7 +1,2 @@
-acyclic
-AIDS
-mao
-pah
-Mutagenicity
 Protein
 Letter

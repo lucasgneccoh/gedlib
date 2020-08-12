@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE GraphCollection SYSTEM "http://www.inf.unibz.it/~blumenthal/dtd/GraphCollection.dtd">
+<GraphCollection>
+	<graph file="LP1_0050.gxl" class="class"/>
+	<graph file="AP1_0051.gxl" class="class"/>
+	<graph file="LP1_0052.gxl" class="class"/>
+	<graph file="LP1_0051.gxl" class="class"/>
+	<graph file="AP1_0050.gxl" class="class"/>
+</GraphCollection>
