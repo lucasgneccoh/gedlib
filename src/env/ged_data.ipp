@@ -475,9 +475,12 @@ edge_cost(LabelID label1, LabelID label2) const {
 	if (eager_init_()) {
 		return edge_costs_(label1, label2);
 	}
+	#ifndef COMPRESS_EDIT_COST
 	if (label1 == label2) {
 		return 0.0;
 	}
+	#endif
+
 	if (label1 == dummy_label()) {
 		return edit_costs_->edge_ins_cost_fun(edge_labels_.at(label2 - 1));
 	}

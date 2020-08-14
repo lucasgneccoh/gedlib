@@ -336,6 +336,13 @@ public:
 	std::size_t get_num_nodes(GEDGraph::GraphID graph_id) const;
 
 	/*!
+	 * @brief Returns the number of edges. Not in original version of GEDLIB
+	 * @param[in] graph_id ID of an input graph that has been added to the environment.
+	 * @return Number of edges in the graph.
+	 */
+	std::size_t get_num_edges(GEDGraph::GraphID graph_id) const;
+
+	/*!
 	 * @brief Returns average number of nodes.
 	 * @return Average number of nodes of the graphs contained in the environment.
 	 */

@@ -242,17 +242,17 @@ add_assignment(GEDGraph::NodeID i, GEDGraph::NodeID k) {
 		}
 		else {
 			std::vector<Assignment> relation;
-			GEDGraph::NodeID i, k;
-			for (i = 0; i < forward_map_.size(); i++) {
-				k = forward_map_.at(i);
-				if (k != GEDGraph::undefined_node()) {
-					relation.emplace_back(i, k);
+			GEDGraph::NodeID x, y;
+			for (x = 0; x < forward_map_.size(); x++) {
+				y = forward_map_.at(x);
+				if (y != GEDGraph::undefined_node()) {
+					relation.emplace_back(x, y);
 				}
 			}
-			for (k = 0; k < backward_map_.size(); k++) {
-				i = backward_map_.at(k);
-				if (i == GEDGraph::dummy_node()) {
-					relation.emplace_back(i, k);
+			for (y = 0; y < backward_map_.size(); y++) {
+				x = backward_map_.at(y);
+				if (x == GEDGraph::dummy_node()) {
+					relation.emplace_back(x, y);
 				}
 			}
 			std::cout << "{ ";
@@ -269,17 +269,17 @@ add_assignment(GEDGraph::NodeID i, GEDGraph::NodeID k) {
 		}
 		else {
 			std::vector<Assignment> relation;
-			GEDGraph::NodeID i, k;
-			for (i = 0; i < forward_map_.size(); i++) {
-				k = forward_map_.at(i);
-				if (k != GEDGraph::undefined_node()) {
-					relation.emplace_back(i, k);
+			GEDGraph::NodeID x, y;
+			for (x = 0; x < forward_map_.size(); x++) {
+				y = forward_map_.at(x);
+				if (y != GEDGraph::undefined_node()) {
+					relation.emplace_back(x, y);
 				}
 			}
-			for (k = 0; k < backward_map_.size(); k++) {
-				i = backward_map_.at(k);
-				if (i == GEDGraph::dummy_node()) {
-					relation.emplace_back(i, k);
+			for (y = 0; y < backward_map_.size(); y++) {
+				x = backward_map_.at(y);
+				if (x == GEDGraph::dummy_node()) {
+					relation.emplace_back(x, y);
 				}
 			}
 			std::cout << "{ ";

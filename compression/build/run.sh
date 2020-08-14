@@ -2,7 +2,7 @@
 exec_path="src/"
 exec_name="compression"
 
-stdout="6"
+stdout="4"
 
 collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_lucas.txt"
 graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_lucas.txt"
@@ -15,7 +15,7 @@ output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/
 
 ged_method="branch_uniform"
 ged_method_options="24"
-graph_sample_size="3"
+graph_sample_size="99"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
 refinement_size="0"
@@ -30,7 +30,7 @@ train_path="/home/lucas/Documents/stage/gedlib/compression/data/training"
 ring_method="LSAPE_OPTIMAL"
 
 edit_cost_type="second"
-relaxed_coding="false"
+relaxed_coding="true"
 
 echo -ne '\007'
 echo "execute"
