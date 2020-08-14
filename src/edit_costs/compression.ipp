@@ -66,14 +66,17 @@ node_rel_cost_fun(const GXLLabel & node_label_1, const GXLLabel & node_label_2) 
 	if (node_label_1.size()!=node_label_2.size()){
 		is_zero=false;
 	}
-	for(auto const& entry : node_label_1){
-		if(node_label_2.count(entry.first)<1){
-			is_zero=false;
-		}
-		if(node_label_2.at(entry.first) != entry.second){
-			is_zero=false;
-		}
+	else{
+		for(auto const& entry : node_label_1){
+			if(node_label_2.count(entry.first)<1){
+				is_zero=false;
+			}
+			if(node_label_2.at(entry.first) != entry.second){
+				is_zero=false;
+			}
+		}	
 	}
+	
 	if (is_zero) {
 		return 0.0;
 	}
@@ -131,14 +134,17 @@ edge_rel_cost_fun(const GXLLabel & edge_label_1, const GXLLabel & edge_label_2) 
 	if (edge_label_1.size()!=edge_label_2.size()){
 		is_id=false;
 	}
-	for(auto const& entry : edge_label_1){
-		if(edge_label_2.count(entry.first)<1){
-			is_id=false;
-		}
-		if(edge_label_2.at(entry.first) != entry.second){
-			is_id=false;
+	else{
+		for(auto const& entry : edge_label_1){
+			if(edge_label_2.count(entry.first)<1){
+				is_id=false;
+			}
+			if(edge_label_2.at(entry.first) != entry.second){
+				is_id=false;
+			}
 		}
 	}
+	
 	if (is_id) {
 		return edge_rel_cost_id_;
 	}

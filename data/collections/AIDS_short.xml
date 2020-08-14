@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE GraphCollection SYSTEM "http://www.inf.unibz.it/~blumenthal/dtd/GraphCollection.dtd">
+<GraphCollection>
+	<graph file="1827.gxl" class="i"/>
+	<graph file="537.gxl" class="i"/>
+</GraphCollection>

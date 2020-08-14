@@ -98,13 +98,13 @@ class MSArbor
 /*---------------------------- PUBLIC TYPES --------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-  typedef unsigned int  Index;          ///< arc or node index ( >= 0 )
+  typedef unsigned short int  Index;          ///< arc or node index ( >= 0 )
   typedef Index          *Index_Set;      ///< set (array) of indices
   typedef const Index    cIndex;          ///< a read-only Index
   typedef cIndex        *cIndex_Set;      ///< read-only array
   static cIndex InINF = std::numeric_limits<unsigned int>::max();            ///< the largest Index
 
-  typedef unsigned int           CNumber;        /**< type of arc costs: since the
+  typedef unsigned int          CNumber;        /**< type of arc costs: since the
 					     cost matrix is re-used to store
 					     node names, it not should be
 					     (too) "smaller" than Index */
@@ -116,7 +116,7 @@ class MSArbor
                                              "no arc is here" and C_INF is
                                              reserved */
 
-  typedef int             FONumber;       /**< type of objective function
+  typedef std::size_t             FONumber;       /**< type of objective function
 					     values; should be able to hold
 					     something like (max arc cost)
 					     times (max number of nodes) */

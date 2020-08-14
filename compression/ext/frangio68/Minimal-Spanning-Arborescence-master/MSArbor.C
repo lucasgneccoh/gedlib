@@ -99,6 +99,7 @@ MSArbor::MSArbor( Index nds )
 
 MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
 {
+ std::cout<<"MSArbor: CINF = "<<C_INF<<std::endl;
  m = root;
 
  CRow tc = c + csize;
