@@ -2,11 +2,11 @@
 exec_path="src/"
 exec_name="compression"
 
-stdout="4"
+stdout="0"
 
-collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_lucas.txt"
-graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_lucas.txt"
-dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset_lucas.txt"
+collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_mao.txt"
+graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_mao.txt"
+dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset_mao.txt"
 
 output_root_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/output_root.txt"
 
@@ -15,7 +15,7 @@ output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/
 
 ged_method="branch_uniform"
 ged_method_options="24"
-graph_sample_size="99"
+graph_sample_size="10"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
 refinement_size="0"
@@ -30,7 +30,7 @@ train_path="/home/lucas/Documents/stage/gedlib/compression/data/training"
 ring_method="LSAPE_OPTIMAL"
 
 edit_cost_type="second"
-relaxed_coding="true"
+relaxed_coding="false"
 
 echo -ne '\007'
 echo "execute"

@@ -2019,7 +2019,7 @@ void decode_collection(
 							second = line.substr(1);
 							v_i.emplace_back(std::stoi(second));
 							//map_indices.emplace(std::stoi(second), aux_node_ids.size());
-							aux_node_ids.emplace_back(second);
+							
 							label.clear();
 							for(int a = 0; a < num_node_attr; a++){
 								graph_in >> line;	
@@ -2049,7 +2049,7 @@ void decode_collection(
 					second = line.substr(1);
 					v_s.emplace_back(std::stoi(second));
 					v_rest.emplace_back(std::stoi(second));
-					map_indices.emplace(std::stoi(second), aux_node_ids.size());
+					map_indices.emplace(std::stoi(second), aux_node_labels.size());
 					aux_node_ids.emplace_back(second);
 
 					label.clear();
@@ -2107,6 +2107,8 @@ void decode_collection(
 				label.clear();
 				g2.node_labels = std::vector<UserNodeLabel>(num_nodes, label);
 				g2.original_node_ids = std::vector<UserNodeID>(num_nodes, "");
+				if(stdout>3) std::cout<< "g2.node_labels.size(): " << g2.node_labels.size() << std::endl;
+				if(stdout>3) std::cout<< "aux_node_labels.size(): " << aux_node_labels.size() << std::endl;
 
 
 				if(stdout>2) std::cout<< " ==== V_S ==="<<std::endl;
@@ -2880,7 +2882,7 @@ void decode_collection_relaxed(
 					second = line.substr(1);
 					v_s.emplace_back(std::stoi(second));
 					v_rest.emplace_back(std::stoi(second));
-					map_indices.emplace(std::stoi(second), aux_node_ids.size());
+					map_indices.emplace(std::stoi(second), aux_node_labels.size());
 					aux_node_ids.emplace_back(second);
 
 					label.clear();
@@ -3443,6 +3445,7 @@ void modified_costs(std::vector<double> & comp_costs, std::size_t v1, std::size_
 	if(v1 < v2){
 		c_ni = 0;
 		c_ei = 0;
+
 		c_es = 0;
 		c_es_id = -2*b_ni - b_ea;
 
@@ -3450,6 +3453,7 @@ void modified_costs(std::vector<double> & comp_costs, std::size_t v1, std::size_
 	else{
 		c_ni = omega;
 		c_ei = 2*b_ni + b_ea;
+
 		c_es = 2*b_ni + b_ea;	
 		c_es_id = 0;	
 	}
@@ -3759,7 +3763,7 @@ get_compression_data(
 		// get the k graphs to calculate the distance to 
 		if(! complete){
 			subset.clear();
-			subset = random_sample(population, graph_sample_size);
+			subset = random_sample(population, graph_sample_size);			
 		}
 		else{
 			subset = population;
@@ -3809,9 +3813,8 @@ get_compression_data(
 						}
 						env.run_method(i_par,j_par);
 
-						if(stdout>3) std::cout<<"cost_extra_constant: "<<cost_extra_constant<<", from "<<V1<<" to "<<V2<<std::endl;
-						aux_line.emplace_back(env.get_upper_bound(i_par,j_par)+ cost_extra_constant);	
-						if(i_par == 7 && j_par == 8) std::cout<<"POR FIN!"<<std::endl<<env.get_node_map(i_par, j_par)<<std::endl; 
+						if(stdout>3) std::cout<<"cost_extra_constant: "<<cost_extra_constant<<", from "<<V1<<" to "<<V2<<std::endl;						
+						aux_line.emplace_back(env.get_upper_bound(i_par,j_par)+ cost_extra_constant);							
 						progress.increment();
 						if (stdout >0) std::cout << "\rComputing GED: " << progress << std::flush;
 					}
