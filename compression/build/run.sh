@@ -2,12 +2,16 @@
 exec_path="src/"
 exec_name="compression"
 
-stdout="0"
+stdout="1"
 
-collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_mao.txt"
-graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_mao.txt"
-dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset_mao.txt"
+suffix="lucas"
 
+collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_"$suffix".txt"
+graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_"$suffix".txt"
+dataset_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/dataset_"$suffix".txt"
+
+
+k_sample_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/k_sample_file.txt"
 output_root_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/output_root.txt"
 
 
@@ -15,7 +19,7 @@ output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/
 
 ged_method="branch_uniform"
 ged_method_options="24"
-graph_sample_size="10"
+graph_sample_size="20"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
 refinement_size="0"
@@ -34,6 +38,6 @@ relaxed_coding="false"
 
 echo -ne '\007'
 echo "execute"
-eval "./"$exec_path$exec_name $stdout $collection_file $graph_dir_file $output_root_file $dataset_file $output_results_file $ged_method $ged_method_options $graph_sample_size $ged_method_refinement $ged_method_refinement_options $refinement_size $encode $decode $write_decoded $train_set $train_path $ring_method $edit_cost_type $relaxed_coding
+eval "./"$exec_path$exec_name $stdout $collection_file $graph_dir_file $output_root_file $dataset_file $output_results_file $ged_method $ged_method_options $graph_sample_size $ged_method_refinement $ged_method_refinement_options $refinement_size $encode $decode $write_decoded $train_set $train_path $ring_method $edit_cost_type $relaxed_coding $k_sample_file
 echo -ne '\007'
 

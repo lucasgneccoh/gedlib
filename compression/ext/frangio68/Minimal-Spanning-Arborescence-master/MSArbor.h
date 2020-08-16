@@ -98,7 +98,7 @@ class MSArbor
 /*---------------------------- PUBLIC TYPES --------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-  typedef unsigned short int  Index;          ///< arc or node index ( >= 0 )
+  typedef unsigned int  Index;          ///< arc or node index ( >= 0 )
   typedef Index          *Index_Set;      ///< set (array) of indices
   typedef const Index    cIndex;          ///< a read-only Index
   typedef cIndex        *cIndex_Set;      ///< read-only array

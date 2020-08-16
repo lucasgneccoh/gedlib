@@ -99,7 +99,12 @@ MSArbor::MSArbor( Index nds )
 
 MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
 {
+  /*
  std::cout<<"MSArbor: CINF = "<<C_INF<<std::endl;
+ std::cout<<"MSArbor: InINF = "<<InINF<<std::endl;
+ std::cout<<"MSArbor: FONumber = "<<std::numeric_limits<MSArbor::FONumber>::max()<<std::endl;
+ */
+  
  m = root;
 
  CRow tc = c + csize;
@@ -130,12 +135,14 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
 
  FONumber Z = 0;
 
+
  // Start of Phase 1 --------------------------------------------------------
 
  while( UnLabeled > 0 ) {
   Stage++;  // a new stage begins
 
   // find first unlabeled active node
+
 
   if( Ubot < Abot )  // some nodes have been deleted
    Ubot = Abot;      // note: Ubot is non-decreasing 
@@ -146,6 +153,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
   Index h = STACK[ 0 ] = ACTIVE[ Ubot ];
   Index Stop = 0;
   Index status;
+
 
   do {
    // process node v  at the top of the STACK
@@ -217,6 +225,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
     ARCH[ v ] = v;
    else           // v is a shrunken component
     ARCH[ v ] = Index( c[ SHADOW[ k1 ] * n + kmin ] );
+
 
    if( t == kmin )  // t is an original node
     ARCT[ v ] = t;
@@ -378,6 +387,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
 
  }  // end while( UnLabeled > 0 )
 
+
  // end of Phase 1 - Phase 2 begins -----------------------------------------
 
  Index j = 0;
@@ -399,9 +409,12 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
     }
    }
 
+
+
  // End of Phase 2 - possibly, Phase 3 begins -------------------------------
 
  if( RC ) {
+
   // Compute reduced costs -- output on array RC with  n - 1 rows and n
   // columns (row == backward star, same format as the cost array).
   // For each arc ( i , j ), RC[ j , i ] gives the cost of ( i , j ) minus
@@ -475,6 +488,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
      }
 
   }  // end if( RC != NULL )
+
 
  // End of Phase 3 ----------------------------------------------------------
 

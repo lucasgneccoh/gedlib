@@ -1,0 +1,6 @@
+/home/lucas/Documents/stage/gedlib/data/datasets/acyclic
+/home/lucas/Documents/stage/gedlib/data/datasets/AIDS/data
+/home/lucas/Documents/stage/gedlib/data/datasets/mao
+/home/lucas/Documents/stage/gedlib/data/datasets/pah
+/home/lucas/Documents/stage/gedlib/data/datasets/Protein/data
+/home/lucas/Documents/stage/gedlib/data/datasets/Letter/MED
