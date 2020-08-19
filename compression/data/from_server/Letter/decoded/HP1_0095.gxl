@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="HP1_0095.gxl" edgeids="false" edgemode="undirected">
+<node id="_0"><attr name="x"><TYPENAME>2.3</TYPENAME></attr><attr name="y"><TYPENAME>1.76</TYPENAME></attr></node>
+<node id="_1"><attr name="x"><TYPENAME>0.80261</TYPENAME></attr><attr name="y"><TYPENAME>3.33424</TYPENAME></attr></node>
+<node id="_2"><attr name="x"><TYPENAME>1.32173</TYPENAME></attr><attr name="y"><TYPENAME>0.420962</TYPENAME></attr></node>
+<node id="_3"><attr name="x"><TYPENAME>1.7536</TYPENAME></attr><attr name="y"><TYPENAME>0.232652</TYPENAME></attr></node>
+<node id="_4"><attr name="x"><TYPENAME>1.733</TYPENAME></attr><attr name="y"><TYPENAME>3.25823</TYPENAME></attr></node>
+<node id="_5"><attr name="x"><TYPENAME>0.354656</TYPENAME></attr><attr name="y"><TYPENAME>2.07262</TYPENAME></attr></node>
+<node id="_6"><attr name="x"><TYPENAME>2.56738</TYPENAME></attr><attr name="y"><TYPENAME>2.21681</TYPENAME></attr></node>
+<edge from="_3" to="_4"></edge>
+<edge from="_1" to="_2"></edge>
+<edge from="_0" to="_6"></edge>
+<edge from="_0" to="_5"></edge>
+</graph>
+</gxl>

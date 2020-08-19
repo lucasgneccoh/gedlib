@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="28557.gxl" edgeids="false" edgemode="undirected">
+<node id="_0"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>3.6942</TYPENAME></attr><attr name="y"><TYPENAME>-0.2229</TYPENAME></attr></node>
+<node id="_1"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>2.7431</TYPENAME></attr><attr name="y"><TYPENAME>0.0862</TYPENAME></attr></node>
+<node id="_2"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>5.0032</TYPENAME></attr><attr name="y"><TYPENAME>-1.1739</TYPENAME></attr></node>
+<node id="_3"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>5.3122</TYPENAME></attr><attr name="y"><TYPENAME>-0.2229</TYPENAME></attr></node>
+<node id="_4"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>4.0032</TYPENAME></attr><attr name="y"><TYPENAME>-1.1739</TYPENAME></attr></node>
+<node id="_5"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>5</TYPENAME></attr><attr name="symbol"><TYPENAME>S</TYPENAME></attr><attr name="x"><TYPENAME>4.5032</TYPENAME></attr><attr name="y"><TYPENAME>0.3649</TYPENAME></attr></node>
+<node id="_6"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>2</TYPENAME></attr><attr name="y"><TYPENAME>-0.583</TYPENAME></attr></node>
+<node id="_7"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>3.9154</TYPENAME></attr><attr name="y"><TYPENAME>1.1739</TYPENAME></attr></node>
+<node id="_8"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>5.091</TYPENAME></attr><attr name="y"><TYPENAME>1.1739</TYPENAME></attr></node>
+<edge from="_5" to="_8"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_5" to="_7"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_5" to="_0"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_4" to="_2"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_3" to="_5"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_2" to="_3"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_6"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_0" to="_4"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_1"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+</graph>
+</gxl>

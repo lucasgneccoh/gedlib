@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="21686.gxl" edgeids="false" edgemode="undirected">
+<node id="_0"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>13.7727</TYPENAME></attr><attr name="y"><TYPENAME>-0.5081</TYPENAME></attr></node>
+<node id="_1"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>17.0874</TYPENAME></attr><attr name="y"><TYPENAME>-0.8445</TYPENAME></attr></node>
+<node id="_2"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>14.4418</TYPENAME></attr><attr name="y"><TYPENAME>-1.2512</TYPENAME></attr></node>
+<node id="_3"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>16.2214</TYPENAME></attr><attr name="y"><TYPENAME>-1.3445</TYPENAME></attr></node>
+<node id="_4"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>15.3554</TYPENAME></attr><attr name="y"><TYPENAME>-0.8445</TYPENAME></attr></node>
+<node id="_5"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>15.2508</TYPENAME></attr><attr name="y"><TYPENAME>0.15</TYPENAME></attr></node>
+<node id="_6"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>17.9534</TYPENAME></attr><attr name="y"><TYPENAME>-1.3445</TYPENAME></attr></node>
+<node id="_7"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>17.0874</TYPENAME></attr><attr name="y"><TYPENAME>0.1555</TYPENAME></attr></node>
+<node id="_8"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>14.2727</TYPENAME></attr><attr name="y"><TYPENAME>0.3579</TYPENAME></attr></node>
+<node id="_9"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>18.8195</TYPENAME></attr><attr name="y"><TYPENAME>-0.8445</TYPENAME></attr></node>
+<node id="_10"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>18.924</TYPENAME></attr><attr name="y"><TYPENAME>0.15</TYPENAME></attr></node>
+<node id="_11"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>19.9021</TYPENAME></attr><attr name="y"><TYPENAME>0.3579</TYPENAME></attr></node>
+<node id="_12"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>20.4021</TYPENAME></attr><attr name="y"><TYPENAME>-0.5081</TYPENAME></attr></node>
+<node id="_13"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>19.733</TYPENAME></attr><attr name="y"><TYPENAME>-1.2512</TYPENAME></attr></node>
+<node id="_14"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>13.8659</TYPENAME></attr><attr name="y"><TYPENAME>1.2715</TYPENAME></attr></node>
+<node id="_15"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>20.3089</TYPENAME></attr><attr name="y"><TYPENAME>1.2715</TYPENAME></attr></node>
+<node id="_16"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>12.7782</TYPENAME></attr><attr name="y"><TYPENAME>-0.6126</TYPENAME></attr></node>
+<node id="_17"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>12.1904</TYPENAME></attr><attr name="y"><TYPENAME>0.1964</TYPENAME></attr></node>
+<node id="_18"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>21.3967</TYPENAME></attr><attr name="y"><TYPENAME>-0.6126</TYPENAME></attr></node>
+<node id="_19"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>21.8034</TYPENAME></attr><attr name="y"><TYPENAME>-1.5262</TYPENAME></attr></node>
+<node id="_20"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>21.9844</TYPENAME></attr><attr name="y"><TYPENAME>0.1964</TYPENAME></attr></node>
+<node id="_21"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>22.979</TYPENAME></attr><attr name="y"><TYPENAME>0.0918</TYPENAME></attr></node>
+<node id="_22"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>23.479</TYPENAME></attr><attr name="y"><TYPENAME>-0.7742</TYPENAME></attr></node>
+<node id="_23"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>24.4571</TYPENAME></attr><attr name="y"><TYPENAME>-0.5663</TYPENAME></attr></node>
+<node id="_24"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>24.5616</TYPENAME></attr><attr name="y"><TYPENAME>0.4282</TYPENAME></attr></node>
+<node id="_25"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>23.6481</TYPENAME></attr><attr name="y"><TYPENAME>0.835</TYPENAME></attr></node>
+<node id="_26"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>25.4277</TYPENAME></attr><attr name="y"><TYPENAME>0.9282</TYPENAME></attr></node>
+<node id="_27"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>25.4277</TYPENAME></attr><attr name="y"><TYPENAME>1.9282</TYPENAME></attr></node>
+<node id="_28"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>26.2937</TYPENAME></attr><attr name="y"><TYPENAME>0.4282</TYPENAME></attr></node>
+<node id="_29"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>27.1597</TYPENAME></attr><attr name="y"><TYPENAME>0.9282</TYPENAME></attr></node>
+<node id="_30"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>28.0257</TYPENAME></attr><attr name="y"><TYPENAME>0.4282</TYPENAME></attr></node>
+<node id="_31"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>28.8918</TYPENAME></attr><attr name="y"><TYPENAME>0.9282</TYPENAME></attr></node>
+<node id="_32"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>28.8918</TYPENAME></attr><attr name="y"><TYPENAME>1.9282</TYPENAME></attr></node>
+<node id="_33"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>28.0258</TYPENAME></attr><attr name="y"><TYPENAME>2.4282</TYPENAME></attr></node>
+<node id="_34"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>27.1597</TYPENAME></attr><attr name="y"><TYPENAME>1.9282</TYPENAME></attr></node>
+<node id="_35"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>29.7578</TYPENAME></attr><attr name="y"><TYPENAME>0.4282</TYPENAME></attr></node>
+<node id="_36"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>30.6238</TYPENAME></attr><attr name="y"><TYPENAME>0.9282</TYPENAME></attr></node>
+<node id="_37"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>30.6238</TYPENAME></attr><attr name="y"><TYPENAME>1.9282</TYPENAME></attr></node>
+<node id="_38"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>29.7578</TYPENAME></attr><attr name="y"><TYPENAME>2.4282</TYPENAME></attr></node>
+<node id="_39"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>5</TYPENAME></attr><attr name="symbol"><TYPENAME>S</TYPENAME></attr><attr name="x"><TYPENAME>29.7578</TYPENAME></attr><attr name="y"><TYPENAME>-0.5718</TYPENAME></attr></node>
+<node id="_40"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>29.7578</TYPENAME></attr><attr name="y"><TYPENAME>-1.5718</TYPENAME></attr></node>
+<node id="_41"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>28.7578</TYPENAME></attr><attr name="y"><TYPENAME>-0.5718</TYPENAME></attr></node>
+<node id="_42"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>30.7578</TYPENAME></attr><attr name="y"><TYPENAME>-0.5718</TYPENAME></attr></node>
+<node id="_43"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>12.3714</TYPENAME></attr><attr name="y"><TYPENAME>-1.5262</TYPENAME></attr></node>
+<node id="_44"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>11.3769</TYPENAME></attr><attr name="y"><TYPENAME>-1.6307</TYPENAME></attr></node>
+<node id="_45"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>10.8769</TYPENAME></attr><attr name="y"><TYPENAME>-2.4967</TYPENAME></attr></node>
+<node id="_46"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>9.8987</TYPENAME></attr><attr name="y"><TYPENAME>-2.2888</TYPENAME></attr></node>
+<node id="_47"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>9.7942</TYPENAME></attr><attr name="y"><TYPENAME>-1.2943</TYPENAME></attr></node>
+<node id="_48"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>10.7078</TYPENAME></attr><attr name="y"><TYPENAME>-0.8875</TYPENAME></attr></node>
+<node id="_49"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>8.9282</TYPENAME></attr><attr name="y"><TYPENAME>-0.7943</TYPENAME></attr></node>
+<node id="_50"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>8.9282</TYPENAME></attr><attr name="y"><TYPENAME>0.2057</TYPENAME></attr></node>
+<node id="_51"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>4</TYPENAME></attr><attr name="symbol"><TYPENAME>N</TYPENAME></attr><attr name="x"><TYPENAME>8.0622</TYPENAME></attr><attr name="y"><TYPENAME>-1.2943</TYPENAME></attr></node>
+<node id="_52"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>7.1961</TYPENAME></attr><attr name="y"><TYPENAME>-0.7943</TYPENAME></attr></node>
+<node id="_53"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>6.3301</TYPENAME></attr><attr name="y"><TYPENAME>-1.2943</TYPENAME></attr></node>
+<node id="_54"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>5.4641</TYPENAME></attr><attr name="y"><TYPENAME>-0.7943</TYPENAME></attr></node>
+<node id="_55"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>5.4641</TYPENAME></attr><attr name="y"><TYPENAME>0.2057</TYPENAME></attr></node>
+<node id="_56"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>6.3301</TYPENAME></attr><attr name="y"><TYPENAME>0.7057</TYPENAME></attr></node>
+<node id="_57"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>7.1961</TYPENAME></attr><attr name="y"><TYPENAME>0.2057</TYPENAME></attr></node>
+<node id="_58"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>4.5981</TYPENAME></attr><attr name="y"><TYPENAME>-1.2943</TYPENAME></attr></node>
+<node id="_59"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>3.732</TYPENAME></attr><attr name="y"><TYPENAME>-0.7942</TYPENAME></attr></node>
+<node id="_60"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>3.732</TYPENAME></attr><attr name="y"><TYPENAME>0.2058</TYPENAME></attr></node>
+<node id="_61"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>4.5981</TYPENAME></attr><attr name="y"><TYPENAME>0.7057</TYPENAME></attr></node>
+<node id="_62"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>5</TYPENAME></attr><attr name="symbol"><TYPENAME>S</TYPENAME></attr><attr name="x"><TYPENAME>4.5981</TYPENAME></attr><attr name="y"><TYPENAME>-2.2943</TYPENAME></attr></node>
+<node id="_63"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>4.5981</TYPENAME></attr><attr name="y"><TYPENAME>-3.2943</TYPENAME></attr></node>
+<node id="_64"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>5.5981</TYPENAME></attr><attr name="y"><TYPENAME>-2.2943</TYPENAME></attr></node>
+<node id="_65"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>3.5981</TYPENAME></attr><attr name="y"><TYPENAME>-2.2942</TYPENAME></attr></node>
+<node id="_66"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>5</TYPENAME></attr><attr name="symbol"><TYPENAME>S</TYPENAME></attr><attr name="x"><TYPENAME>31.4899</TYPENAME></attr><attr name="y"><TYPENAME>2.4282</TYPENAME></attr></node>
+<node id="_67"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>32.3559</TYPENAME></attr><attr name="y"><TYPENAME>2.9282</TYPENAME></attr></node>
+<node id="_68"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>31.9899</TYPENAME></attr><attr name="y"><TYPENAME>1.5622</TYPENAME></attr></node>
+<node id="_69"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>30.9899</TYPENAME></attr><attr name="y"><TYPENAME>3.2943</TYPENAME></attr></node>
+<node id="_70"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>5</TYPENAME></attr><attr name="symbol"><TYPENAME>S</TYPENAME></attr><attr name="x"><TYPENAME>2.866</TYPENAME></attr><attr name="y"><TYPENAME>0.7058</TYPENAME></attr></node>
+<node id="_71"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>2</TYPENAME></attr><attr name="y"><TYPENAME>1.2058</TYPENAME></attr></node>
+<node id="_72"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>2.366</TYPENAME></attr><attr name="y"><TYPENAME>-0.1603</TYPENAME></attr></node>
+<node id="_73"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>2</TYPENAME></attr><attr name="symbol"><TYPENAME>O</TYPENAME></attr><attr name="x"><TYPENAME>3.366</TYPENAME></attr><attr name="y"><TYPENAME>1.5718</TYPENAME></attr></node>
+<node id="_74"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>39</TYPENAME></attr><attr name="symbol"><TYPENAME>K</TYPENAME></attr><attr name="x"><TYPENAME>34.3559</TYPENAME></attr><attr name="y"><TYPENAME>0</TYPENAME></attr></node>
+<node id="_75"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>25.2003</TYPENAME></attr><attr name="y"><TYPENAME>-1.2354</TYPENAME></attr></node>
+<node id="_76"><attr name="charge"><TYPENAME>0</TYPENAME></attr><attr name="chem"><TYPENAME>1</TYPENAME></attr><attr name="symbol"><TYPENAME>C</TYPENAME></attr><attr name="x"><TYPENAME>9.1556</TYPENAME></attr><attr name="y"><TYPENAME>-2.9579</TYPENAME></attr></node>
+<edge from="_4" to="_2"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_70" to="_73"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_70" to="_72"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_70" to="_71"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_66" to="_69"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_66" to="_68"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_66" to="_67"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_62" to="_65"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_62" to="_64"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_62" to="_63"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_60" to="_70"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_60" to="_61"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_59" to="_60"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_58" to="_62"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_58" to="_59"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_56" to="_57"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_55" to="_61"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_55" to="_56"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_54" to="_58"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_54" to="_55"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_53" to="_54"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_52" to="_57"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_52" to="_53"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_51" to="_52"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_49" to="_51"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_49" to="_50"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_47" to="_49"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_47" to="_48"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_46" to="_76"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_46" to="_47"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_45" to="_46"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_44" to="_48"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_44" to="_45"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_43" to="_44"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_39" to="_42"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_39" to="_41"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_39" to="_40"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_37" to="_66"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_37" to="_38"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_36" to="_37"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_35" to="_39"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_35" to="_36"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_33" to="_34"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_32" to="_38"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_32" to="_33"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_31" to="_35"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_31" to="_32"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_30" to="_31"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_29" to="_34"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_29" to="_30"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_28" to="_29"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_26" to="_28"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_26" to="_27"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_24" to="_26"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_24" to="_25"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_23" to="_75"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_23" to="_24"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_22" to="_23"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_21" to="_25"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_21" to="_22"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_20" to="_21"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_18" to="_20"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_18" to="_19"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_16" to="_43"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_16" to="_17"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_12" to="_18"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_12" to="_13"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_11" to="_15"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_11" to="_12"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_10" to="_11"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_9" to="_13"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_9" to="_10"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_8" to="_14"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_16"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_8"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_5" to="_8"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_6" to="_9"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_4" to="_5"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_3" to="_4"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_7"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_1" to="_6"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_3"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_2"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+</graph>
+</gxl>

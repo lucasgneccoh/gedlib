@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="molecule_2103.gxl" edgeids="false" edgemode="undirected">
+<node id="_0"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_1"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_2"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_3"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_4"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_5"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_6"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_7"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_8"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_9"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_10"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_11"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_12"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_13"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_14"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_15"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_16"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_17"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_18"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_19"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_20"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_21"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_22"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_23"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_24"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_25"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_26"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_27"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_28"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_29"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_30"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_31"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_32"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_33"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_34"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_35"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_36"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_37"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_38"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_39"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_40"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_41"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_42"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_43"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_44"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_45"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_46"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_47"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_48"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_49"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_50"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_51"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_52"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_53"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<edge from="_22" to="_24"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_6" to="_25"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_6" to="_24"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_8" to="_10"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_47" to="_53"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_46" to="_52"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_45" to="_51"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_44" to="_50"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_42" to="_49"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_42" to="_48"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_42" to="_27"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_41" to="_23"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_40" to="_21"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_39" to="_20"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_38" to="_17"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_37" to="_16"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_36" to="_15"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_36" to="_14"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_36" to="_13"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_35" to="_12"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_34" to="_47"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_34" to="_45"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_33" to="_46"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_33" to="_45"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_32" to="_44"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_32" to="_41"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_31" to="_43"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_30" to="_42"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_30" to="_41"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_29" to="_40"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_29" to="_38"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_28" to="_39"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_28" to="_38"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_25" to="_37"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_25" to="_35"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_18" to="_36"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_18" to="_35"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_19" to="_34"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_19" to="_31"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_11" to="_33"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_7" to="_32"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_7" to="_31"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_10" to="_30"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_22" to="_29"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_9" to="_28"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_9" to="_11"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_4" to="_7"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_4" to="_10"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_24" to="_26"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_8" to="_18"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_5" to="_19"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_5" to="_11"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_22"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_0" to="_9"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_6"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_1" to="_8"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_3" to="_5"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_3" to="_4"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_2" to="_0"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_2" to="_1"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_2" to="_3"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+</graph>
+</gxl>

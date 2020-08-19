@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="molecule_1807.gxl" edgeids="false" edgemode="undirected">
+<node id="_0"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_1"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_2"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<node id="_3"><attr name="chem"><TYPENAME>C</TYPENAME></attr></node>
+<node id="_4"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_5"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_6"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_7"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_8"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_9"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_10"><attr name="chem"><TYPENAME>H</TYPENAME></attr></node>
+<node id="_11"><attr name="chem"><TYPENAME>N</TYPENAME></attr></node>
+<node id="_12"><attr name="chem"><TYPENAME>O</TYPENAME></attr></node>
+<edge from="_12" to="_0"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_11" to="_12"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_11" to="_2"><attr name="valence"><TYPENAME>2</TYPENAME></attr></edge>
+<edge from="_3" to="_10"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_3" to="_9"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_3" to="_8"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_7"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_6"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_1" to="_3"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_5"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_4"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+<edge from="_0" to="_1"><attr name="valence"><TYPENAME>1</TYPENAME></attr></edge>
+</graph>
+</gxl>

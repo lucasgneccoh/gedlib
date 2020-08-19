@@ -1,5 +1,0 @@
-collection_file,graph_dir,b_ni,b_na,b_ei,b_ea,cost_arborescence,base_compression_cost,num_nodes,num_leafs,avg_degree,min_degree,max_degree,root_degree,avg_depth,max_depth,base_compression_cost_2,compression_ratio,gedlib_runtime,spanning_arb_runtime
-/home/lamsade/lgnecco/stage/gedlib/compression/data/collections/acyclic.xml,/home/lamsade/lgnecco/stage/gedlib/data/datasets/acyclic,1,1,1,1,1876,6334,184,54,1.407692,1,4,1,23,41,6334,0.296179,9.487858,0.047293
-/home/lamsade/lgnecco/stage/gedlib/compression/data/collections/AIDS.xml,/home/lamsade/lgnecco/stage/gedlib/data/datasets/AIDS/data,1,7,1,1,145402,245671,1501,637,1.736111,1,17,6,53.829447,99,245671,0.591857,2969.699064,3.707068
-/home/lamsade/lgnecco/stage/gedlib/compression/data/collections/mao.xml,/home/lamsade/lgnecco/stage/gedlib/data/datasets/mao,1,1,1,1,722,5595,69,19,1.36,1,5,1,15.188406,28,5595,0.129044,5.370691,0.011267
-/home/lamsade/lgnecco/stage/gedlib/compression/data/collections/pah.xml,/home/lamsade/lgnecco/stage/gedlib/data/datasets/pah,1,1,1,1,3794,9304,95,31,1.46875,1,4,1,13.578947,23,9304,0.407782,12.112318,0.023589
