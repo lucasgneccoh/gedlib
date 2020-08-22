@@ -22,7 +22,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_MACOSX_RPATH ON)
 
-set(EXEC_NAME compression)
+set(EXEC_NAME arborescence_based_compression)
 
 #set(GEDLIB /home/lucas/Documents/stage/gedlib)
 set(GEDLIB ${CMAKE_CURRENT_SOURCE_DIR}/..)

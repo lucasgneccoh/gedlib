@@ -1,10 +1,10 @@
 #From build dir
 exec_path="src/"
-exec_name="compression"
+exec_name="arborescence_based_compression"
 
 stdout="1"
 
-suffix="AIDS"
+suffix="lucas"
 
 collection_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/collections_list_"$suffix".txt"
 graph_dir_file="/home/lucas/Documents/stage/gedlib/compression/data/test_collections/graphs_dir_list_"$suffix".txt"

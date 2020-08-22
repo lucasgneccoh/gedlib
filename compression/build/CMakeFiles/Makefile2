@@ -71,7 +71,7 @@ clean: src/clean
 # Directory level rules for directory src
 
 # Recursive "all" directory target.
-src/all: src/CMakeFiles/compression.dir/all
+src/all: src/CMakeFiles/arborescence_based_compression.dir/all
 
 .PHONY : src/all
 
@@ -81,36 +81,36 @@ src/preinstall:
 .PHONY : src/preinstall
 
 # Recursive "clean" directory target.
-src/clean: src/CMakeFiles/compression.dir/clean
+src/clean: src/CMakeFiles/arborescence_based_compression.dir/clean
 
 .PHONY : src/clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/compression.dir
+# Target rules for target src/CMakeFiles/arborescence_based_compression.dir
 
 # All Build rule for target.
-src/CMakeFiles/compression.dir/all:
-	$(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/depend
-	$(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=1,2 "Built target compression"
-.PHONY : src/CMakeFiles/compression.dir/all
+src/CMakeFiles/arborescence_based_compression.dir/all:
+	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/depend
+	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=1,2 "Built target arborescence_based_compression"
+.PHONY : src/CMakeFiles/arborescence_based_compression.dir/all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/compression.dir/rule: cmake_check_build_system
+src/CMakeFiles/arborescence_based_compression.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/compression.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/arborescence_based_compression.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/compression.dir/rule
+.PHONY : src/CMakeFiles/arborescence_based_compression.dir/rule
 
 # Convenience name for target.
-compression: src/CMakeFiles/compression.dir/rule
+arborescence_based_compression: src/CMakeFiles/arborescence_based_compression.dir/rule
 
-.PHONY : compression
+.PHONY : arborescence_based_compression
 
 # clean rule for target.
-src/CMakeFiles/compression.dir/clean:
-	$(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/clean
-.PHONY : src/CMakeFiles/compression.dir/clean
+src/CMakeFiles/arborescence_based_compression.dir/clean:
+	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/clean
+.PHONY : src/CMakeFiles/arborescence_based_compression.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -20,7 +20,7 @@
 ############################################################################
 
 
-add_executable(${EXEC_NAME} registers.cpp)
+add_executable(${EXEC_NAME} arborescence_based_compression.cpp)
 
 #SHARED LIBRARY
 target_link_libraries(

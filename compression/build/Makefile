@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named compression
+# Target rules for targets named arborescence_based_compression
 
 # Build rule for target.
-compression: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 compression
-.PHONY : compression
+arborescence_based_compression: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 arborescence_based_compression
+.PHONY : arborescence_based_compression
 
 # fast build rule for target.
-compression/fast:
-	$(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/build
-.PHONY : compression/fast
+arborescence_based_compression/fast:
+	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/build
+.PHONY : arborescence_based_compression/fast
 
 # Help Target
 help:
@@ -131,7 +131,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... compression"
+	@echo "... arborescence_based_compression"
 .PHONY : help
 
 

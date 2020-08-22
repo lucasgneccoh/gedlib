@@ -111,46 +111,46 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/compression.dir/rule:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/compression.dir/rule
-.PHONY : src/CMakeFiles/compression.dir/rule
+src/CMakeFiles/arborescence_based_compression.dir/rule:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/arborescence_based_compression.dir/rule
+.PHONY : src/CMakeFiles/arborescence_based_compression.dir/rule
 
 # Convenience name for target.
-compression: src/CMakeFiles/compression.dir/rule
+arborescence_based_compression: src/CMakeFiles/arborescence_based_compression.dir/rule
 
-.PHONY : compression
+.PHONY : arborescence_based_compression
 
 # fast build rule for target.
-compression/fast:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/build
-.PHONY : compression/fast
+arborescence_based_compression/fast:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/build
+.PHONY : arborescence_based_compression/fast
 
-registers.o: registers.cpp.o
+arborescence_based_compression.o: arborescence_based_compression.cpp.o
 
-.PHONY : registers.o
+.PHONY : arborescence_based_compression.o
 
 # target to build an object file
-registers.cpp.o:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.o
-.PHONY : registers.cpp.o
+arborescence_based_compression.cpp.o:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/arborescence_based_compression.cpp.o
+.PHONY : arborescence_based_compression.cpp.o
 
-registers.i: registers.cpp.i
+arborescence_based_compression.i: arborescence_based_compression.cpp.i
 
-.PHONY : registers.i
+.PHONY : arborescence_based_compression.i
 
 # target to preprocess a source file
-registers.cpp.i:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.i
-.PHONY : registers.cpp.i
+arborescence_based_compression.cpp.i:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/arborescence_based_compression.cpp.i
+.PHONY : arborescence_based_compression.cpp.i
 
-registers.s: registers.cpp.s
+arborescence_based_compression.s: arborescence_based_compression.cpp.s
 
-.PHONY : registers.s
+.PHONY : arborescence_based_compression.s
 
 # target to generate assembly for a file
-registers.cpp.s:
-	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/compression.dir/build.make src/CMakeFiles/compression.dir/registers.cpp.s
-.PHONY : registers.cpp.s
+arborescence_based_compression.cpp.s:
+	cd /home/lucas/Documents/stage/gedlib/compression/build && $(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/arborescence_based_compression.cpp.s
+.PHONY : arborescence_based_compression.cpp.s
 
 # Help Target
 help:
@@ -160,10 +160,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... compression"
-	@echo "... registers.o"
-	@echo "... registers.i"
-	@echo "... registers.s"
+	@echo "... arborescence_based_compression"
+	@echo "... arborescence_based_compression.o"
+	@echo "... arborescence_based_compression.i"
+	@echo "... arborescence_based_compression.s"
 .PHONY : help
 
 
