@@ -1,19 +1,18 @@
 //Test
-#include<iostream>
+#include <iostream>
+#include <fstream>
 
-using namespace std;
 
 int main(int argc, char* argv[]){
-	string str1 = "#x:empty";
-	std::size_t pos=0;
-	pos = str1.find(":");
-	string str2;
-	string str3;
-
-	str2 = str1.substr(1, pos-1);
-	str3 = str1.substr(pos+1);
-
-	cout<<"str2: "<<str2<<endl;
-	cout<<"str3: "<<str3<<endl;
+	std::string filename = "binary_file.bin";
+	std::ofstream out_file;
+	out_file.open(filename.c_str(),ios::binary);
+	std::vector<int> vec;
+	for(int i =0; i<5; i++) vec.emplace_back(i);
+	
+	if(out_file.is_open()){
+		for(int i =0; i<5; i++) out_file << vec.at(i);	
+	}
+	out_file.close();
 
 }
