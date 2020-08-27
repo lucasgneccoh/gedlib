@@ -656,6 +656,32 @@ bst_query_letter/fast:
 	$(MAKE) -f median/CMakeFiles/bst_query_letter.dir/build.make median/CMakeFiles/bst_query_letter.dir/build
 .PHONY : bst_query_letter/fast
 
+#=============================================================================
+# Target rules for targets named abc
+
+# Build rule for target.
+abc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abc
+.PHONY : abc
+
+# fast build rule for target.
+abc/fast:
+	$(MAKE) -f compression/CMakeFiles/abc.dir/build.make compression/CMakeFiles/abc.dir/build
+.PHONY : abc/fast
+
+#=============================================================================
+# Target rules for targets named abc_compression
+
+# Build rule for target.
+abc_compression: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abc_compression
+.PHONY : abc_compression
+
+# fast build rule for target.
+abc_compression/fast:
+	$(MAKE) -f compression/CMakeFiles/abc_compression.dir/build.make compression/CMakeFiles/abc_compression.dir/build
+.PHONY : abc_compression/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -706,6 +732,8 @@ help:
 	@echo "... bst_init_letter"
 	@echo "... median_letter_demo"
 	@echo "... bst_query_letter"
+	@echo "... abc"
+	@echo "... abc_compression"
 .PHONY : help
 
 

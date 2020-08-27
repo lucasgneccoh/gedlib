@@ -11,6 +11,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
+  "../compression/CMakeLists.txt"
   "../doxyfile.in"
   "../median/CMakeLists.txt"
   "../src/CMakeLists.txt"
@@ -131,6 +132,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "tests/tkde2019/CMakeFiles/CMakeDirectoryInformation.cmake"
   "tests/vldbj2020/CMakeFiles/CMakeDirectoryInformation.cmake"
   "median/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "compression/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -177,4 +179,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "median/CMakeFiles/bst_init_letter.dir/DependInfo.cmake"
   "median/CMakeFiles/median_letter_demo.dir/DependInfo.cmake"
   "median/CMakeFiles/bst_query_letter.dir/DependInfo.cmake"
+  "compression/CMakeFiles/abc.dir/DependInfo.cmake"
+  "compression/CMakeFiles/abc_compression.dir/DependInfo.cmake"
   )

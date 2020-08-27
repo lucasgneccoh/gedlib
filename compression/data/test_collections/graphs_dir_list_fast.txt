@@ -1,0 +1,3 @@
+/home/lucas/Documents/stage/gedlib/data/datasets/acyclic
+/home/lucas/Documents/stage/gedlib/data/datasets/mao
+/home/lucas/Documents/stage/gedlib/data/datasets/pah

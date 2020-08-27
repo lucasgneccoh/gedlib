@@ -570,27 +570,19 @@ run_method(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id) {
 		ged_method_->run(g_id, ged_data_.id_shuffled_graph_copy(h_id));
 	}
 	else {
-		//std::cout<<"Call method... ";
 		ged_method_->run(g_id, h_id);
 	}
-	//std::cout<<"Key creation... ";
 	std::pair<GEDGraph::GraphID, GEDGraph::GraphID> key(g_id, h_id);
-	//std::cout<<"Get bounds... ";
 	lower_bounds_[key] = ged_method_->get_lower_bound();
 	upper_bounds_[key] = ged_method_->get_upper_bound();
-	//std::cout<<"Runtimes... ";
 	runtimes_[key] = ged_method_->get_runtime();
-	//std::cout<<"Iterator... ";
 	auto it = node_maps_.find(key);
 	if (it == node_maps_.end()) {
-	//	std::cout<<"Not found, create... ";
 		node_maps_.emplace(key, ged_method_->get_node_map());
 	}
 	else {
-	//	std::cout<<"Found... ";
 		it->second = ged_method_->get_node_map();
 	}
-	//std::cout<<"End... ";
 }
 
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>

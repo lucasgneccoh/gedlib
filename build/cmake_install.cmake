@@ -42,6 +42,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/lucas/Documents/stage/gedlib/build/src/cmake_install.cmake")
   include("/home/lucas/Documents/stage/gedlib/build/tests/cmake_install.cmake")
   include("/home/lucas/Documents/stage/gedlib/build/median/cmake_install.cmake")
+  include("/home/lucas/Documents/stage/gedlib/build/compression/cmake_install.cmake")
 
 endif()
 

@@ -56,3 +56,7 @@
 /home/lucas/Documents/stage/gedlib/build/median/CMakeFiles/bst_init_letter.dir
 /home/lucas/Documents/stage/gedlib/build/median/CMakeFiles/median_letter_demo.dir
 /home/lucas/Documents/stage/gedlib/build/median/CMakeFiles/bst_query_letter.dir
+/home/lucas/Documents/stage/gedlib/build/compression/CMakeFiles/rebuild_cache.dir
+/home/lucas/Documents/stage/gedlib/build/compression/CMakeFiles/edit_cache.dir
+/home/lucas/Documents/stage/gedlib/build/compression/CMakeFiles/abc.dir
+/home/lucas/Documents/stage/gedlib/build/compression/CMakeFiles/abc_compression.dir

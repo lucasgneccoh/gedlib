@@ -1,7 +1,8 @@
 #From build dir
 exec_path="src/"
-exec_name="arborescence_based_compression"
-suffix="mao"
+exec_name="test_abc"
+
+suffix="lucas"
 
 # Parameters
 
@@ -21,9 +22,9 @@ output_results_file="/home/lucas/Documents/stage/gedlib/compression/data/output/
 ged_method="branch_uniform"
 ged_method_options="24"
 graph_sample_size="20"
-ged_method_refinement="ipfp"
+ged_method_refinement="branch_fast"
 ged_method_refinement_options="24"
-refinement_size="0"
+refinement_size="999"
 
 write_ged_matrix="true"
 write_arb="true"
@@ -34,8 +35,8 @@ train_set="Letter-500g"
 train_path="/home/lucas/Documents/stage/gedlib/compression/data/training"
 ring_method="LSAPE_OPTIMAL"
 
-edit_cost_type="trad"
-relaxed_coding="true"
+edit_cost_type="mod"
+relaxed_coding="false"
 
 echo -ne '\007'
 echo "execute"
