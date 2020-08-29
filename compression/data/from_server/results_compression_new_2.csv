@@ -1,0 +1,2 @@
+file_preffix,edit_costs,relaxed_compression,ged_method,b_ni,b_na,b_ei,b_ea,graph_sample_size,cost_arborescence,k_complexity_a,k_complexity_b,gedlib_runtime_initial,spanning_arb_runtime,num_nodes,num_leafs,avg_degree,min_degree,max_degree,root_degree,avg_depth,max_depth
+Mutagenicity,traditional,true,branch_uniform,2,1,1,1,4336,412804,3078719,807397,5293.569465,0.765427,4338,1671,1.626172,1,6,1,90.571692,162

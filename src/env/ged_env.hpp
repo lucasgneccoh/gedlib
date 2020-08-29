@@ -203,6 +203,18 @@ public:
 	 */
 	void run_method(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id);
 
+
+	/*!
+	 * @brief Added by Lucas. Sets the node map
+	 * @param[in] g_id ID of an input graph that has been added to the environment.
+	 * @param[in] h_id ID of an input graph that has been added to the environment.
+	 * @param[in] node_map NodeMap between g_id and h_id to add to the environment.
+	 * @param[in] lb Upper bound between g_id and h_id to add to the environment.
+	 * @param[in] ub Lower bound between g_id and h_id to add to the environment.
+	 * @param[in] runtime runtime between g_id and h_id to add to the environment.
+	 */
+	void set_calculation_values(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id, NodeMap node_map, double lb, double ub, Seconds runtime);
+
 	/*!
 	 * @brief Initializes the method specified by call to set_method().
 	 */

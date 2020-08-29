@@ -304,7 +304,7 @@ if __name__ == "__main__":
 	#base = "/home/lamsade/lgnecco"
 	base = "/home/lucas/Documents"
 	
-	suffix = "lucas"
+	suffix = "Letter"
 	verbose = True
 	
 	filename_input = base + "/stage/gedlib/compression/data/test_collections/collections_list_" + suffix + ".txt"

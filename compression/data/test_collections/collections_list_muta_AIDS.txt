@@ -1,0 +1,2 @@
+/home/lucas/Documents/stage/gedlib/compression/data/collections/AIDS.xml
+/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity.xml

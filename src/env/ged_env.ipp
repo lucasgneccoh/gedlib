@@ -552,7 +552,6 @@ template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 void
 GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel>::
 run_method(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id) {
-	//std::cout<<"Begin: run_method... ";
 	if (g_id >= ged_data_.num_graphs()) {
 		throw Error("The graph with ID " + std::to_string(g_id) + " has not been added to the environment.");
 	}
@@ -582,6 +581,36 @@ run_method(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id) {
 	}
 	else {
 		it->second = ged_method_->get_node_map();
+	}
+}
+
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+void
+GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel>::
+set_calculation_values(GEDGraph::GraphID g_id, GEDGraph::GraphID h_id, NodeMap node_map, double lb, double ub, Seconds runtime) {	
+	if (g_id >= ged_data_.num_graphs()) {
+		throw Error("The graph with ID " + std::to_string(g_id) + " has not been added to the environment.");
+	}
+	if (h_id >= ged_data_.num_graphs()) {
+		throw Error("The graph with ID " + std::to_string(h_id) + " has not been added to the environment.");
+	}
+	if (not initialized_) {
+		throw Error("The environment is uninitialized. Call init() after adding all graphs to the environment.");
+	}
+	if (not ged_method_) {
+		throw Error("No method has been set. Call set_method().");
+	}
+	
+	std::pair<GEDGraph::GraphID, GEDGraph::GraphID> key(g_id, h_id);
+	lower_bounds_[key] = lb;
+	upper_bounds_[key] = ub;
+	runtimes_[key] = runtime;
+	auto it = node_maps_.find(key);
+	if (it == node_maps_.end()) {
+		node_maps_.emplace(key, node_map);
+	}
+	else {
+		it->second = node_map;
 	}
 }
 
@@ -704,7 +733,7 @@ get_num_nodes(GEDGraph::GraphID graph_id) const {
 	return ged_data_.graph(graph_id).num_nodes();
 }
 
-// Not in original GEDLIB
+// Not in original GEDLIB: Added by Lucas
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 std::size_t
 GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel>::

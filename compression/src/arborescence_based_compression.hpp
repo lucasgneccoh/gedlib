@@ -67,6 +67,8 @@ public:
 
 	std::size_t compute_cost_triangular_matrix(std::size_t V, std::size_t  E, std::size_t b_ni, std::size_t b_na, std::size_t b_ei, std::size_t b_ea);
 
+	std::size_t compute_cost_abc(std::size_t V, std::size_t  E, std::size_t b_ni, std::size_t b_na, std::size_t b_ei, std::size_t b_ea);
+
 	template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 	std::size_t base_compr_cost_edge_pairs(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env, std::size_t &b_ni, std::size_t &b_na, std::size_t &b_ei, std::size_t &b_ea, std::size_t constant=0);
 
@@ -74,7 +76,8 @@ public:
 	template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 	std::size_t base_compr_cost_triangular_matrix(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env, std::size_t &b_ni, std::size_t &b_na, std::size_t &b_ei, std::size_t &b_ea, std::size_t constant=0);
 
-
+	template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+	std::size_t base_compr_cost_abc(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env, std::size_t &b_ni, std::size_t &b_na, std::size_t &b_ei, std::size_t &b_ea, std::size_t constant=0);
 
 	/*
 		Args can have the following fields:

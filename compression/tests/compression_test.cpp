@@ -29,7 +29,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 
 	for(std::size_t i = 0; i < num_trials; i++){
-		std::cout<<"Trial #"<<i<< " of "<< num_trials<<std::endl;
+		std::cout<<"Trial #"<<i+1<< " of "<< num_trials<<std::endl;
 
 
 		if(stdout>0) std::cout<<"**********    COMPRESS   ************"<<std::endl;
@@ -106,6 +106,40 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	}
 
 }
+
+void print_info(std::map<std::string, std::string> &args){
+
+
+	std::string file_preffix = args.at("file_preffix");
+	
+	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env;
+	ged::GED_ABC abc;
+	
+	std::map<std::string, std::map<std::string, std::vector<std::string>>> distribution;
+	std::map<std::string, std::map<std::string, std::set<std::string>>> alphabets;
+	std::map<std::string, std::map<std::string, std::size_t>> attr_sizes;
+	std::size_t b_ni, b_na, b_ei, b_ea;
+	bool fast_node_translate, fast_edge_translate;
+
+	std::vector<ged::GEDGraph::GraphID> graph_ids(env.load_gxl_graphs(
+		args.at("graph_dir"), args.at("collection_file"),
+			ged::Options::GXLNodeEdgeType::LABELED, ged::Options::GXLNodeEdgeType::LABELED));
+
+
+	abc.get_graphs_structure<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> (
+		env, distribution, alphabets, attr_sizes,b_ni, b_na, b_ei, b_ea, 
+		fast_node_translate,fast_edge_translate);
+
+
+	std::cout<<file_preffix<<":   "<<env.num_graphs()<<" graphs"<<std::endl;
+	std::cout<<"\tK Complexity a: "<< abc.base_compr_cost_triangular_matrix(env, b_ni, b_na, b_ei, b_ea,0) <<std::endl;
+	std::cout<<"\tK Complexity b: "<< abc.base_compr_cost_edge_pairs(env, b_ni, b_na, b_ei, b_ea,0) <<std::endl;
+	std::cout<<"\tFrom empty graph (abc) (relaxed): "<< abc.base_compr_cost_abc(env, b_ni, b_na, b_ei, b_ea,1) <<std::endl;
+	std::cout<<"\tFrom empty graph (abc) (non-relaxed): "<< abc.base_compr_cost_abc(env, b_ni, b_na, b_ei, b_ea,0) <<std::endl;
+	std::cout<<"----------------------------------------------------------------------"<<std::endl;	
+
+}
+
 
 int main(int argc, char* argv[]){
 
@@ -250,40 +284,47 @@ int main(int argc, char* argv[]){
         args.at("file_preffix") = input_dataset;
         
 
-        for(const auto k_sample:graph_sample_sizes){
-	        std::cout<<"*** START: "<<input_dataset<<", k_sample: "<<k_sample<<" % ***"<<std::endl;
-			try{
-				args.at("graph_sample_size") = k_sample;
+        if(args.at("stdout")=="99"){
+        	// Just get the info in the screen
+        	print_info(args);
+        }
+        else{
 
-				if(args.at("test_mode")=="true"){
-					for(const auto edit : edit_cost_type){
-						args.at("edit_cost_type") = edit;
-						if(edit == "mod"){
-							args.at("relaxed_compression") = "false";
-						} 
-						else{
-							args.at("relaxed_compression") = "true";
-						}
-						treat_dataset(args); 
+	        for(const auto k_sample:graph_sample_sizes){
+		        std::cout<<"*** START: "<<input_dataset<<", k_sample: "<<k_sample<<" % ***"<<std::endl;
+				try{
+					args.at("graph_sample_size") = k_sample;
+
+					if(args.at("test_mode")=="true"){
+						for(const auto edit : edit_cost_type){
+							args.at("edit_cost_type") = edit;
+							if(edit == "mod"){
+								args.at("relaxed_compression") = "false";
+							} 
+							else{
+								args.at("relaxed_compression") = "true";
+							}
+							treat_dataset(args); 
+							args.at("first_iteration") = "false";
+						}	
+					}
+					else{
+						treat_dataset(args);
 						args.at("first_iteration") = "false";
-					}	
-				}
-				else{
-					treat_dataset(args);
-					args.at("first_iteration") = "false";
-				}
+					}
 
-				
+					
 
+					
+				}
+				catch(const std::exception& e){
+					std::cout<<"main: Error during execution: "<<e.what()<<std::endl;
+					return 1;
+				}
 				
-			}
-			catch(const std::exception& e){
-				std::cout<<"main: Error during execution: "<<e.what()<<std::endl;
-				return 1;
-			}
-			
-			std::cout<<"*** END: "<<input_dataset<<" ***"<<std::endl;
-			
+				std::cout<<"*** END: "<<input_dataset<<" ***"<<std::endl;
+				
+			}	
 		}
 		
     }

@@ -531,6 +531,11 @@ std::size_t
 GED_ABC::
 compute_cost_triangular_matrix(std::size_t  V, std::size_t  E, std::size_t b_ni, std::size_t b_na, std::size_t b_ei, std::size_t b_ea){return b_ni + V*(V-1)/2 + V*b_na + E*b_ea;}
 
+std::size_t 
+GED_ABC::
+compute_cost_abc(std::size_t V, std::size_t  E, std::size_t b_ni, std::size_t b_na, std::size_t b_ei, std::size_t b_ea){return 2*b_ni + V * b_na + 1 + 3*b_ei + E*(2*b_ni + b_ea);}
+
+
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 std::size_t
 GED_ABC::
@@ -557,6 +562,19 @@ base_compr_cost_triangular_matrix(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdg
 	return total_cost_compression;
 }
 
+template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+std::size_t 
+GED_ABC::
+base_compr_cost_abc(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env, std::size_t &b_ni, std::size_t &b_na, std::size_t &b_ei, std::size_t &b_ea, std::size_t constant){
+	std::size_t total_cost_compression = 0;
+	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits = env.graph_ids();
+	for(ged::GEDGraph::GraphID i{limits.first}; i<limits.second; i++){
+		total_cost_compression += compute_cost_abc(env.get_num_nodes(i), env.get_num_edges(i), b_ni, b_na, b_ei, b_ea);
+		total_cost_compression += constant;
+	}
+	return total_cost_compression;
+}
+
 
 
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
@@ -576,6 +594,7 @@ print_compression_sets(
 	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &g1,
 	ged::ExchangeGraph<UserNodeID, UserNodeLabel, UserEdgeLabel> &g2
 	){
+	
 	std::cout<<"-------------------NODES----------------------"<<std::endl;
 	std::cout<<"v_d: deleted nodes"<<std::endl;
 	for(const auto & n : v_d){
@@ -2064,6 +2083,10 @@ compress_collection(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env,
 	double ref_time=0;
 	double ref_arb_time=0;
 
+	double lb, ub;
+	ged::Seconds last_runtime;
+	ged::NodeMap last_node_map = ged::NodeMap(1,1);
+	std::size_t aux_value=0;
 
 	if(refinement_size>0){
 
@@ -2114,6 +2137,20 @@ compress_collection(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env,
 		to_add = cost_extra_constant;
 		if(relaxed) to_add += b_ni;
 
+
+		std::size_t cont = 0;
+
+		for(std::size_t n =0; n<arborescence.size(); n++){
+			step=0;
+			node = n;
+			while(step<refinement_size && node!=root){
+				cont++;
+				node = arborescence.at(node);
+			}
+		}
+
+		ged::ProgressBar progress( cont );
+		if (stdout >0) std::cout << "\rComputing GED (refinement): " << progress << std::flush;
 		for(std::size_t n =0; n<arborescence.size(); n++){
 			step=0;
 			node = n;
@@ -2135,13 +2172,27 @@ compress_collection(ged::GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel> &env,
 					last_iter = this_iter;
 					
 				}
-				
+				// Save last values to replace them in the environment if they are better
+				lb = env_coded.get_lower_bound(i_par, j_par);
+				ub = env_coded.get_upper_bound(i_par, j_par);
+				last_runtime = ged::Seconds(env_coded.get_runtime(i_par, j_par));
+				last_node_map = env_coded.get_node_map(i_par, j_par);
+
 				env_coded.run_method(i_par, j_par);	
 				g1 = env_coded.get_graph(i_par, true, false, true);
 				g2 = env_coded.get_graph(j_par, true, false, true);	
-				upper_bounds_refined.at(i_par).at(j_par) = 
-					min(compute_induced_compression_cost(env_coded.get_node_map(i_par,j_par),g1,g2, b_ni, b_na, b_ei,b_ea)+ to_add, upper_bounds.at(i_par).at(j_par));
+				
+				aux_value = compute_induced_compression_cost(env_coded.get_node_map(i_par,j_par),g1,g2, b_ni, b_na, b_ei,b_ea)+ to_add;
+				if(aux_value < upper_bounds.at(i_par).at(j_par) ){
+					upper_bounds_refined.at(i_par).at(j_par) = aux_value;
+				}
+				else{
+					// Get to initial values
+					env_coded.set_calculation_values(i_par, j_par, last_node_map, lb, ub, last_runtime);
+				}
 				node = arborescence.at(node);
+				progress.increment();
+				if (stdout >0) std::cout << "\rComputing GED (refinement): " << progress << std::flush;
 			}
 		}
 

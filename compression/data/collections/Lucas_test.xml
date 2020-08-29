@@ -1,16 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE GraphCollection SYSTEM "http://www.inf.unibz.it/~blumenthal/dtd/GraphCollection.dtd">
 <GraphCollection>
-	<graph file="g1.gxl" class="1"/>
-	<graph file="g2.gxl" class="1"/>	
-	<graph file="g3.gxl" class="1"/>
-	<graph file="g4.gxl" class="1"/>
-	<graph file="g5.gxl" class="1"/>	
-	<graph file="g6.gxl" class="1"/>	
-	<graph file="g7.gxl" class="1"/>
-	<graph file="g8.gxl" class="1"/>
-	<graph file="g9.gxl" class="1"/>
-	<graph file="g10.gxl" class="1"/>
-	<graph file="g11.gxl" class="1"/>
-	<graph file="g12.gxl" class="1"/>		
+	<graph file="gg0.gxl" class="1"/>
+	<graph file="gg1.gxl" class="1"/>	
 </GraphCollection>

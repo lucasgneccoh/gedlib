@@ -5,7 +5,7 @@ exec_name="abc"
 root_dir="/home/lucas/Documents"
 #root_dir="/home/lamsade/lgnecco"
 
-suffix="Letter"
+suffix="pah"
 num_trials="1"
 test_mode="false"
 
@@ -20,21 +20,21 @@ file_preffix=$root_dir"/stage/gedlib/compression/data/test_collections/dataset_"
 
 k_sample_file=$root_dir"/stage/gedlib/compression/data/test_collections/k_sample_file.txt"
 
-output_results_file=$root_dir"/stage/gedlib/compression/data/output/compressed/results_compression_protein_short.csv"
+output_results_file=$root_dir"/stage/gedlib/compression/data/output/compressed/results_refinement_2.csv"
 
-ged_method="branch_uniform"
+ged_method="branch_fast"
 ged_method_options="24"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
-refinement_size="0"
+refinement_size="999999"
 
 write_ged_matrix="true"
 write_arb="true"
 write_results="true"
 
 
-edit_cost_type="mod"
-relaxed_coding="false"
+edit_cost_type="trad"
+relaxed_coding="true"
 
 echo -ne '\007'
 echo "execute"

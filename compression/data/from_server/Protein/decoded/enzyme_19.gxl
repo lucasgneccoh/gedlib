@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
-<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
-<graph id="enzyme_19.gxl" edgeids="false" edgemode="undirected">
-<node id="_0"><attr name="aaLength"><TYPENAME>22</TYPENAME></attr><attr name="sequence"><TYPENAME>DSLVLYNRVAVQGDVVRELKAK</TYPENAME></attr><attr name="type"><TYPENAME>0</TYPENAME></attr></node>
-<node id="_1"><attr name="aaLength"><TYPENAME>24</TYPENAME></attr><attr name="sequence"><TYPENAME>PKEDVDAAVKQLLSLKAEYKEKTG</TYPENAME></attr><attr name="type"><TYPENAME>0</TYPENAME></attr></node>
-<edge from="_0" to="_1"><attr name="distance0"><TYPENAME>25.19745</TYPENAME></attr><attr name="distance1"><TYPENAME>default</TYPENAME></attr><attr name="frequency"><TYPENAME>1</TYPENAME></attr><attr name="type0"><TYPENAME>1</TYPENAME></attr><attr name="type1"><TYPENAME>default</TYPENAME></attr></edge>
-</graph>
-</gxl>
