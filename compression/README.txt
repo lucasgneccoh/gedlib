@@ -1,13 +1,14 @@
 # To make the codes work:
 1. Install gedlib by runing the install.py file from the gedlib folder
-2. Go to gedlib/compression/build and delete everyting but the run.sh file
-3. Open a terminal and execute the following commands:
+2. Go to the compression folder and run the create_directories.sh file. If you dont want or cant run it, you will have to create all the folders yourself to avoid problems with the output of the compression method.
+3. Go to gedlib/compression/build
+4. Open a terminal and execute the following commands:
 	cmake ..
 	make
-4. Now you can execute the compression code using the run.sh file. Change the variable values and run it in the same terminal 
-	bash run.sh
+5. Now you can execute the compression_test.cpp code. The executable is called by default "abc" and is stored in the bin folder. To execute it from the terminal assuming you are still in the build directory:
+	./../bin/abc
+Note: This execution will by default run all the tests, on all the datasets. This will take a lot of time. So if you want to test the method in some datasets and with less iterations per dataset, go to gedlib/compression/tests/compression_test.cpp, modify the inputs in the source code, compile using make in the build folder, and execute as in 5.
 
-NOTE: The run.sh file has a structure that depends on the code for now. As I have been doing different tests, you will find variables that are not used.
 
 The general structure of the compression folder is the following. Use the create_directories.sh file to create the data folder that has many folders inside
 
