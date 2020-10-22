@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<gxl>
-<graph id="g1" edgeids="true" edgemode="undirected">
-<node id="1"><attr name="letra"><string>A</string></attr>
-<attr name="float"><string>1.100000</string></attr></node>
-</graph>
-</gxl>

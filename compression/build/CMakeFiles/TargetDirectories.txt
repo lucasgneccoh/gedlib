@@ -1,4 +1,0 @@
-/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/rebuild_cache.dir
-/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/edit_cache.dir
-/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/abc.dir
-/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/abc_compression.dir

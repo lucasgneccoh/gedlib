@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<gxl>
-<graph id="g6" edgeids="true" edgemode="undirected">
-<node id="1"><attr name="letra"><string>Z</string></attr>
-<attr name="float"><string>4.400000</string></attr></node>
-<node id="2"><attr name="letra"><string>B</string></attr>
-<attr name="float"><string>2.200000</string></attr></node>
-</graph>
-</gxl>

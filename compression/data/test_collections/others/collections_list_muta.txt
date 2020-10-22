@@ -1,5 +1,0 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_very_short.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_very_short.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_short.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity_sample_long.xml

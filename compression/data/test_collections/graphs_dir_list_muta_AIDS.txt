@@ -1,2 +1,0 @@
-/home/lucas/Documents/stage/gedlib/data/datasets/AIDS/data
-/home/lucas/Documents/stage/gedlib/data/datasets/Mutagenicity/data

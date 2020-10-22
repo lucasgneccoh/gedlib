@@ -1,4 +1,0 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Letter.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Protein.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/AIDS.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Mutagenicity.xml

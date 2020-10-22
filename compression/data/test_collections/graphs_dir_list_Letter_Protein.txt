@@ -1,2 +1,0 @@
-/home/lucas/Documents/stage/gedlib/data/datasets/Letter/MED
-/home/lucas/Documents/stage/gedlib/data/datasets/Protein/data

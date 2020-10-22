@@ -1,3 +1,0 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/acyclic.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/mao.xml
-/home/lucas/Documents/stage/gedlib/compression/data/collections/pah.xml

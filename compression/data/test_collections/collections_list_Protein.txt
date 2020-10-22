@@ -1,1 +1,0 @@
-/home/lucas/Documents/stage/gedlib/compression/data/collections/Protein.xml
