@@ -53,64 +53,74 @@ CMAKE_BINARY_DIR = /home/lucas/Documents/stage/gedlib/compression/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: src/all
+all: CMakeFiles/abc.dir/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: src/preinstall
+preinstall:
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: src/clean
+clean: CMakeFiles/abc.dir/clean
+clean: CMakeFiles/abc_compression.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory src
-
-# Recursive "all" directory target.
-src/all: src/CMakeFiles/arborescence_based_compression.dir/all
-
-.PHONY : src/all
-
-# Recursive "preinstall" directory target.
-src/preinstall:
-
-.PHONY : src/preinstall
-
-# Recursive "clean" directory target.
-src/clean: src/CMakeFiles/arborescence_based_compression.dir/clean
-
-.PHONY : src/clean
-
-#=============================================================================
-# Target rules for target src/CMakeFiles/arborescence_based_compression.dir
+# Target rules for target CMakeFiles/abc.dir
 
 # All Build rule for target.
-src/CMakeFiles/arborescence_based_compression.dir/all:
-	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/depend
-	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=1,2 "Built target arborescence_based_compression"
-.PHONY : src/CMakeFiles/arborescence_based_compression.dir/all
+CMakeFiles/abc.dir/all:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/depend
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num=1,2 "Built target abc"
+.PHONY : CMakeFiles/abc.dir/all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/arborescence_based_compression.dir/rule: cmake_check_build_system
+CMakeFiles/abc.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/arborescence_based_compression.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/abc.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/arborescence_based_compression.dir/rule
+.PHONY : CMakeFiles/abc.dir/rule
 
 # Convenience name for target.
-arborescence_based_compression: src/CMakeFiles/arborescence_based_compression.dir/rule
+abc: CMakeFiles/abc.dir/rule
 
-.PHONY : arborescence_based_compression
+.PHONY : abc
 
 # clean rule for target.
-src/CMakeFiles/arborescence_based_compression.dir/clean:
-	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/clean
-.PHONY : src/CMakeFiles/arborescence_based_compression.dir/clean
+CMakeFiles/abc.dir/clean:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/clean
+.PHONY : CMakeFiles/abc.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/abc_compression.dir
+
+# All Build rule for target.
+CMakeFiles/abc_compression.dir/all: CMakeFiles/abc.dir/all
+	$(MAKE) -f CMakeFiles/abc_compression.dir/build.make CMakeFiles/abc_compression.dir/depend
+	$(MAKE) -f CMakeFiles/abc_compression.dir/build.make CMakeFiles/abc_compression.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles --progress-num= "Built target abc_compression"
+.PHONY : CMakeFiles/abc_compression.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/abc_compression.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/abc_compression.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles 0
+.PHONY : CMakeFiles/abc_compression.dir/rule
+
+# Convenience name for target.
+abc_compression: CMakeFiles/abc_compression.dir/rule
+
+.PHONY : abc_compression
+
+# clean rule for target.
+CMakeFiles/abc_compression.dir/clean:
+	$(MAKE) -f CMakeFiles/abc_compression.dir/build.make CMakeFiles/abc_compression.dir/clean
+.PHONY : CMakeFiles/abc_compression.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

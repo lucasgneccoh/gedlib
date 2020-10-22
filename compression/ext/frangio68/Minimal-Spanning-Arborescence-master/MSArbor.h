@@ -97,25 +97,26 @@ class MSArbor
 /*--------------------------------------------------------------------------*/
 /*---------------------------- PUBLIC TYPES --------------------------------*/
 /*--------------------------------------------------------------------------*/
-
+  // MODIFIY HERE ****
   typedef unsigned int  Index;          ///< arc or node index ( >= 0 )
   typedef Index          *Index_Set;      ///< set (array) of indices
   typedef const Index    cIndex;          ///< a read-only Index
   typedef cIndex        *cIndex_Set;      ///< read-only array
-  static cIndex InINF = std::numeric_limits<unsigned int>::max();            ///< the largest Index
+  static cIndex InINF = std::numeric_limits<Index>::max();            ///< the largest Index
 
-  typedef unsigned int          CNumber;        /**< type of arc costs: since the
+  typedef Index CNumber;        /**< type of arc costs: since the
 					     cost matrix is re-used to store
 					     node names, it not should be
 					     (too) "smaller" than Index */
   typedef CNumber        *CRow;           ///< vector of costs
   typedef const CNumber  cCNumber;        ///< a read-only cost
   typedef cCNumber      *cCRow;           ///< read-only cost array
-  static cCNumber C_INF = std::numeric_limits<unsigned int>::max();          /**< the largest arc cost is
+  static cCNumber C_INF = std::numeric_limits<CNumber>::max();          /**< the largest arc cost is
                                              C_INF - 2, as C_INF - 1 means
                                              "no arc is here" and C_INF is
                                              reserved */
 
+// MODIFIY HERE ****
   typedef std::size_t             FONumber;       /**< type of objective function
 					     values; should be able to hold
 					     something like (max arc cost)
@@ -309,7 +310,7 @@ inline MSArbor::Index MSArbor::GetN( void ) const
 
 /*--------------------------------------------------------------------------*/
 
- };  // end( namespace MSA_di_unipi_it )
+ }  // end( namespace MSA_di_unipi_it )
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

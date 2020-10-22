@@ -48,6 +48,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <typeinfo>
+#include <sys/stat.h>
 #ifdef _OPENMP
 #include <omp.h>
 #endif

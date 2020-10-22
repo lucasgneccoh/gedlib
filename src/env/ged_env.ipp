@@ -741,6 +741,8 @@ get_num_edges(GEDGraph::GraphID graph_id) const {
 	return ged_data_.graph(graph_id).num_edges();
 }
 
+
+
 template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 double
 GEDEnv<UserNodeID, UserNodeLabel, UserEdgeLabel>::

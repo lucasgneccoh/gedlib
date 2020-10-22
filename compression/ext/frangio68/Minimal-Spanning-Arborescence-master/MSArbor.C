@@ -150,7 +150,8 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
   while( LABEL[ ACTIVE[ Ubot ] ] )
    Ubot++;
 
-  Index h = STACK[ 0 ] = ACTIVE[ Ubot ];
+  //Index h = STACK[ 0 ] = ACTIVE[ Ubot ];
+  STACK[ 0 ] = ACTIVE[ Ubot ];
   Index Stop = 0;
   Index status;
 
@@ -196,7 +197,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
        status = RCON;  // h r-linked  
       }
     else
-     if( ctv == lmin )  // WARNING: some epsilon might be needed here
+     if( ctv == lmin ) { // WARNING: some epsilon might be needed here // Añadi {}
       if( ( label2 < Stage ) && ( label2 > 0 ) ) {
        // i is a (currently) minimum r-connected node
        // choose i ONLY IF v is not already connected to the root;
@@ -215,6 +216,7 @@ MSArbor::FONumber MSArbor::Solve( cCRow C , CRow RC )
         t = i;
         status = SCAN;
         }
+      }
     }  // end for( j ): processing active node i
 
    // now, ( t , v ) is the minimum arc entering v: LINE[ t ] = kmin;

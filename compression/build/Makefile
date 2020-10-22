@@ -111,17 +111,57 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named arborescence_based_compression
+# Target rules for targets named abc
 
 # Build rule for target.
-arborescence_based_compression: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 arborescence_based_compression
-.PHONY : arborescence_based_compression
+abc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abc
+.PHONY : abc
 
 # fast build rule for target.
-arborescence_based_compression/fast:
-	$(MAKE) -f src/CMakeFiles/arborescence_based_compression.dir/build.make src/CMakeFiles/arborescence_based_compression.dir/build
-.PHONY : arborescence_based_compression/fast
+abc/fast:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/build
+.PHONY : abc/fast
+
+#=============================================================================
+# Target rules for targets named abc_compression
+
+# Build rule for target.
+abc_compression: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 abc_compression
+.PHONY : abc_compression
+
+# fast build rule for target.
+abc_compression/fast:
+	$(MAKE) -f CMakeFiles/abc_compression.dir/build.make CMakeFiles/abc_compression.dir/build
+.PHONY : abc_compression/fast
+
+tests/compression_test.o: tests/compression_test.cpp.o
+
+.PHONY : tests/compression_test.o
+
+# target to build an object file
+tests/compression_test.cpp.o:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/tests/compression_test.cpp.o
+.PHONY : tests/compression_test.cpp.o
+
+tests/compression_test.i: tests/compression_test.cpp.i
+
+.PHONY : tests/compression_test.i
+
+# target to preprocess a source file
+tests/compression_test.cpp.i:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/tests/compression_test.cpp.i
+.PHONY : tests/compression_test.cpp.i
+
+tests/compression_test.s: tests/compression_test.cpp.s
+
+.PHONY : tests/compression_test.s
+
+# target to generate assembly for a file
+tests/compression_test.cpp.s:
+	$(MAKE) -f CMakeFiles/abc.dir/build.make CMakeFiles/abc.dir/tests/compression_test.cpp.s
+.PHONY : tests/compression_test.cpp.s
 
 # Help Target
 help:
@@ -131,7 +171,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... arborescence_based_compression"
+	@echo "... abc"
+	@echo "... abc_compression"
+	@echo "... tests/compression_test.o"
+	@echo "... tests/compression_test.i"
+	@echo "... tests/compression_test.s"
 .PHONY : help
 
 

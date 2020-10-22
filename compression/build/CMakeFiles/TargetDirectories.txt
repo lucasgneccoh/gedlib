@@ -1,5 +1,4 @@
 /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/rebuild_cache.dir
 /home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/edit_cache.dir
-/home/lucas/Documents/stage/gedlib/compression/build/src/CMakeFiles/rebuild_cache.dir
-/home/lucas/Documents/stage/gedlib/compression/build/src/CMakeFiles/edit_cache.dir
-/home/lucas/Documents/stage/gedlib/compression/build/src/CMakeFiles/arborescence_based_compression.dir
+/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/abc.dir
+/home/lucas/Documents/stage/gedlib/compression/build/CMakeFiles/abc_compression.dir
