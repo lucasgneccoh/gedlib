@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<gxl>
+<graph id="g1" edgeids="true" edgemode="undirected">
+<node id="1"></node>
+<node id="2"></node>
+<node id="3"></node>
+<node id="4"></node>
+<node id="5"></node>
+<edge from="1" to="2"></edge>
+<edge from="1" to="3"></edge>
+<edge from="2" to="4"></edge>
+<edge from="4" to="5"></edge>
+</graph>
+</gxl>

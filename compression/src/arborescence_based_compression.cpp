@@ -436,16 +436,29 @@ get_all_compression_sets(ged::NodeMap node_map,
 			e_nd.emplace_back(edge.first); // in G1.edge_list
 		}
 		else{
-			if(g2.adj_matrix[node_map.image(edge.first.first)][node_map.image(edge.first.second)]==0){
+			if(g2.adj_matrix[node_map.image(edge.first.first)][node_map.image(edge.first.second)]==0 && g2.adj_matrix[node_map.image(edge.first.second)][node_map.image(edge.first.first)]==0){
 				e_ed.emplace_back(edge.first); // in G1.edge_list
 			}
 			else{
-				if(compare_label(edge.second,g2.edge_labels.at(std::make_pair(node_map.image(edge.first.first),node_map.image(edge.first.second))))){
-					e_is.emplace_back(edge.first); // in G1.edge_list
+				if(g2.adj_matrix[node_map.image(edge.first.first)][node_map.image(edge.first.second)]==1){
+
+					if(compare_label(edge.second,g2.edge_labels.at(std::make_pair(node_map.image(edge.first.first),node_map.image(edge.first.second))))){
+						e_is.emplace_back(edge.first); // in G1.edge_list
+					}
+					else{
+						e_s.emplace_back(edge.first); // in G1.edge_list
+						phi_s.emplace_back(g2.edge_labels.at(std::make_pair(node_map.image(edge.first.first),node_map.image(edge.first.second))));
+					}
 				}
 				else{
-					e_s.emplace_back(edge.first); // in G1.edge_list
-					phi_s.emplace_back(g2.edge_labels.at(std::make_pair(node_map.image(edge.first.first),node_map.image(edge.first.second))));
+					if(compare_label(edge.second,g2.edge_labels.at(std::make_pair(node_map.image(edge.first.second),node_map.image(edge.first.first))))){
+						e_is.emplace_back(edge.first); // in G1.edge_list
+					}
+					
+					else{
+						e_s.emplace_back(edge.first); // in G1.edge_list
+						phi_s.emplace_back(g2.edge_labels.at(std::make_pair(node_map.image(edge.first.second),node_map.image(edge.first.first))));
+					}
 				}
 			}		
 		}
@@ -463,7 +476,7 @@ get_all_compression_sets(ged::NodeMap node_map,
 			phi_ni.emplace_back(edge2.second);			
 		}
 		else{
-			if(g1.adj_matrix[node_map.pre_image(edge2.first.first)][node_map.pre_image(edge2.first.second)]==0){
+			if(g1.adj_matrix[node_map.pre_image(edge2.first.first)][node_map.pre_image(edge2.first.second)]==0 && g1.adj_matrix[node_map.pre_image(edge2.first.second)][node_map.pre_image(edge2.first.first)]==0){
 				e_ei.emplace_back(edge2.first); // in G2.edge_list
 				phi_ei.emplace_back(edge2.second);
 			}
@@ -1339,9 +1352,6 @@ create_info_file(bool binary, std::string path, std::string file_preffix,
 	std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> limits;
 	limits = env.graph_ids();
 
-		//AQUI
-		//stdout = 4;
-
 	// info_file
 	if(ofile.is_open()){
 
@@ -1557,6 +1567,7 @@ encode_single_graph(bool binary, bool relaxed, std::string path,
 
 	get_all_compression_sets<UserNodeID, UserNodeLabel, UserEdgeLabel>(node_map,v_d,v_i,varphi_i,v_s,v_is,varphi_s,e_nd,e_ed,e_ni,e_ei,
 		phi_ni,phi_ei,e_s,e_is,phi_s,g1,g2);
+
 	if (stdout>3) print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
 
 	node_map_id_before = graph_permutations.at(parent_num);
@@ -2415,12 +2426,12 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 
 	std::size_t V1=0, V2=0;
 
-	std::vector<std::vector<bool>> already_calculated(limits.second, std::vector<bool>(limits.second-1,false));
-
 
 	auto start_gedlib = std::chrono::high_resolution_clock::now();
 	runtime = start_gedlib - start_init;
 	double initialization_time = runtime.count();
+	bool add_following = false;
+	if(args.count("path_structure")>0 && args.at("path_structure")=="true") add_following = true;
 
 	for(i_par = limits.first; i_par<limits.second; i_par++){
 		
@@ -2428,7 +2439,10 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 		// get the k graphs to calculate the distance to 
 		if(!complete && i_par != empty_id){
 			subset.clear();
-			subset = random_sample(population, graph_sample_size, i_par);			
+			subset = random_sample(population, graph_sample_size, i_par);
+			// If we are working with the msts that have a "path" relationship, add the following graph
+			if(add_following && i_par+1 != empty_id && std::find(subset.begin(), subset.end(), i_par+1)==subset.end()) subset.emplace_back(i_par+1);
+
 		}
 		else{
 			subset = population; // Does not matter
@@ -2460,7 +2474,7 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 						}						
 						g2 = env_coded.get_graph(j_par, true, false, true);						
 						env_coded.run_method(i_par,j_par);	
-						already_calculated.at(i_par).at(j_par) = true;	
+						//already_calculated.at(i_par).at(j_par) = true;	
 						upper_bounds[i_par + (limits.second)*j_par] = static_cast<ged_type>(compute_induced_compression_cost(env_coded.get_node_map(i_par,j_par), g1, g2, b_ni, b_na, b_ei,b_ea)+ to_add);
 						progress.increment();
 						if (stdout >0) std::cout << "\rComputing GED: " << progress << std::flush;
@@ -2476,6 +2490,34 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 		aux_string = output_other + "/"+ file_preffix +"_GEDmatrix_k_" + std::to_string(graph_sample_size) + ".csv";
 		write_matrix(aux_string, upper_bounds, limits.second);
 	}
+
+	
+	// AQUI
+	/*
+	std::vector<ged::GEDGraph::NodeID> v_d, v_i, v_s, v_is, v_i_aux;
+	std::vector<UserNodeLabel> varphi_i, varphi_s, varphi_i_aux;
+	std::vector<std::pair<ged::GEDGraph::NodeID,ged::GEDGraph::NodeID>> e_nd, e_ed, e_ni, e_ei, e_s, e_is;
+	std::vector<UserEdgeLabel> phi_ni, phi_ei, phi_s;
+	std::map<std::size_t,std::size_t> v_i_map;
+
+	std::size_t from, to;
+	from = 0;
+	to = 1;
+	ged::NodeMap node_map_aux = ged::NodeMap(1,1);
+	ged::NodeMap node_map_id = ged::NodeMap(1,1);
+	ged::NodeMap node_map_id_before = ged::NodeMap(1,1);
+	ged::NodeMap node_map = env_coded.get_node_map(from, to);
+	std::cout<<node_map<<std::endl;
+	g1 = env_coded.get_graph(from, true, false, true); // edge list and adj matrix
+	g2 = env_coded.get_graph(to, true, false, true); // edge list and adj matrix
+	std::cout<<compute_induced_compression_cost(node_map,g1,g2, b_ni, b_na, b_ei,b_ea)<<std::endl;
+	std::cout<<from<<" -> "<<to<<std::endl;
+	get_all_compression_sets<UserNodeID, UserNodeLabel, UserEdgeLabel>(node_map,v_d,v_i,varphi_i,v_s,v_is,varphi_s,e_nd,e_ed,e_ni,e_ei,
+		phi_ni,phi_ei,e_s,e_is,phi_s,g1,g2);
+	print_compression_sets(v_d,v_i,v_s,v_is,e_nd,e_ed,e_ni,e_ei,e_s,e_is, g1, g2);
+	return;
+	*/
+	// AQUI
 	
 	auto start_arb = std::chrono::high_resolution_clock::now();
 	runtime = start_arb - start_gedlib;
@@ -2599,13 +2641,13 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 						last_iter = this_iter;
 						
 					}
-					if(already_calculated.at(i_par).at(j_par)){
+					//if(already_calculated.at(i_par).at(j_par)){
 						// Save last values to replace them in the environment if they are better
 						lb = env_coded.get_lower_bound(i_par, j_par);
 						ub = env_coded.get_upper_bound(i_par, j_par);
 						last_runtime = ged::Seconds(env_coded.get_runtime(i_par, j_par));
 						last_node_map = env_coded.get_node_map(i_par, j_par);	
-					}
+					//}
 			
 					env_coded.run_method(i_par, j_par);	
 					
@@ -2617,10 +2659,10 @@ compress_collection(bool binary, bool relaxed, std::string graph_dir, std::strin
 						upper_bounds[i_par + (limits.second)*j_par] = aux_value;
 					}
 					else{
-						if(already_calculated.at(i_par).at(j_par)){
+						//if(already_calculated.at(i_par).at(j_par)){
 							// Put initial values and forget about the new calculation
 							env_coded.set_calculation_values(i_par, j_par, last_node_map, lb, ub, last_runtime);	
-						}
+						//}
 					}
 				}
 				node = arborescence.at(node);
@@ -4076,8 +4118,6 @@ decode_collection(bool binary, bool relaxed, ged::GEDEnv<UserNodeID, UserNodeLab
 			graph_classes.emplace_back(aux_string);				
 		}
 
-		//AQUI
-		//stdout = 5;
 
 		// arborescence
 		arborescence.clear();
@@ -4335,10 +4375,6 @@ decode_collection(bool binary, bool relaxed, ged::GEDEnv<UserNodeID, UserNodeLab
 		throw compression_exception("Unable to open info_file. Stopping decode execution");
 		
 	}
-
-
-	//AQUI
-	//	stdout = 2;
 
 	// Decode graphs
 

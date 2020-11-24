@@ -1,11 +1,30 @@
 #define GXL_GEDLIB_SHARED
 #include "../src/arborescence_based_compression.hpp"
-#include <ctime>
-
+#include <cstdlib>
 
 /*
 	Util functions
 */
+
+class test_exception : public std::exception{
+	public:
+	    test_exception(const std::string& msg) : m_msg(msg)
+	    {}
+
+	   ~test_exception()
+	   {
+	        std::cout << "test_exception::~test_exception" << std::endl;
+	   }
+
+	   virtual const char* what() const throw () 
+	   {
+	        std::cout << "test_exception - what:" << std::endl;
+	        return m_msg.c_str();
+	   }
+
+	   const std::string m_msg;
+};
+
 template<class T>
 double mean(std::vector<T> x){
 	T sum = 0;
@@ -141,8 +160,24 @@ get_dataset_attr_types(std::string dataset){
 		ans.at("node_attr").emplace(std::make_pair("element", 's'));
 		ans.at("node_attr").emplace(std::make_pair("charge", 'i'));
 		ans.at("node_attr").emplace(std::make_pair("aromatic", 's'));
-		//ans.at("node_attr").emplace(std::make_pair("hcount", 'i'));
+		ans.at("node_attr").emplace(std::make_pair("hcount", 'i'));
 		ans.at("edge_attr").emplace(std::make_pair("order", 'f'));
+		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
+		return ans;
+	}
+
+	if(dataset=="msts_float_w"){
+		ans.at("edge_attr").emplace(std::make_pair("w", 'f'));
+		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
+		return ans;
+	}
+	if(dataset=="msts_int_w"){
+		ans.at("edge_attr").emplace(std::make_pair("w", 'i'));
+		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
+		return ans;
+	}
+	if(dataset=="msts_no_w"){
+		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
 
@@ -188,30 +223,33 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	ged::GED_ABC abc;
 	std::size_t num_trials = std::stoi(args.at("num_trials"));
 
-	std::clock_t c_start, c_end;
 	double comp_time, decomp_time, write_time;
-
-	// Old approach
+	
 	auto start = std::chrono::high_resolution_clock::now();
 	auto end = std::chrono::high_resolution_clock::now();
 	ged::Seconds runtime;
 
-	ged::Options::GXLNodeEdgeType node_type = ged::Options::GXLNodeEdgeType::LABELED;
-	ged::Options::GXLNodeEdgeType edge_type = ged::Options::GXLNodeEdgeType::LABELED;
+	// AQUI
+	std::cout<<"Types: nodes: "<<attr_types.at("node_attr").size() << std::endl;
+	std::cout<<"Types: edges: "<<attr_types.at("edge_attr").size() << std::endl;
+
+
+	ged::Options::GXLNodeEdgeType node_type = attr_types.at("node_attr").size()>0 ? ged::Options::GXLNodeEdgeType::LABELED : ged::Options::GXLNodeEdgeType::UNLABELED;
+	ged::Options::GXLNodeEdgeType edge_type = attr_types.at("edge_attr").size()>0 ? ged::Options::GXLNodeEdgeType::LABELED : ged::Options::GXLNodeEdgeType::UNLABELED;
 	std::unordered_set<std::string>  irrelevant_node_attributes;
 	std::unordered_set<std::string>  irrelevant_edge_attributes;
 
 	std::cout<<"Working on : "<<file_preffix<<std::endl;
 
 
-	for(std::size_t i = 0; i < num_trials; i++){
-		std::cout<<"Trial #"<<i+1<< " of "<< num_trials<<std::endl;
+	for(std::size_t num_t = 0; num_t < num_trials; num_t++){
+		std::cout<<"Trial #"<<num_t+1<< " of "<< num_trials<<std::endl;
 		headers.clear();
 		values.clear();
 		if(!decomp_only){
 		if(stdout>0) std::cout<<"**********    COMPRESS   ************"<<std::endl;
 		try{
-			c_start = std::clock();
+			
 			start = std::chrono::high_resolution_clock::now();
 
 			abc.set_omega(0.2);
@@ -227,21 +265,22 @@ void treat_dataset(std::map<std::string, std::string> &args){
 				file_preffix, args, stdout, headers, values,
 				separator_1, separator_2);
 
-			c_end = std::clock();
+			
 			end = std::chrono::high_resolution_clock::now();
 
-			comp_time = static_cast<double>(c_end-c_start) / CLOCKS_PER_SEC;
 			runtime = end - start;
-			//comp_time = runtime.count();
+			comp_time = runtime.count();
 			std::cout<<"Comp :"<<comp_time<<" , "<<runtime.count()<<std::endl;
 
 		}
 		catch(const std::exception& e){ throw; }
 
 		}	
+
+
 		if(stdout>0) std::cout<<"************    DECOMPRESS   **************"<<std::endl;		
 		try{		
-			c_start = std::clock();
+			
 			start = std::chrono::high_resolution_clock::now();
 
 			env_decoded = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
@@ -250,13 +289,11 @@ void treat_dataset(std::map<std::string, std::string> &args){
 				env_decoded,
 				output_root + "/encoded" + folder_suffix, file_preffix, args, stdout,
 				separator_1, separator_2);
-
-			c_end = std::clock();
+			
 			end = std::chrono::high_resolution_clock::now();
 
-			decomp_time = static_cast<double>(c_end-c_start) / CLOCKS_PER_SEC;
 			runtime = end - start;
-			//decomp_time = runtime.count();
+			decomp_time = runtime.count();
 			std::cout<<"decomp :"<<decomp_time<<" , "<<runtime.count()<<std::endl;
 		}
 		catch(const std::exception& e){ throw; }
@@ -265,7 +302,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 		if(stdout>0) std::cout<<"**********    WRITE GRAPHS    ************"<<std::endl;	
 		
 		try{
-			c_start = std::clock();
+			
 			start = std::chrono::high_resolution_clock::now();
 
 			std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> graph_ids;
@@ -278,13 +315,11 @@ void treat_dataset(std::map<std::string, std::string> &args){
 				env_decoded.save_as_gxl_graph(i,  output_root + "/decoded" + folder_suffix + "/" + env_decoded.get_graph_name(i));	
 			}
 			env_decoded.save_graph_collection(output_root + "/decoded" + folder_suffix + "/" + file_preffix + ".xml",  gxl_file_names,  graph_classes);
-			
-			c_end = std::clock();
+						
 			end = std::chrono::high_resolution_clock::now();
 
-			write_time = static_cast<double>(c_end-c_start) / CLOCKS_PER_SEC;
 			runtime = end - start;
-			//write_time = runtime.count();
+			write_time = runtime.count();
 			std::cout<<"Write :"<<write_time<<" , "<<runtime.count()<<std::endl;
 		}
 		catch(const std::exception& e){
@@ -306,6 +341,24 @@ void treat_dataset(std::map<std::string, std::string> &args){
 			values.emplace_back(std::to_string(write_time));
 		}
 
+		if(stdout>0) std::cout<<"**********    COMPRESS WITH TAR    ************"<<std::endl;
+
+		std::string dir = output_root + "/encoded" + folder_suffix;
+		std::string folder_to_tar = "tar -cjf " + dir + ".tar.bz --directory=" + output_root + " " +  "encoded" + folder_suffix;
+		int sys_ans = 0;
+		sys_ans = std::system(folder_to_tar.c_str());
+		std::size_t tar_size;
+		if (sys_ans==0){
+			if(stdout>0) std::cout<<"Collections compressed"<<std::endl;
+		}
+		else{
+			throw(test_exception("Error while compressing encoded folder"));
+		}
+		tar_size = abc.get_file_size(dir + ".tar.bz");
+		headers.emplace_back("tar_compressed_size");
+		values.emplace_back(std::to_string(tar_size));
+
+
 		if(stdout>0) std::cout<<"**********    WRITE TEST RESULTS    ************"<<std::endl;	
 
 
@@ -320,7 +373,8 @@ void treat_dataset(std::map<std::string, std::string> &args){
 		if(args.count("write_results")>0 && args.at("write_results")=="true"){
 
 			std::ofstream output_file;
-			output_file.open(args.at("output_results_file").c_str(), ios::out | ios::app);
+			std::string out_file_str = args.at("output_root") + "/" + args.at("output_results_file");
+			output_file.open(out_file_str.c_str(), ios::out | ios::app);
 			
 			if(output_file.is_open()){
 				if(args.at("first_iteration")=="true"){
@@ -880,7 +934,7 @@ void print_info(std::map<std::string, std::string> &args){
 
 std::string get_graph_dir(std::string ds){
 	std::string base = "../../data/datasets/";
-	if(ds=="acyclic" || ds=="mao" || ds=="pah"){
+	if(ds=="acyclic" || ds=="mao" || ds=="pah" || ds=="msts_float_w" || ds=="msts_int_w" || ds=="msts_no_w" || ds=="Lucas"){
 		return base + ds;
 	}
 	if(ds=="AIDS" || ds=="Mutagenicity" ||ds=="Protein"){
@@ -895,9 +949,25 @@ std::string get_collection_file(std::string ds){
 }
 
 
+std::vector<std::string> split_string(std::string s, std::string d){
+	std::vector<std::string> res;
+	size_t pos = 0;
+	std::string token;
+	while ((pos = s.find(d)) != std::string::npos) {
+	    res.emplace_back(s.substr(0, pos));
+	    s.erase(0, pos + d.length());
+	}
+	res.emplace_back(s.substr(0, pos));
+	return res;
+}
+
+
 int main(int argc, char* argv[]){
 
+
+
 	std::map<std::string, std::string> args;
+	short int param = 1; 
 
 	// Handle the execution to do other tasks
 	// "dataset_stats" to only compute the descriptive statistics of nodes, edges and attributes
@@ -907,42 +977,48 @@ int main(int argc, char* argv[]){
 	// WARNING: again, paths and directory names are fixed for the moment
 	// "print_only" to iterate over datasets and show information on the terminal. Does not run the compression algorithm
 	// Any other value results in running the compression and decompression algorithms for all datasets and graph_sample_sizes
-	args.emplace(std::make_pair("test_mode","complete"));
+	args.emplace(std::make_pair("test_mode",argv[param++]));
 
 	// stdout: Number indicating the amount of text shown on terminal	
-	args.emplace(std::make_pair("stdout","1"));
+	args.emplace(std::make_pair("stdout",argv[param++]));
 
-	std::vector<std::string> datasets_names = {"acyclic", "AIDS", "Letter", "mao", "Mutagenicity", "pah", "Protein"};
+	std::vector<std::string> datasets_names = split_string(argv[param++], ":");
 
-	args.emplace(std::make_pair("output_root","../data/output"));
+	// Number of times each dataset and k_sample will be executed 
+	args.emplace(std::make_pair("num_trials", argv[param++]));
 
-	args.emplace(std::make_pair("output_results_file","results_compression.csv"));
+	// Set to "true" to always add the edge between the graph and the following one (with the stock msts for example) 
+	args.emplace(std::make_pair("path_structure",argv[param++]));
 
-	args.emplace(std::make_pair("ged_method","branch_uniform"));
 
-	args.emplace(std::make_pair("ged_method_options","32"));
+	args.emplace(std::make_pair("output_root",argv[param++]));
 
-	args.emplace(std::make_pair("ged_method_refinement","ipfp"));
+	args.emplace(std::make_pair("output_results_file",argv[param++]));
 
-	args.emplace(std::make_pair("ged_method_refinement_options","32"));
+	args.emplace(std::make_pair("ged_method",argv[param++]));
 
-	args.emplace(std::make_pair("refinement_size","1"));
+	args.emplace(std::make_pair("ged_method_options",argv[param++]));
 
-	args.emplace(std::make_pair("output_results_file","results_compression.csv"));
+	args.emplace(std::make_pair("ged_method_refinement",argv[param++]));
 
-	args.emplace(std::make_pair("write_ged_matrix","false"));
+	args.emplace(std::make_pair("ged_method_refinement_options",argv[param++]));
+
+	args.emplace(std::make_pair("refinement_size",argv[param++]));
 	
-	args.emplace(std::make_pair("write_arb","false"));
 
-	args.emplace(std::make_pair("write_results","true"));
+	args.emplace(std::make_pair("write_ged_matrix",argv[param++]));
+	
+	args.emplace(std::make_pair("write_arb",argv[param++]));
+
+	args.emplace(std::make_pair("write_results",argv[param++]));
 
 	// edit_cost_type: String telling if the modified compression costs should be used. 
 	// "mod" meand transformed costs, any other value means the more "conservative" costs
-	args.emplace(std::make_pair("edit_cost_type","traditional")); 
+	args.emplace(std::make_pair("edit_cost_type",argv[param++])); 
 
 	// relaxed_compression: "true" if the compression format should allow simultaneous node insertions and deletions.
 	// File sizes will bigger be in general 
-	args.emplace(std::make_pair("relaxed_compression","true")); 
+	args.emplace(std::make_pair("relaxed_compression",argv[param++])); 
 	
 	// Parameter to control the density of the collection graph. 
 	// Out degree of each node. Select parameter "graph_sample_type" to chose if
@@ -952,19 +1028,19 @@ int main(int argc, char* argv[]){
 	// every graph has 50 edges starting at it.
 
 	args.emplace(std::make_pair("graph_sample_size","100"));
-	std::vector<std::string> graph_sample_sizes = {"10", "20", "30", "40", "50", "60", "70", "80", "90", "100"};
-
-	// Number of times each dataset and k_sample will be executed 
-	args.emplace(std::make_pair("num_trials", "5"));
+	std::vector<std::string> graph_sample_sizes = split_string(argv[param++], ":");
 
 	// "%" if the 
-	args.emplace(std::make_pair("graph_sample_type","%"));
+	args.emplace(std::make_pair("graph_sample_type", argv[param++]));
 
 	// "true" for compressed files in binary. Any other value leads to compressed files in text mode
-	args.emplace(std::make_pair("binary_encoding","true"));
+	args.emplace(std::make_pair("binary_encoding",argv[param++]));
 
 	// "true" if the executions will only try the decompression part
-	args.emplace(std::make_pair("decomp_only", "false"));
+	args.emplace(std::make_pair("decomp_only", argv[param++]));
+
+
+
 
     // Just to handle output writing
     args.emplace(std::make_pair("first_iteration", "true"));
@@ -1039,7 +1115,7 @@ int main(int argc, char* argv[]){
         }
         else{
 	        for(const auto k_sample:graph_sample_sizes){
-		        std::cout<<"*** START: "<<args.at("file_preffix")<<", k_sample: "<<k_sample<<" % ***"<<std::endl;
+		        std::cout<<"*** START: "<<args.at("file_preffix")<<", k_sample: "<<k_sample<<"  "<<args.at("graph_sample_type")<<" ***"<<std::endl;
 				try{
 					args.at("graph_sample_size") = k_sample;				
 					treat_dataset(args);

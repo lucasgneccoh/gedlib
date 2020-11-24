@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="2029" >
+<node id="6"></node>
+<node id="33"></node>
+<node id="65"></node>
+<node id="178"></node>
+<node id="21"></node>
+<node id="157"></node>
+<node id="104"></node>
+<node id="158"></node>
+<node id="203"></node>
+<node id="180"></node>
+<node id="15"></node>
+<node id="142"></node>
+<node id="108"></node>
+<node id="52"></node>
+<node id="199"></node>
+<node id="58"></node>
+<node id="133"></node>
+<node id="163"></node>
+<node id="172"></node>
+<node id="106"></node>
+<node id="170"></node>
+<node id="125"></node>
+<node id="19"></node>
+<node id="200"></node>
+<node id="44"></node>
+<node id="146"></node>
+<node id="57"></node>
+<node id="117"></node>
+<node id="100"></node>
+<node id="101"></node>
+<node id="102"></node>
+<node id="114"></node>
+<node id="147"></node>
+<node id="183"></node>
+<node id="30"></node>
+<node id="53"></node>
+<node id="80"></node>
+<node id="47"></node>
+<node id="162"></node>
+<node id="131"></node>
+<node id="62"></node>
+<node id="103"></node>
+<node id="63"></node>
+<node id="190"></node>
+<node id="150"></node>
+<node id="161"></node>
+<node id="1"></node>
+<node id="189"></node>
+<node id="29"></node>
+<node id="7"></node>
+<node id="10"></node>
+<node id="167"></node>
+<node id="68"></node>
+<node id="72"></node>
+<node id="86"></node>
+<node id="116"></node>
+<node id="173"></node>
+<node id="207"></node>
+<node id="0"></node>
+<node id="97"></node>
+<node id="14"></node>
+<node id="35"></node>
+<node id="119"></node>
+<node id="94"></node>
+<node id="186"></node>
+<node id="194"></node>
+<node id="156"></node>
+<node id="153"></node>
+<node id="159"></node>
+<node id="9"></node>
+<node id="193"></node>
+<node id="25"></node>
+<node id="181"></node>
+<node id="169"></node>
+<node id="174"></node>
+<node id="198"></node>
+<node id="164"></node>
+<node id="32"></node>
+<node id="37"></node>
+<node id="196"></node>
+<node id="42"></node>
+<node id="43"></node>
+<node id="128"></node>
+<node id="144"></node>
+<node id="79"></node>
+<node id="176"></node>
+<node id="137"></node>
+<node id="171"></node>
+<node id="111"></node>
+<node id="168"></node>
+<node id="127"></node>
+<node id="120"></node>
+<node id="16"></node>
+<node id="31"></node>
+<node id="40"></node>
+<node id="46"></node>
+<node id="84"></node>
+<node id="166"></node>
+<node id="113"></node>
+<node id="126"></node>
+<node id="165"></node>
+<node id="141"></node>
+<node id="160"></node>
+<node id="2"></node>
+<node id="136"></node>
+<node id="17"></node>
+<node id="24"></node>
+<node id="149"></node>
+<node id="211"></node>
+<node id="36"></node>
+<node id="49"></node>
+<node id="73"></node>
+<node id="130"></node>
+<node id="74"></node>
+<node id="85"></node>
+<node id="148"></node>
+<node id="87"></node>
+<node id="90"></node>
+<node id="107"></node>
+<node id="140"></node>
+<node id="123"></node>
+<node id="48"></node>
+<node id="82"></node>
+<node id="155"></node>
+<node id="112"></node>
+<node id="4"></node>
+<node id="59"></node>
+<node id="22"></node>
+<node id="134"></node>
+<node id="34"></node>
+<node id="81"></node>
+<node id="152"></node>
+<node id="121"></node>
+<node id="132"></node>
+<node id="179"></node>
+<node id="139"></node>
+<node id="3"></node>
+<node id="210"></node>
+<node id="8"></node>
+<node id="122"></node>
+<node id="98"></node>
+<node id="61"></node>
+<node id="91"></node>
+<node id="185"></node>
+<node id="138"></node>
+<node id="143"></node>
+<node id="177"></node>
+<node id="182"></node>
+<node id="11"></node>
+<node id="93"></node>
+<node id="23"></node>
+<node id="28"></node>
+<node id="69"></node>
+<node id="92"></node>
+<node id="109"></node>
+<node id="5"></node>
+<node id="67"></node>
+<node id="18"></node>
+<node id="56"></node>
+<node id="89"></node>
+<node id="20"></node>
+<node id="76"></node>
+<node id="64"></node>
+<node id="212"></node>
+<node id="206"></node>
+<node id="175"></node>
+<node id="12"></node>
+<node id="55"></node>
+<node id="115"></node>
+<node id="54"></node>
+<node id="188"></node>
+<node id="124"></node>
+<node id="60"></node>
+<node id="70"></node>
+<node id="209"></node>
+<node id="51"></node>
+<node id="184"></node>
+<node id="95"></node>
+<node id="129"></node>
+<node id="96"></node>
+<node id="105"></node>
+<node id="195"></node>
+<node id="135"></node>
+<node id="151"></node>
+<node id="204"></node>
+<node id="77"></node>
+<node id="27"></node>
+<node id="50"></node>
+<node id="83"></node>
+<node id="201"></node>
+<node id="13"></node>
+<node id="191"></node>
+<node id="145"></node>
+<node id="197"></node>
+<node id="110"></node>
+<node id="205"></node>
+<node id="99"></node>
+<node id="41"></node>
+<node id="45"></node>
+<node id="88"></node>
+<node id="78"></node>
+<node id="66"></node>
+<node id="39"></node>
+<node id="192"></node>
+<node id="187"></node>
+<node id="38"></node>
+<node id="71"></node>
+<node id="154"></node>
+<node id="208"></node>
+<node id="26"></node>
+<node id="75"></node>
+<node id="202"></node>
+<node id="118"></node>
+<edge from="6" to="33"><attr name="w"><int>98</int></attr></edge>
+<edge from="6" to="180"><attr name="w"><int>96</int></attr></edge>
+<edge from="6" to="183"><attr name="w"><int>94</int></attr></edge>
+<edge from="6" to="29"><attr name="w"><int>93</int></attr></edge>
+<edge from="33" to="21"><attr name="w"><int>96</int></attr></edge>
+<edge from="65" to="178"><attr name="w"><int>98</int></attr></edge>
+<edge from="178" to="203"><attr name="w"><int>97</int></attr></edge>
+<edge from="178" to="125"><attr name="w"><int>96</int></attr></edge>
+<edge from="21" to="157"><attr name="w"><int>97</int></attr></edge>
+<edge from="21" to="108"><attr name="w"><int>96</int></attr></edge>
+<edge from="157" to="74"><attr name="w"><int>88</int></attr></edge>
+<edge from="157" to="90"><attr name="w"><int>88</int></attr></edge>
+<edge from="157" to="182"><attr name="w"><int>85</int></attr></edge>
+<edge from="157" to="92"><attr name="w"><int>84</int></attr></edge>
+<edge from="104" to="158"><attr name="w"><int>97</int></attr></edge>
+<edge from="104" to="58"><attr name="w"><int>96</int></attr></edge>
+<edge from="104" to="133"><attr name="w"><int>96</int></attr></edge>
+<edge from="104" to="163"><attr name="w"><int>96</int></attr></edge>
+<edge from="104" to="172"><attr name="w"><int>96</int></attr></edge>
+<edge from="104" to="203"><attr name="w"><int>96</int></attr></edge>
+<edge from="104" to="173"><attr name="w"><int>93</int></attr></edge>
+<edge from="104" to="42"><attr name="w"><int>90</int></attr></edge>
+<edge from="104" to="137"><attr name="w"><int>90</int></attr></edge>
+<edge from="203" to="44"><attr name="w"><int>94</int></attr></edge>
+<edge from="180" to="100"><attr name="w"><int>95</int></attr></edge>
+<edge from="180" to="72"><attr name="w"><int>93</int></attr></edge>
+<edge from="180" to="207"><attr name="w"><int>93</int></attr></edge>
+<edge from="15" to="142"><attr name="w"><int>96</int></attr></edge>
+<edge from="15" to="133"><attr name="w"><int>95</int></attr></edge>
+<edge from="15" to="183"><attr name="w"><int>94</int></attr></edge>
+<edge from="52" to="199"><attr name="w"><int>96</int></attr></edge>
+<edge from="52" to="80"><attr name="w"><int>94</int></attr></edge>
+<edge from="52" to="68"><attr name="w"><int>93</int></attr></edge>
+<edge from="199" to="47"><attr name="w"><int>93</int></attr></edge>
+<edge from="199" to="169"><attr name="w"><int>91</int></attr></edge>
+<edge from="199" to="36"><attr name="w"><int>88</int></attr></edge>
+<edge from="58" to="117"><attr name="w"><int>95</int></attr></edge>
+<edge from="58" to="101"><attr name="w"><int>93</int></attr></edge>
+<edge from="58" to="46"><attr name="w"><int>89</int></attr></edge>
+<edge from="58" to="49"><attr name="w"><int>88</int></attr></edge>
+<edge from="133" to="161"><attr name="w"><int>93</int></attr></edge>
+<edge from="133" to="32"><attr name="w"><int>90</int></attr></edge>
+<edge from="106" to="170"><attr name="w"><int>96</int></attr></edge>
+<edge from="106" to="19"><attr name="w"><int>94</int></attr></edge>
+<edge from="106" to="171"><attr name="w"><int>90</int></attr></edge>
+<edge from="170" to="57"><attr name="w"><int>95</int></attr></edge>
+<edge from="170" to="186"><attr name="w"><int>92</int></attr></edge>
+<edge from="19" to="200"><attr name="w"><int>95</int></attr></edge>
+<edge from="200" to="117"><attr name="w"><int>95</int></attr></edge>
+<edge from="200" to="113"><attr name="w"><int>89</int></attr></edge>
+<edge from="44" to="146"><attr name="w"><int>95</int></attr></edge>
+<edge from="44" to="181"><attr name="w"><int>91</int></attr></edge>
+<edge from="44" to="128"><attr name="w"><int>90</int></attr></edge>
+<edge from="44" to="174"><attr name="w"><int>90</int></attr></edge>
+<edge from="146" to="156"><attr name="w"><int>92</int></attr></edge>
+<edge from="146" to="127"><attr name="w"><int>90</int></attr></edge>
+<edge from="146" to="87"><attr name="w"><int>88</int></attr></edge>
+<edge from="57" to="7"><attr name="w"><int>93</int></attr></edge>
+<edge from="57" to="25"><attr name="w"><int>91</int></attr></edge>
+<edge from="101" to="102"><attr name="w"><int>95</int></attr></edge>
+<edge from="101" to="166"><attr name="w"><int>89</int></attr></edge>
+<edge from="102" to="14"><attr name="w"><int>92</int></attr></edge>
+<edge from="114" to="147"><attr name="w"><int>95</int></attr></edge>
+<edge from="114" to="84"><attr name="w"><int>87</int></attr></edge>
+<edge from="147" to="149"><attr name="w"><int>85</int></attr></edge>
+<edge from="183" to="63"><attr name="w"><int>92</int></attr></edge>
+<edge from="30" to="53"><attr name="w"><int>94</int></attr></edge>
+<edge from="30" to="80"><attr name="w"><int>94</int></attr></edge>
+<edge from="30" to="9"><attr name="w"><int>91</int></attr></edge>
+<edge from="53" to="131"><attr name="w"><int>94</int></attr></edge>
+<edge from="53" to="119"><attr name="w"><int>92</int></attr></edge>
+<edge from="47" to="162"><attr name="w"><int>94</int></attr></edge>
+<edge from="47" to="122"><attr name="w"><int>85</int></attr></edge>
+<edge from="162" to="0"><attr name="w"><int>92</int></attr></edge>
+<edge from="162" to="37"><attr name="w"><int>90</int></attr></edge>
+<edge from="131" to="10"><attr name="w"><int>93</int></attr></edge>
+<edge from="131" to="43"><attr name="w"><int>90</int></attr></edge>
+<edge from="62" to="103"><attr name="w"><int>94</int></attr></edge>
+<edge from="103" to="116"><attr name="w"><int>90</int></attr></edge>
+<edge from="103" to="56"><attr name="w"><int>83</int></attr></edge>
+<edge from="63" to="190"><attr name="w"><int>94</int></attr></edge>
+<edge from="150" to="161"><attr name="w"><int>94</int></attr></edge>
+<edge from="1" to="189"><attr name="w"><int>93</int></attr></edge>
+<edge from="1" to="120"><attr name="w"><int>89</int></attr></edge>
+<edge from="189" to="68"><attr name="w"><int>91</int></attr></edge>
+<edge from="29" to="167"><attr name="w"><int>93</int></attr></edge>
+<edge from="7" to="136"><attr name="w"><int>88</int></attr></edge>
+<edge from="10" to="97"><attr name="w"><int>92</int></attr></edge>
+<edge from="10" to="193"><attr name="w"><int>91</int></attr></edge>
+<edge from="167" to="107"><attr name="w"><int>88</int></attr></edge>
+<edge from="167" to="109"><attr name="w"><int>84</int></attr></edge>
+<edge from="68" to="35"><attr name="w"><int>92</int></attr></edge>
+<edge from="68" to="144"><attr name="w"><int>90</int></attr></edge>
+<edge from="68" to="17"><attr name="w"><int>88</int></attr></edge>
+<edge from="72" to="95"><attr name="w"><int>79</int></attr></edge>
+<edge from="86" to="116"><attr name="w"><int>93</int></attr></edge>
+<edge from="86" to="198"><attr name="w"><int>90</int></attr></edge>
+<edge from="116" to="185"><attr name="w"><int>85</int></attr></edge>
+<edge from="116" to="197"><attr name="w"><int>71</int></attr></edge>
+<edge from="97" to="194"><attr name="w"><int>92</int></attr></edge>
+<edge from="97" to="212"><attr name="w"><int>82</int></attr></edge>
+<edge from="97" to="60"><attr name="w"><int>80</int></attr></edge>
+<edge from="119" to="126"><attr name="w"><int>89</int></attr></edge>
+<edge from="119" to="152"><attr name="w"><int>86</int></attr></edge>
+<edge from="119" to="176"><attr name="w"><int>86</int></attr></edge>
+<edge from="94" to="186"><attr name="w"><int>92</int></attr></edge>
+<edge from="186" to="18"><attr name="w"><int>83</int></attr></edge>
+<edge from="156" to="39"><attr name="w"><int>64</int></attr></edge>
+<edge from="153" to="159"><attr name="w"><int>92</int></attr></edge>
+<edge from="153" to="121"><attr name="w"><int>86</int></attr></edge>
+<edge from="159" to="111"><attr name="w"><int>90</int></attr></edge>
+<edge from="159" to="160"><attr name="w"><int>88</int></attr></edge>
+<edge from="159" to="175"><attr name="w"><int>82</int></attr></edge>
+<edge from="159" to="12"><attr name="w"><int>77</int></attr></edge>
+<edge from="9" to="164"><attr name="w"><int>90</int></attr></edge>
+<edge from="25" to="16"><attr name="w"><int>89</int></attr></edge>
+<edge from="25" to="211"><attr name="w"><int>88</int></attr></edge>
+<edge from="181" to="124"><attr name="w"><int>81</int></attr></edge>
+<edge from="169" to="2"><attr name="w"><int>88</int></attr></edge>
+<edge from="169" to="140"><attr name="w"><int>88</int></attr></edge>
+<edge from="174" to="198"><attr name="w"><int>91</int></attr></edge>
+<edge from="198" to="111"><attr name="w"><int>90</int></attr></edge>
+<edge from="198" to="40"><attr name="w"><int>89</int></attr></edge>
+<edge from="198" to="112"><attr name="w"><int>87</int></attr></edge>
+<edge from="37" to="196"><attr name="w"><int>90</int></attr></edge>
+<edge from="37" to="28"><attr name="w"><int>84</int></attr></edge>
+<edge from="37" to="115"><attr name="w"><int>81</int></attr></edge>
+<edge from="37" to="204"><attr name="w"><int>76</int></attr></edge>
+<edge from="37" to="13"><attr name="w"><int>75</int></attr></edge>
+<edge from="196" to="139"><attr name="w"><int>86</int></attr></edge>
+<edge from="42" to="130"><attr name="w"><int>85</int></attr></edge>
+<edge from="144" to="34"><attr name="w"><int>86</int></attr></edge>
+<edge from="79" to="176"><attr name="w"><int>90</int></attr></edge>
+<edge from="176" to="84"><attr name="w"><int>89</int></attr></edge>
+<edge from="171" to="20"><attr name="w"><int>82</int></attr></edge>
+<edge from="111" to="168"><attr name="w"><int>90</int></attr></edge>
+<edge from="127" to="31"><attr name="w"><int>89</int></attr></edge>
+<edge from="127" to="165"><attr name="w"><int>89</int></attr></edge>
+<edge from="16" to="24"><attr name="w"><int>81</int></attr></edge>
+<edge from="16" to="110"><attr name="w"><int>70</int></attr></edge>
+<edge from="31" to="134"><attr name="w"><int>86</int></attr></edge>
+<edge from="40" to="123"><attr name="w"><int>87</int></attr></edge>
+<edge from="40" to="41"><attr name="w"><int>67</int></attr></edge>
+<edge from="84" to="129"><attr name="w"><int>79</int></attr></edge>
+<edge from="126" to="69"><attr name="w"><int>84</int></attr></edge>
+<edge from="126" to="99"><attr name="w"><int>68</int></attr></edge>
+<edge from="141" to="160"><attr name="w"><int>89</int></attr></edge>
+<edge from="141" to="93"><attr name="w"><int>79</int></attr></edge>
+<edge from="136" to="81"><attr name="w"><int>86</int></attr></edge>
+<edge from="24" to="149"><attr name="w"><int>88</int></attr></edge>
+<edge from="24" to="64"><attr name="w"><int>82</int></attr></edge>
+<edge from="149" to="96"><attr name="w"><int>79</int></attr></edge>
+<edge from="73" to="130"><attr name="w"><int>88</int></attr></edge>
+<edge from="73" to="85"><attr name="w"><int>87</int></attr></edge>
+<edge from="85" to="148"><attr name="w"><int>88</int></attr></edge>
+<edge from="85" to="8"><attr name="w"><int>85</int></attr></edge>
+<edge from="148" to="89"><attr name="w"><int>83</int></attr></edge>
+<edge from="90" to="71"><attr name="w"><int>63</int></attr></edge>
+<edge from="90" to="26"><attr name="w"><int>62</int></attr></edge>
+<edge from="140" to="48"><attr name="w"><int>87</int></attr></edge>
+<edge from="140" to="22"><attr name="w"><int>86</int></attr></edge>
+<edge from="48" to="98"><attr name="w"><int>85</int></attr></edge>
+<edge from="48" to="210"><attr name="w"><int>84</int></attr></edge>
+<edge from="82" to="155"><attr name="w"><int>87</int></attr></edge>
+<edge from="82" to="179"><attr name="w"><int>80</int></attr></edge>
+<edge from="155" to="138"><attr name="w"><int>85</int></attr></edge>
+<edge from="155" to="201"><attr name="w"><int>76</int></attr></edge>
+<edge from="4" to="59"><attr name="w"><int>86</int></attr></edge>
+<edge from="4" to="77"><attr name="w"><int>77</int></attr></edge>
+<edge from="4" to="138"><attr name="w"><int>77</int></attr></edge>
+<edge from="59" to="188"><attr name="w"><int>81</int></attr></edge>
+<edge from="59" to="5"><attr name="w"><int>79</int></attr></edge>
+<edge from="59" to="151"><attr name="w"><int>78</int></attr></edge>
+<edge from="59" to="191"><attr name="w"><int>75</int></attr></edge>
+<edge from="152" to="83"><attr name="w"><int>76</int></attr></edge>
+<edge from="121" to="206"><attr name="w"><int>82</int></attr></edge>
+<edge from="121" to="50"><attr name="w"><int>76</int></attr></edge>
+<edge from="121" to="45"><attr name="w"><int>67</int></attr></edge>
+<edge from="132" to="179"><attr name="w"><int>86</int></attr></edge>
+<edge from="179" to="210"><attr name="w"><int>80</int></attr></edge>
+<edge from="139" to="70"><attr name="w"><int>80</int></attr></edge>
+<edge from="3" to="210"><attr name="w"><int>85</int></attr></edge>
+<edge from="210" to="91"><attr name="w"><int>85</int></attr></edge>
+<edge from="98" to="61"><attr name="w"><int>85</int></attr></edge>
+<edge from="98" to="23"><attr name="w"><int>84</int></attr></edge>
+<edge from="61" to="184"><attr name="w"><int>79</int></attr></edge>
+<edge from="61" to="38"><attr name="w"><int>63</int></attr></edge>
+<edge from="185" to="209"><attr name="w"><int>80</int></attr></edge>
+<edge from="143" to="177"><attr name="w"><int>85</int></attr></edge>
+<edge from="177" to="51"><attr name="w"><int>79</int></attr></edge>
+<edge from="177" to="89"><attr name="w"><int>77</int></attr></edge>
+<edge from="11" to="93"><attr name="w"><int>84</int></attr></edge>
+<edge from="11" to="192"><attr name="w"><int>63</int></attr></edge>
+<edge from="23" to="76"><attr name="w"><int>82</int></attr></edge>
+<edge from="5" to="67"><attr name="w"><int>83</int></attr></edge>
+<edge from="5" to="66"><attr name="w"><int>65</int></attr></edge>
+<edge from="5" to="208"><attr name="w"><int>62</int></attr></edge>
+<edge from="56" to="54"><attr name="w"><int>81</int></attr></edge>
+<edge from="206" to="202"><attr name="w"><int>61</int></attr></edge>
+<edge from="12" to="55"><attr name="w"><int>81</int></attr></edge>
+<edge from="70" to="145"><attr name="w"><int>75</int></attr></edge>
+<edge from="51" to="135"><attr name="w"><int>78</int></attr></edge>
+<edge from="51" to="88"><attr name="w"><int>67</int></attr></edge>
+<edge from="96" to="27"><attr name="w"><int>76</int></attr></edge>
+<edge from="105" to="195"><attr name="w"><int>79</int></attr></edge>
+<edge from="105" to="204"><attr name="w"><int>78</int></attr></edge>
+<edge from="135" to="205"><attr name="w"><int>70</int></attr></edge>
+<edge from="204" to="75"><attr name="w"><int>61</int></attr></edge>
+<edge from="77" to="154"><attr name="w"><int>63</int></attr></edge>
+<edge from="27" to="187"><attr name="w"><int>63</int></attr></edge>
+<edge from="145" to="78"><attr name="w"><int>67</int></attr></edge>
+<edge from="71" to="118"><attr name="w"><int>41</int></attr></edge>
+</graph>
+</gxl>
