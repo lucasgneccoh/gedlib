@@ -5,9 +5,7 @@
 4. Open a terminal and execute the following commands:
 	cmake ..
 	make
-5. Now you can execute the compression_test.cpp code. The executable is called by default "abc" and is stored in the bin folder. To execute it from the terminal assuming you are still in the build directory:
-	./../bin/abc
-Note: This execution will by default run all the tests, on all the datasets. This will take a lot of time. So if you want to test the method in some datasets and with less iterations per dataset, go to gedlib/compression/tests/compression_test.cpp, modify the inputs in the source code, compile using make in the build folder, and execute as in 5.
+5. Get the run.sh file from the util_files folder. This file is used to simplify execution. Define parameters, and execute the bash file using "bash run.sh"
 
 
 The general structure of the compression folder is the following. Use the create_directories.sh file to create the data folder that has many folders inside
@@ -45,7 +43,8 @@ _compression
 	|-- check_iso.py	----------------------- python file to test isomorphism between collections
 	|-- copy_graphs.py	----------------------- python file to copy graph gxl collections
 	|-- clean_folders.sh	------------------- bash file used to clean the dataset folders in different situations
-	|-- compress_tar.sh	----------------------- bash file used to compress the collections present in the directory
+	|-- compress_tar.sh	----------------------- bash file used to compress the
+	|-- run.sh	------------------------------- bash file used to execute
 
 
 
