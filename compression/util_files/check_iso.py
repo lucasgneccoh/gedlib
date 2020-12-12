@@ -298,7 +298,7 @@ def test_iso(filename, original_path, decoded_path, verbose=False):
 
 
 def get_graph_dir(ds, base):
-	if ds=="acyclic" or ds=="mao" or ds=="pah":
+	if ds=="acyclic" or ds=="mao" or ds=="pah" or ds=="msts_int_w" or ds=="msts_float_w" or ds=="msts_no_w":
 		return base + ds
 	
 	if ds=="AIDS" or ds=="Mutagenicity" or ds=="Protein":
@@ -320,7 +320,7 @@ if __name__ == "__main__":
 	graph_dir_orig = "../../data/datasets/"
 	graph_dir_decoded = "../data/output/"
 	suffix_decoded = "/decoded_bin"
-	datasets = ["acyclic", "AIDS", "Letter", "mao", "Mutagenicity", "pah", "Protein"]
+	datasets = ["msts_no_w"]
 
 	for d in datasets:
 		test_iso(get_collection_file(d, base_xml), get_graph_dir(d, graph_dir_orig), graph_dir_decoded + d + suffix_decoded, verbose)

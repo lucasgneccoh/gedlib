@@ -299,6 +299,11 @@ private:
 	// std::size_t omega = std::numeric_limits<std::size_t>::max() * omega_prop_;
 	double omega_prop_;
 
+
+	template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
+	ged::NodeMap
+	get_trivial_node_map(std::vector<std::pair<std::size_t, std::string>> &att_1, std::vector<std::pair<std::size_t, std::string>> &att_2);
+
 	// Loads the graph contained in path to the environment env.
 	template<class UserNodeID, class UserNodeLabel, class UserEdgeLabel>
 	void decode_single_graph(bool binary, bool relaxed, std::string path, std::string graph_name, std::string graph_class,
@@ -454,6 +459,11 @@ private:
 
 	// Comparator for labels
 	bool compare_label(std::map<std::string, std::string> label_1, std::map<std::string, std::string> label_2);
+
+	// Comparator for labels
+	template<class A, class B>
+	bool compare_pair_second(std::pair<std::size_t, std::string> p1,std::pair<std::size_t, std::string> p2);
+
 
 
 	// Calculates the compression sets from the node map and the graphs.

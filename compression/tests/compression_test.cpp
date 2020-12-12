@@ -167,16 +167,19 @@ get_dataset_attr_types(std::string dataset){
 	}
 
 	if(dataset=="msts_float_w"){
+		ans.at("node_attr").emplace(std::make_pair("stock", 's'));
 		ans.at("edge_attr").emplace(std::make_pair("w", 'f'));
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
 	if(dataset=="msts_int_w"){
+		ans.at("node_attr").emplace(std::make_pair("stock", 's'));
 		ans.at("edge_attr").emplace(std::make_pair("w", 'i'));
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
 	if(dataset=="msts_no_w"){
+		ans.at("node_attr").emplace(std::make_pair("stock", 's')); // Very important to habe nodes LABELED
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
@@ -229,9 +232,6 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	auto end = std::chrono::high_resolution_clock::now();
 	ged::Seconds runtime;
 
-	// AQUI
-	std::cout<<"Types: nodes: "<<attr_types.at("node_attr").size() << std::endl;
-	std::cout<<"Types: edges: "<<attr_types.at("edge_attr").size() << std::endl;
 
 
 	ged::Options::GXLNodeEdgeType node_type = attr_types.at("node_attr").size()>0 ? ged::Options::GXLNodeEdgeType::LABELED : ged::Options::GXLNodeEdgeType::UNLABELED;
@@ -346,13 +346,17 @@ void treat_dataset(std::map<std::string, std::string> &args){
 		std::string dir = output_root + "/encoded" + folder_suffix;
 		std::string folder_to_tar = "tar -cjf " + dir + ".tar.bz --directory=" + output_root + " " +  "encoded" + folder_suffix;
 		int sys_ans = 0;
+		std::string remove = "rm " + dir + ".tar.bz";
+		sys_ans = std::system(remove.c_str());
+		if (stdout>0 && sys_ans==0) std::cout<<"Old tar file removed"<<std::endl;
 		sys_ans = std::system(folder_to_tar.c_str());
 		std::size_t tar_size;
 		if (sys_ans==0){
 			if(stdout>0) std::cout<<"Collections compressed"<<std::endl;
 		}
 		else{
-			throw(test_exception("Error while compressing encoded folder"));
+			std::cout<<"Possible error while using tar system call. Returned value: "<<sys_ans<<std::endl;
+			//throw(test_exception("Error while compressing encoded folder"));
 		}
 		tar_size = abc.get_file_size(dir + ".tar.bz");
 		headers.emplace_back("tar_compressed_size");
@@ -1040,6 +1044,12 @@ int main(int argc, char* argv[]){
 	args.emplace(std::make_pair("decomp_only", argv[param++]));
 
 
+	// "true" if nodes are uniquely identified and they should be matched according to attributes
+	args.emplace(std::make_pair("match_node_map", argv[param++]));
+	args.emplace(std::make_pair("match_node_map_by", argv[param++]));
+	
+
+
 
 
     // Just to handle output writing
@@ -1063,7 +1073,7 @@ int main(int argc, char* argv[]){
 		return 0;
 	}
 
-	std::string tar_path = "../data/orig_datasets_to_tar";
+	std::string tar_path = "../data/orig_datasets_to_tar/compressed";
 	// get the real size of original datasets
 	if(args.at("test_mode") == "gxl_sizes"){
 		get_gxl_sizes(collection_files, graph_dirs, datasets_names, args.at("output_root"), tar_path);
