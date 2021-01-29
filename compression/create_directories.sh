@@ -2,7 +2,7 @@ mkdir "bin"
 mkdir "build"
 mkdir "data"
 cd "data"
-dirs=("acyclic" "AIDS" "mao" "pah" "Mutagenicity" "Protein" "Letter" "compressed" "extract")
+dirs=("acyclic" "AIDS" "mao" "pah" "Mutagenicity" "Protein" "Letter" "msts_no_w" "msts_int_w" "msts_float_w" "compressed" "extract")
 in_output=("decoded_text" "decoded_bin" "encoded_bin" "encoded_text" "extract")
 
 mkdir "orig_datasets_to_tar"

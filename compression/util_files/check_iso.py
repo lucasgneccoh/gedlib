@@ -86,12 +86,6 @@ def loadGXL(filename):
 				for a in attr:
 					node_attr[attr.attrib['name']] = a.tag
 		done = True
-#		if 'chem' in labels:
-#			labels['label'] = labels['chem']
-#			node_attr['label'] = 'string'
-#			labels['atom'] = labels['chem']
-#			node_attr['atom'] = 'string'
-		#g.add_node(index, **labels)
 		g.add_node(node.attrib['id'], **labels)
 		index += 1
 	done = False
@@ -103,150 +97,11 @@ def loadGXL(filename):
 				for a in attr:
 					edge_attr[attr.attrib['name']] = a.tag
 		done = True
-#		if 'valence' in labels:
-#			labels['label'] = labels['valence']
-#			edge_attr['label'] = 'int' 
-#			labels['bond_type'] = labels['valence']
-#			edge_attr['bond_type'] = 'int' 
-		#g.add_edge(dic[edge.attrib['from']], dic[edge.attrib['to']], **labels)
+
 		g.add_edge(edge.attrib['from'], edge.attrib['to'], **labels)
 	struct = {'nodes': node_attr, 'edges': edge_attr}
 	return g, struct
 	
-"""
-	Taken from graphfiles.py
-	Saves a gxl file describing a graph
-	parameters:
-	- g: a nx graph object
-	- filename: path and file name to write the graph into.
-	- struct: it is recommended to always specify the node and edge structure to write the file. See loadGXL for the descriptions of the struct dictionary. 
-"""
-def saveGXL(g,filename, struct = None):
-	with open(filename, 'w') as gxl_file:
-		gxl_file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
-		gxl_file.write("<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n")
-		gxl_file.write("<gxl xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n")
-
-		gxl_file.write("<graph ")
-		for k in g.graph:
-			gxl_file.write(k + "=\"" + str(g.graph[k]) + "\" ")
-		gxl_file.write(">\n")
-		if not struct is None:
-			node_attr = struct['nodes']
-			edge_attr = struct['edges']
-			tag = True
-		else:
-			node_attr = None
-			edge_attr = None
-			tag = False
-			
-		for v, attrs in g.nodes(data=True):
-			gxl_file.write("<node id=\"" + str(v) + "\">")
-			for a in attrs:	
-				gxl_file.write("<attr name=\"" + a + "\">")
-				if tag: gxl_file.write("<" + node_attr[a] + ">")
-				gxl_file.write(str(attrs[a]))
-				if tag: gxl_file.write("</" + node_attr[a] + ">")
-				gxl_file.write("</attr>")
-			gxl_file.write("</node>\n")
-			
-		for v1, v2, attrs in g.edges(data=True):
-			gxl_file.write("<edge from=\"" + str(v1) + "\" to=\"" + str(v2) + "\">")
-			for a in attrs:	
-				gxl_file.write("<attr name=\"" + a + "\">")
-				if tag: gxl_file.write("<" + edge_attr[a] + ">")
-				gxl_file.write(str(attrs[a]))
-				if tag: gxl_file.write("</" + edge_attr[a] + ">")
-				gxl_file.write("</attr>")
-			gxl_file.write("</edge>\n")
-		gxl_file.write("</graph>\n")
-		gxl_file.write("</gxl>")
-		gxl_file.close()
-	
-
-"""
-	Taken from graphfiles.py
-	Saves a gxl collection file and the corresponding graph files
-	parameters:
-	- graphs: a list of nx graph objects to save
-	- y: a list with the classes corresponding to the graphs
-	- filename: path and file name to write the collection file into.
-	- graph_dir: If the graphs are not to be stored in the same folder where the collection file is, this variable specifies the folder to save the graph files into.
-	- struct: it is recommended to always specify the node and edge structure to write the file. See loadGXL for the descriptions of the struct dictionary. 
-"""
-def saveToXML(graphs, y, filename='gfile', graph_dir=None, struct = None):
-	import os
-	dirname_ds = os.path.dirname(filename)
-	if dirname_ds != '':
-		dirname_ds += '/'
-		if not os.path.exists(dirname_ds) :
-			os.makedirs(dirname_ds)
-				
-	if graph_dir is not None:
-		graph_dir = graph_dir + '/'
-		if not os.path.exists(graph_dir):
-			os.makedirs(graph_dir)
-	else:
-		graph_dir = dirname_ds 
-		
-	with open(filename, 'w') as fgroup:
-		fgroup.write("<?xml version=\"1.0\"?>")
-		fgroup.write("\n<!DOCTYPE GraphCollection SYSTEM \"http://www.inf.unibz.it/~blumenthal/dtd/GraphCollection.dtd\">")
-		fgroup.write("\n<GraphCollection>")
-		for idx, g in enumerate(graphs):
-			fname_tmp = "graph" + str(idx) + ".gxl"
-			saveGXL(g, graph_dir + fname_tmp, struct=struct)
-			fgroup.write("\n\t<graph file=\"" + fname_tmp + "\" class=\"" + str(y[idx]) + "\"/>")
-		fgroup.write("\n</GraphCollection>")
-		fgroup.close()
-
-
-"""
-	Prints a representation of the graph including the ID and attributes of the graph itself, and the ID and attributes of all nodes and edges
-	parameters:
-	- graph: a nx graph object
-"""
-def visual(graph):
-	print("GRAPH")
-	print(graph.graph)
-	print("NODES:")
-	for n in graph.nodes:
-		attr = graph.nodes[n]
-		print(n, " -> ", attr)
-	print("EDGES:")
-	for e in graph.edges:
-		attr = graph.edges[e]
-		print(e, " -> ", attr)   
-
-
-"""
-	Draws the letter graph in the matplotlib axes object ax
-	parameters:
-	- graph: a nx graph object
-	- ax: a matplotlib.Axes object
-"""
-def draw_Letter(graph, ax):
-	import numpy as np
-	import networkx as nx
-	import matplotlib.pyplot as plt
-	pos = {}
-	for n in graph.nodes:
-		pos[n] = np.array([float(graph.nodes[n]['x']),float(graph.nodes[n]['y'])])
-	nx.draw_networkx(graph,pos, ax = ax)
-	
-def draw_lucas(graph, ax):
-	import numpy as np
-	import networkx as nx
-	import matplotlib.pyplot as plt
-	pos = {}
-	labels = {}
-	edge_color = []
-	for n in graph.nodes:
-		labels[n] = graph.nodes[n]['letra']
-	for e in graph.edges:
-		edge_color.append(graph.edges[e]['color'])
-		
-	nx.draw_networkx(graph,pos = nx.circular_layout(graph), ax = ax, labels = labels, edge_color = edge_color)
 		
 def test_iso(filename, original_path, decoded_path, verbose=False):
 	data, y, struct, labels = loadFromXML(filename,original_path)
@@ -310,11 +165,7 @@ def get_graph_dir(ds, base):
 def get_collection_file(ds, base):
 	return base + ds +".xml"
 
-
-		
 if __name__ == "__main__":
-
-	import matplotlib.pyplot as plt
 	verbose = True
 	base_xml = "../../data/collections/"
 	graph_dir_orig = "../../data/datasets/"
