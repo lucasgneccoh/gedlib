@@ -1,4 +1,6 @@
-Working with a fork of GEDLIB. This is the original GEDLIB documentation
+Working with a fork of GEDLIB. I added the *compression* folder with the arborescence based compression method.
+
+This is the original GEDLIB documentation.
 
 <!--------------------------------------------------------------------------
 -                                                                          -
