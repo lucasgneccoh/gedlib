@@ -21,13 +21,13 @@ compression
 
 |-- bin
 
-|	|-- abc				------------------------ the executable file to run the compression methods
+	|-- abc				------------------------ the executable file to run the compression methods
 
 |
 
 |-- build
 
-|	|-- ...				------------------------ files used for building
+	|-- ...				------------------------ files used for building
 
 |-- data
 
