@@ -1,4 +1,4 @@
-# To make the codes work:
+## To make the codes work:
 1. Install gedlib by runing the install.py file from the gedlib folder
 2. Go to the compression folder and run the create_directories.sh file. If you dont want or cant run it, you will have to create all the folders yourself to avoid problems with the output of the compression method.
 3. Go to gedlib/compression/build
@@ -37,7 +37,7 @@ _compression
 |	|-- arborescence_based_compression.cpp ---- main file with the compression methods
 |	|-- arborescence_based_compression.hpp ---- header file
 |-- _tests
-|	|-- compression_test.cpp	--------------- file containing the tests. Used for compressing and decompressing
+|	|-- compression_test.cpp	--------------- file containing the tests. Used for compressing and decompressing adn getting results
 |	|-- README.txt		----------------------- text file explaining how to replicate all the results, including comparing with tar.gz
 |-- _util_files
 	|-- check_iso.py	----------------------- python file to test isomorphism between collections
@@ -45,6 +45,7 @@ _compression
 	|-- clean_folders.sh	------------------- bash file used to clean the dataset folders in different situations
 	|-- compress_tar.sh	----------------------- bash file used to compress the
 	|-- run.sh	------------------------------- bash file used to execute
+	|-- run_2.sh	--------------------------- bash file used to execute and avoid system call problems with the tar call
 
 
 
