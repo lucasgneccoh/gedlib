@@ -22,11 +22,11 @@ compression
 	|-- ...				------------------------ files used for building
 |-- data
 |   |--output			------------------------ where to write results of tests. One folder for each dataset to be tested
-|	|	|-- acyclic 	------------------------ folder for the output of the acyclic collection
-|	|	|-- AIDS
-|	|	|-- other datasets ...
-|	|	|-- separate_files   ------------------ folder to store collections in separate files format, and their .tar.bz files
-|	|	|-- separate_files_2 ------------------ folder to store collections in separate files (2) format, and their .tar.bz files
+|	|-- acyclic 	------------------------ folder for the output of the acyclic collection
+|	|-- AIDS
+|	|-- other datasets ...
+|	|-- separate_files   ------------------ folder to store collections in separate files format, and their .tar.bz files
+|	|-- separate_files_2 ------------------ folder to store collections in separate files (2) format, and their .tar.bz files
 |	|-- orig_datasets_to_tar ---------------------- folder to store copies of the collections and compress them using .tar.bz
 |-- ext				----------------------- contains external implementations used in the project
 |	|-- atofigh
