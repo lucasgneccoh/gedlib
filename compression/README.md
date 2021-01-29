@@ -3,9 +3,10 @@
 2. Go to the compression folder and run the create_directories.sh file. If you dont want or cant run it, you will have to create all the folders yourself to avoid problems with the output of the compression method.
 3. Go to gedlib/compression/build
 4. Open a terminal and execute the following commands:
-	cmake ..
-	make
-5. Get the run.sh file from the util_files folder. This file is used to simplify execution. Define parameters, and execute the bash file using "bash run.sh"
+	`cmake ..
+	`make
+5. Get the run.sh file from the util_files folder. This file is used to simplify execution. Define parameters, and execute the bash file using "bash run.sh".
+Yout results will be available in the *compression/data/output* folder. I you use `run_2.sh` then you will have two files.
 
 
 The general structure of the compression folder is the following. Use the create_directories.sh file to create the data folder that has many folders inside
