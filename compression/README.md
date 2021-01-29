@@ -1,4 +1,4 @@
-## To make the codes work:
+## To make it work:
 1. Install gedlib by runing the install.py file from the gedlib folder
 2. Go to the compression folder and run the create_directories.sh file. If you dont want or cant run it, you will have to create all the folders yourself to avoid problems with the output of the compression method.
 3. Go to gedlib/compression/build
