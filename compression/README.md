@@ -10,39 +10,39 @@
 
 The general structure of the compression folder is the following. Use the create_directories.sh file to create the data folder that has many folders inside
 
-_compression
+compression
 |
 |-- CMakeLists.txt		------------------------ for building GEDLIB with the compression part
 |-- create_directories.sh	-------------------- helper file to create_directories bin, build and data
 |-- README.txt			------------------------ this file
-|-- _bin
+|-- bin
 |	|-- abc				------------------------ the executable file to run the compression methods
 |
-|-- _build
+|-- build
 |	|-- ...				------------------------ files used for building
-|-- _data
-|   |--_output			------------------------ where to write results of tests. One folder for each dataset to be tested
+|-- data
+|   |--output			------------------------ where to write results of tests. One folder for each dataset to be tested
 |	|	|-- acyclic 	------------------------ folder for the output of the acyclic collection
 |	|	|-- AIDS
 |	|	|-- other datasets ...
 |	|	|-- separate_files   ------------------ folder to store collections in separate files format, and their .tar.bz files
 |	|	|-- separate_files_2 ------------------ folder to store collections in separate files (2) format, and their .tar.bz files
-|	|-- orig_datasets_to_tar ------------------ folder to store copies of the collections and compress them using .tar.bz
-|-- _ext				----------------------- contains external implementations used in the project
+|	|-- orig_datasets_to_tar ---------------------- folder to store copies of the collections and compress them using .tar.bz
+|-- ext				----------------------- contains external implementations used in the project
 |	|-- atofigh
 |	|-- frangio68	
-|-- _references			----------------------- some of the academic material used during the project
+|-- references			----------------------- some of the academic material used during the project
 |	|-- ...
-|-- _src
+|-- src
 |	|-- arborescence_based_compression.cpp ---- main file with the compression methods
 |	|-- arborescence_based_compression.hpp ---- header file
-|-- _tests
+|-- tests
 |	|-- compression_test.cpp	--------------- file containing the tests. Used for compressing and decompressing adn getting results
 |	|-- README.txt		----------------------- text file explaining how to replicate all the results, including comparing with tar.gz
-|-- _util_files
+|-- util_files
 	|-- check_iso.py	----------------------- python file to test isomorphism between collections
 	|-- copy_graphs.py	----------------------- python file to copy graph gxl collections
-	|-- clean_folders.sh	------------------- bash file used to clean the dataset folders in different situations
+	|-- clean_folders.sh	----------------------- bash file used to clean the dataset folders in different situations
 	|-- compress_tar.sh	----------------------- bash file used to compress the
 	|-- run.sh	------------------------------- bash file used to execute
 	|-- run_2.sh	--------------------------- bash file used to execute and avoid system call problems with the tar call
