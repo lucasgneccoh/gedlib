@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+<graph id="0" >
+<node id="0"><attr name="stock"><string>0</string></attr></node>
+<node id="1"><attr name="stock"><string>1</string></attr></node>
+<node id="2"><attr name="stock"><string>2</string></attr></node>
+<node id="3"><attr name="stock"><string>3</string></attr></node>
+<node id="4"><attr name="stock"><string>4</string></attr></node>
+<node id="5"><attr name="stock"><string>5</string></attr></node>
+<node id="6"><attr name="stock"><string>6</string></attr></node>
+<node id="7"><attr name="stock"><string>7</string></attr></node>
+<node id="8"><attr name="stock"><string>8</string></attr></node>
+<node id="9"><attr name="stock"><string>9</string></attr></node>
+<node id="10"><attr name="stock"><string>10</string></attr></node>
+<node id="11"><attr name="stock"><string>11</string></attr></node>
+<node id="12"><attr name="stock"><string>12</string></attr></node>
+<node id="13"><attr name="stock"><string>13</string></attr></node>
+<node id="14"><attr name="stock"><string>14</string></attr></node>
+<node id="15"><attr name="stock"><string>15</string></attr></node>
+<node id="16"><attr name="stock"><string>16</string></attr></node>
+<node id="17"><attr name="stock"><string>17</string></attr></node>
+<node id="18"><attr name="stock"><string>18</string></attr></node>
+<node id="19"><attr name="stock"><string>19</string></attr></node>
+<node id="20"><attr name="stock"><string>20</string></attr></node>
+<node id="21"><attr name="stock"><string>21</string></attr></node>
+<node id="22"><attr name="stock"><string>22</string></attr></node>
+<edge from="0" to="1"></edge>
+<edge from="1" to="2"></edge>
+<edge from="1" to="3"></edge>
+<edge from="2" to="4"></edge>
+<edge from="4" to="5"></edge>
+<edge from="4" to="6"></edge>
+<edge from="4" to="7"></edge>
+<edge from="6" to="8"></edge>
+<edge from="7" to="9"></edge>
+<edge from="8" to="10"></edge>
+<edge from="8" to="11"></edge>
+<edge from="3" to="12"></edge>
+<edge from="3" to="13"></edge>
+<edge from="3" to="14"></edge>
+<edge from="14" to="15"></edge>
+<edge from="14" to="16"></edge>
+<edge from="14" to="17"></edge>
+<edge from="13" to="18"></edge>
+<edge from="12" to="19"></edge>
+<edge from="12" to="20"></edge>
+<edge from="19" to="21"></edge>
+<edge from="20" to="22"></edge>
+</graph>
+</gxl>

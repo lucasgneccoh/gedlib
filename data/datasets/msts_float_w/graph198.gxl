@@ -2,219 +2,219 @@
 <!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
 <gxl xmlns:xlink="http://www.w3.org/1999/xlink">
 <graph id="198" >
-<node id="17"></node>
-<node id="118"></node>
-<node id="31"></node>
-<node id="168"></node>
-<node id="32"></node>
-<node id="133"></node>
-<node id="137"></node>
-<node id="143"></node>
-<node id="190"></node>
-<node id="8"></node>
-<node id="153"></node>
-<node id="20"></node>
-<node id="52"></node>
-<node id="29"></node>
-<node id="107"></node>
-<node id="34"></node>
-<node id="172"></node>
-<node id="37"></node>
-<node id="56"></node>
-<node id="70"></node>
-<node id="80"></node>
-<node id="124"></node>
-<node id="4"></node>
-<node id="110"></node>
-<node id="7"></node>
-<node id="167"></node>
-<node id="163"></node>
-<node id="14"></node>
-<node id="54"></node>
-<node id="28"></node>
-<node id="44"></node>
-<node id="157"></node>
-<node id="50"></node>
-<node id="121"></node>
-<node id="72"></node>
-<node id="116"></node>
-<node id="130"></node>
-<node id="139"></node>
-<node id="155"></node>
-<node id="0"></node>
-<node id="204"></node>
-<node id="3"></node>
-<node id="210"></node>
-<node id="105"></node>
-<node id="74"></node>
-<node id="108"></node>
-<node id="182"></node>
-<node id="100"></node>
-<node id="120"></node>
-<node id="123"></node>
-<node id="162"></node>
-<node id="141"></node>
-<node id="92"></node>
-<node id="21"></node>
-<node id="193"></node>
-<node id="82"></node>
-<node id="76"></node>
-<node id="66"></node>
-<node id="81"></node>
-<node id="200"></node>
-<node id="86"></node>
-<node id="91"></node>
-<node id="115"></node>
-<node id="146"></node>
-<node id="25"></node>
-<node id="19"></node>
-<node id="209"></node>
-<node id="30"></node>
-<node id="131"></node>
-<node id="140"></node>
-<node id="195"></node>
-<node id="165"></node>
-<node id="38"></node>
-<node id="136"></node>
-<node id="33"></node>
-<node id="156"></node>
-<node id="46"></node>
-<node id="164"></node>
-<node id="53"></node>
-<node id="181"></node>
-<node id="212"></node>
-<node id="161"></node>
-<node id="192"></node>
-<node id="191"></node>
-<node id="22"></node>
-<node id="36"></node>
-<node id="47"></node>
-<node id="49"></node>
-<node id="183"></node>
-<node id="208"></node>
-<node id="96"></node>
-<node id="135"></node>
-<node id="177"></node>
-<node id="207"></node>
-<node id="112"></node>
-<node id="166"></node>
-<node id="6"></node>
-<node id="148"></node>
-<node id="39"></node>
-<node id="138"></node>
-<node id="205"></node>
-<node id="61"></node>
-<node id="189"></node>
-<node id="63"></node>
-<node id="77"></node>
-<node id="202"></node>
-<node id="1"></node>
-<node id="150"></node>
-<node id="9"></node>
-<node id="12"></node>
-<node id="23"></node>
-<node id="174"></node>
-<node id="59"></node>
-<node id="68"></node>
-<node id="89"></node>
-<node id="111"></node>
-<node id="5"></node>
-<node id="83"></node>
-<node id="90"></node>
-<node id="48"></node>
-<node id="65"></node>
-<node id="128"></node>
-<node id="98"></node>
-<node id="134"></node>
-<node id="16"></node>
-<node id="126"></node>
-<node id="71"></node>
-<node id="73"></node>
-<node id="99"></node>
-<node id="104"></node>
-<node id="69"></node>
-<node id="97"></node>
-<node id="117"></node>
-<node id="158"></node>
-<node id="60"></node>
-<node id="114"></node>
-<node id="58"></node>
-<node id="159"></node>
-<node id="171"></node>
-<node id="93"></node>
-<node id="169"></node>
-<node id="95"></node>
-<node id="180"></node>
-<node id="103"></node>
-<node id="106"></node>
-<node id="178"></node>
-<node id="119"></node>
-<node id="149"></node>
-<node id="15"></node>
-<node id="62"></node>
-<node id="67"></node>
-<node id="42"></node>
-<node id="45"></node>
-<node id="185"></node>
-<node id="179"></node>
-<node id="55"></node>
-<node id="198"></node>
-<node id="109"></node>
-<node id="11"></node>
-<node id="101"></node>
-<node id="57"></node>
-<node id="113"></node>
-<node id="211"></node>
-<node id="170"></node>
-<node id="151"></node>
-<node id="122"></node>
-<node id="188"></node>
-<node id="94"></node>
-<node id="142"></node>
-<node id="145"></node>
-<node id="187"></node>
-<node id="125"></node>
-<node id="40"></node>
-<node id="206"></node>
-<node id="201"></node>
-<node id="144"></node>
-<node id="196"></node>
-<node id="24"></node>
-<node id="154"></node>
-<node id="84"></node>
-<node id="43"></node>
-<node id="78"></node>
-<node id="194"></node>
-<node id="197"></node>
-<node id="2"></node>
-<node id="10"></node>
-<node id="152"></node>
-<node id="85"></node>
-<node id="199"></node>
-<node id="41"></node>
-<node id="75"></node>
-<node id="79"></node>
-<node id="27"></node>
-<node id="147"></node>
-<node id="129"></node>
-<node id="203"></node>
-<node id="176"></node>
-<node id="184"></node>
-<node id="186"></node>
-<node id="160"></node>
-<node id="175"></node>
-<node id="18"></node>
-<node id="87"></node>
-<node id="35"></node>
-<node id="64"></node>
-<node id="102"></node>
-<node id="132"></node>
-<node id="26"></node>
-<node id="173"></node>
-<node id="13"></node>
-<node id="127"></node>
-<node id="88"></node>
-<node id="51"></node>
+<node id="17"><attr name="stock"><string>17</string></attr></node>
+<node id="118"><attr name="stock"><string>118</string></attr></node>
+<node id="31"><attr name="stock"><string>31</string></attr></node>
+<node id="168"><attr name="stock"><string>168</string></attr></node>
+<node id="32"><attr name="stock"><string>32</string></attr></node>
+<node id="133"><attr name="stock"><string>133</string></attr></node>
+<node id="137"><attr name="stock"><string>137</string></attr></node>
+<node id="143"><attr name="stock"><string>143</string></attr></node>
+<node id="190"><attr name="stock"><string>190</string></attr></node>
+<node id="8"><attr name="stock"><string>8</string></attr></node>
+<node id="153"><attr name="stock"><string>153</string></attr></node>
+<node id="20"><attr name="stock"><string>20</string></attr></node>
+<node id="52"><attr name="stock"><string>52</string></attr></node>
+<node id="29"><attr name="stock"><string>29</string></attr></node>
+<node id="107"><attr name="stock"><string>107</string></attr></node>
+<node id="34"><attr name="stock"><string>34</string></attr></node>
+<node id="172"><attr name="stock"><string>172</string></attr></node>
+<node id="37"><attr name="stock"><string>37</string></attr></node>
+<node id="56"><attr name="stock"><string>56</string></attr></node>
+<node id="70"><attr name="stock"><string>70</string></attr></node>
+<node id="80"><attr name="stock"><string>80</string></attr></node>
+<node id="124"><attr name="stock"><string>124</string></attr></node>
+<node id="4"><attr name="stock"><string>4</string></attr></node>
+<node id="110"><attr name="stock"><string>110</string></attr></node>
+<node id="7"><attr name="stock"><string>7</string></attr></node>
+<node id="167"><attr name="stock"><string>167</string></attr></node>
+<node id="163"><attr name="stock"><string>163</string></attr></node>
+<node id="14"><attr name="stock"><string>14</string></attr></node>
+<node id="54"><attr name="stock"><string>54</string></attr></node>
+<node id="28"><attr name="stock"><string>28</string></attr></node>
+<node id="44"><attr name="stock"><string>44</string></attr></node>
+<node id="157"><attr name="stock"><string>157</string></attr></node>
+<node id="50"><attr name="stock"><string>50</string></attr></node>
+<node id="121"><attr name="stock"><string>121</string></attr></node>
+<node id="72"><attr name="stock"><string>72</string></attr></node>
+<node id="116"><attr name="stock"><string>116</string></attr></node>
+<node id="130"><attr name="stock"><string>130</string></attr></node>
+<node id="139"><attr name="stock"><string>139</string></attr></node>
+<node id="155"><attr name="stock"><string>155</string></attr></node>
+<node id="0"><attr name="stock"><string>0</string></attr></node>
+<node id="204"><attr name="stock"><string>204</string></attr></node>
+<node id="3"><attr name="stock"><string>3</string></attr></node>
+<node id="210"><attr name="stock"><string>210</string></attr></node>
+<node id="105"><attr name="stock"><string>105</string></attr></node>
+<node id="74"><attr name="stock"><string>74</string></attr></node>
+<node id="108"><attr name="stock"><string>108</string></attr></node>
+<node id="182"><attr name="stock"><string>182</string></attr></node>
+<node id="100"><attr name="stock"><string>100</string></attr></node>
+<node id="120"><attr name="stock"><string>120</string></attr></node>
+<node id="123"><attr name="stock"><string>123</string></attr></node>
+<node id="162"><attr name="stock"><string>162</string></attr></node>
+<node id="141"><attr name="stock"><string>141</string></attr></node>
+<node id="92"><attr name="stock"><string>92</string></attr></node>
+<node id="21"><attr name="stock"><string>21</string></attr></node>
+<node id="193"><attr name="stock"><string>193</string></attr></node>
+<node id="82"><attr name="stock"><string>82</string></attr></node>
+<node id="76"><attr name="stock"><string>76</string></attr></node>
+<node id="66"><attr name="stock"><string>66</string></attr></node>
+<node id="81"><attr name="stock"><string>81</string></attr></node>
+<node id="200"><attr name="stock"><string>200</string></attr></node>
+<node id="86"><attr name="stock"><string>86</string></attr></node>
+<node id="91"><attr name="stock"><string>91</string></attr></node>
+<node id="115"><attr name="stock"><string>115</string></attr></node>
+<node id="146"><attr name="stock"><string>146</string></attr></node>
+<node id="25"><attr name="stock"><string>25</string></attr></node>
+<node id="19"><attr name="stock"><string>19</string></attr></node>
+<node id="209"><attr name="stock"><string>209</string></attr></node>
+<node id="30"><attr name="stock"><string>30</string></attr></node>
+<node id="131"><attr name="stock"><string>131</string></attr></node>
+<node id="140"><attr name="stock"><string>140</string></attr></node>
+<node id="195"><attr name="stock"><string>195</string></attr></node>
+<node id="165"><attr name="stock"><string>165</string></attr></node>
+<node id="38"><attr name="stock"><string>38</string></attr></node>
+<node id="136"><attr name="stock"><string>136</string></attr></node>
+<node id="33"><attr name="stock"><string>33</string></attr></node>
+<node id="156"><attr name="stock"><string>156</string></attr></node>
+<node id="46"><attr name="stock"><string>46</string></attr></node>
+<node id="164"><attr name="stock"><string>164</string></attr></node>
+<node id="53"><attr name="stock"><string>53</string></attr></node>
+<node id="181"><attr name="stock"><string>181</string></attr></node>
+<node id="212"><attr name="stock"><string>212</string></attr></node>
+<node id="161"><attr name="stock"><string>161</string></attr></node>
+<node id="192"><attr name="stock"><string>192</string></attr></node>
+<node id="191"><attr name="stock"><string>191</string></attr></node>
+<node id="22"><attr name="stock"><string>22</string></attr></node>
+<node id="36"><attr name="stock"><string>36</string></attr></node>
+<node id="47"><attr name="stock"><string>47</string></attr></node>
+<node id="49"><attr name="stock"><string>49</string></attr></node>
+<node id="183"><attr name="stock"><string>183</string></attr></node>
+<node id="208"><attr name="stock"><string>208</string></attr></node>
+<node id="96"><attr name="stock"><string>96</string></attr></node>
+<node id="135"><attr name="stock"><string>135</string></attr></node>
+<node id="177"><attr name="stock"><string>177</string></attr></node>
+<node id="207"><attr name="stock"><string>207</string></attr></node>
+<node id="112"><attr name="stock"><string>112</string></attr></node>
+<node id="166"><attr name="stock"><string>166</string></attr></node>
+<node id="6"><attr name="stock"><string>6</string></attr></node>
+<node id="148"><attr name="stock"><string>148</string></attr></node>
+<node id="39"><attr name="stock"><string>39</string></attr></node>
+<node id="138"><attr name="stock"><string>138</string></attr></node>
+<node id="205"><attr name="stock"><string>205</string></attr></node>
+<node id="61"><attr name="stock"><string>61</string></attr></node>
+<node id="189"><attr name="stock"><string>189</string></attr></node>
+<node id="63"><attr name="stock"><string>63</string></attr></node>
+<node id="77"><attr name="stock"><string>77</string></attr></node>
+<node id="202"><attr name="stock"><string>202</string></attr></node>
+<node id="1"><attr name="stock"><string>1</string></attr></node>
+<node id="150"><attr name="stock"><string>150</string></attr></node>
+<node id="9"><attr name="stock"><string>9</string></attr></node>
+<node id="12"><attr name="stock"><string>12</string></attr></node>
+<node id="23"><attr name="stock"><string>23</string></attr></node>
+<node id="174"><attr name="stock"><string>174</string></attr></node>
+<node id="59"><attr name="stock"><string>59</string></attr></node>
+<node id="68"><attr name="stock"><string>68</string></attr></node>
+<node id="89"><attr name="stock"><string>89</string></attr></node>
+<node id="111"><attr name="stock"><string>111</string></attr></node>
+<node id="5"><attr name="stock"><string>5</string></attr></node>
+<node id="83"><attr name="stock"><string>83</string></attr></node>
+<node id="90"><attr name="stock"><string>90</string></attr></node>
+<node id="48"><attr name="stock"><string>48</string></attr></node>
+<node id="65"><attr name="stock"><string>65</string></attr></node>
+<node id="128"><attr name="stock"><string>128</string></attr></node>
+<node id="98"><attr name="stock"><string>98</string></attr></node>
+<node id="134"><attr name="stock"><string>134</string></attr></node>
+<node id="16"><attr name="stock"><string>16</string></attr></node>
+<node id="126"><attr name="stock"><string>126</string></attr></node>
+<node id="71"><attr name="stock"><string>71</string></attr></node>
+<node id="73"><attr name="stock"><string>73</string></attr></node>
+<node id="99"><attr name="stock"><string>99</string></attr></node>
+<node id="104"><attr name="stock"><string>104</string></attr></node>
+<node id="69"><attr name="stock"><string>69</string></attr></node>
+<node id="97"><attr name="stock"><string>97</string></attr></node>
+<node id="117"><attr name="stock"><string>117</string></attr></node>
+<node id="158"><attr name="stock"><string>158</string></attr></node>
+<node id="60"><attr name="stock"><string>60</string></attr></node>
+<node id="114"><attr name="stock"><string>114</string></attr></node>
+<node id="58"><attr name="stock"><string>58</string></attr></node>
+<node id="159"><attr name="stock"><string>159</string></attr></node>
+<node id="171"><attr name="stock"><string>171</string></attr></node>
+<node id="93"><attr name="stock"><string>93</string></attr></node>
+<node id="169"><attr name="stock"><string>169</string></attr></node>
+<node id="95"><attr name="stock"><string>95</string></attr></node>
+<node id="180"><attr name="stock"><string>180</string></attr></node>
+<node id="103"><attr name="stock"><string>103</string></attr></node>
+<node id="106"><attr name="stock"><string>106</string></attr></node>
+<node id="178"><attr name="stock"><string>178</string></attr></node>
+<node id="119"><attr name="stock"><string>119</string></attr></node>
+<node id="149"><attr name="stock"><string>149</string></attr></node>
+<node id="15"><attr name="stock"><string>15</string></attr></node>
+<node id="62"><attr name="stock"><string>62</string></attr></node>
+<node id="67"><attr name="stock"><string>67</string></attr></node>
+<node id="42"><attr name="stock"><string>42</string></attr></node>
+<node id="45"><attr name="stock"><string>45</string></attr></node>
+<node id="185"><attr name="stock"><string>185</string></attr></node>
+<node id="179"><attr name="stock"><string>179</string></attr></node>
+<node id="55"><attr name="stock"><string>55</string></attr></node>
+<node id="198"><attr name="stock"><string>198</string></attr></node>
+<node id="109"><attr name="stock"><string>109</string></attr></node>
+<node id="11"><attr name="stock"><string>11</string></attr></node>
+<node id="101"><attr name="stock"><string>101</string></attr></node>
+<node id="57"><attr name="stock"><string>57</string></attr></node>
+<node id="113"><attr name="stock"><string>113</string></attr></node>
+<node id="211"><attr name="stock"><string>211</string></attr></node>
+<node id="170"><attr name="stock"><string>170</string></attr></node>
+<node id="151"><attr name="stock"><string>151</string></attr></node>
+<node id="122"><attr name="stock"><string>122</string></attr></node>
+<node id="188"><attr name="stock"><string>188</string></attr></node>
+<node id="94"><attr name="stock"><string>94</string></attr></node>
+<node id="142"><attr name="stock"><string>142</string></attr></node>
+<node id="145"><attr name="stock"><string>145</string></attr></node>
+<node id="187"><attr name="stock"><string>187</string></attr></node>
+<node id="125"><attr name="stock"><string>125</string></attr></node>
+<node id="40"><attr name="stock"><string>40</string></attr></node>
+<node id="206"><attr name="stock"><string>206</string></attr></node>
+<node id="201"><attr name="stock"><string>201</string></attr></node>
+<node id="144"><attr name="stock"><string>144</string></attr></node>
+<node id="196"><attr name="stock"><string>196</string></attr></node>
+<node id="24"><attr name="stock"><string>24</string></attr></node>
+<node id="154"><attr name="stock"><string>154</string></attr></node>
+<node id="84"><attr name="stock"><string>84</string></attr></node>
+<node id="43"><attr name="stock"><string>43</string></attr></node>
+<node id="78"><attr name="stock"><string>78</string></attr></node>
+<node id="194"><attr name="stock"><string>194</string></attr></node>
+<node id="197"><attr name="stock"><string>197</string></attr></node>
+<node id="2"><attr name="stock"><string>2</string></attr></node>
+<node id="10"><attr name="stock"><string>10</string></attr></node>
+<node id="152"><attr name="stock"><string>152</string></attr></node>
+<node id="85"><attr name="stock"><string>85</string></attr></node>
+<node id="199"><attr name="stock"><string>199</string></attr></node>
+<node id="41"><attr name="stock"><string>41</string></attr></node>
+<node id="75"><attr name="stock"><string>75</string></attr></node>
+<node id="79"><attr name="stock"><string>79</string></attr></node>
+<node id="27"><attr name="stock"><string>27</string></attr></node>
+<node id="147"><attr name="stock"><string>147</string></attr></node>
+<node id="129"><attr name="stock"><string>129</string></attr></node>
+<node id="203"><attr name="stock"><string>203</string></attr></node>
+<node id="176"><attr name="stock"><string>176</string></attr></node>
+<node id="184"><attr name="stock"><string>184</string></attr></node>
+<node id="186"><attr name="stock"><string>186</string></attr></node>
+<node id="160"><attr name="stock"><string>160</string></attr></node>
+<node id="175"><attr name="stock"><string>175</string></attr></node>
+<node id="18"><attr name="stock"><string>18</string></attr></node>
+<node id="87"><attr name="stock"><string>87</string></attr></node>
+<node id="35"><attr name="stock"><string>35</string></attr></node>
+<node id="64"><attr name="stock"><string>64</string></attr></node>
+<node id="102"><attr name="stock"><string>102</string></attr></node>
+<node id="132"><attr name="stock"><string>132</string></attr></node>
+<node id="26"><attr name="stock"><string>26</string></attr></node>
+<node id="173"><attr name="stock"><string>173</string></attr></node>
+<node id="13"><attr name="stock"><string>13</string></attr></node>
+<node id="127"><attr name="stock"><string>127</string></attr></node>
+<node id="88"><attr name="stock"><string>88</string></attr></node>
+<node id="51"><attr name="stock"><string>51</string></attr></node>
 <edge from="17" to="118"><attr name="w"><float>0.97</float></attr></edge>
 <edge from="17" to="153"><attr name="w"><float>0.94</float></attr></edge>
 <edge from="17" to="92"><attr name="w"><float>0.92</float></attr></edge>

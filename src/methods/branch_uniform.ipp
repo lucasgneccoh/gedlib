@@ -78,6 +78,37 @@ lsape_populate_instance_(const GEDGraph & g, const GEDGraph & h, DMatrix & maste
 			}
 		}
 	}
+
+	/*
+	// AQUI
+	//std::cout<<" MODIFICACION "<<std::endl;
+	// Export the master_problem matrix to analyse
+	std::vector<std::vector<double>> matrix;
+	for (std::size_t row_in_master = 0; row_in_master < master_problem.num_rows(); row_in_master++) {
+		matrix.emplace_back(std::vector<double>());
+		for (std::size_t col_in_master = 0; col_in_master < master_problem.num_cols(); col_in_master++) {
+			matrix.at(row_in_master).emplace_back(master_problem(row_in_master, col_in_master));
+		}
+	}
+	std::string path = "/home/lucas/Documents/stage/gedlib/compression/build/inside_mat" + std::to_string(g.id()) + "_" + std::to_string(h.id()) +  ".csv"; 
+	std::ofstream file(path.c_str());
+	if(file.is_open()){
+		for(std::size_t i=0; i< master_problem.num_rows(); i++){
+			for(std::size_t j=0; j< master_problem.num_cols(); j++){
+				file<<matrix.at(i).at(j);
+				if(j == master_problem.num_cols()-1){
+					file<<"\n";
+				}
+				else{
+					file<<",";
+				}
+			}
+		}
+		file.close();
+	}
+	*/
+
+
 }
 
 template<class UserNodeLabel, class UserEdgeLabel>

@@ -166,20 +166,20 @@ get_dataset_attr_types(std::string dataset){
 		return ans;
 	}
 
-	if(dataset=="msts_float_w"){
+	if(dataset=="msts_float_w" || dataset=="msts_float_w_un"){
 		ans.at("node_attr").emplace(std::make_pair("stock", 's'));
 		ans.at("edge_attr").emplace(std::make_pair("w", 'f'));
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
-	if(dataset=="msts_int_w"){
+	if(dataset=="msts_int_w" || dataset=="msts_int_w_un"){
 		ans.at("node_attr").emplace(std::make_pair("stock", 's'));
 		ans.at("edge_attr").emplace(std::make_pair("w", 'i'));
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
-	if(dataset=="msts_no_w"){
-		ans.at("node_attr").emplace(std::make_pair("stock", 's')); // Very important to habe nodes LABELED
+	if(dataset=="msts_no_w" || dataset=="msts_no_w_un"){
+		ans.at("node_attr").emplace(std::make_pair("stock", 's')); // Very important to have nodes LABELED
 		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
 		return ans;
 	}
@@ -203,9 +203,11 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	std::string output_root = args.at("output_root");
 	std::string file_preffix = args.at("file_preffix");
 
+
 	bool binary = false;
 	bool relaxed = true;
 	bool decomp_only = false;
+	bool tar_size_only = false;
 	// WARNING: The choice of separators can impact the execution of the program. 
 	// I suggest \n and ;
 	char separator_1 = ';';
@@ -213,6 +215,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	if(args.count("binary_encoding")>0 && args.at("binary_encoding")=="true") binary = true;
 	if(args.count("relaxed_compression")>0 && args.at("relaxed_compression")=="false") relaxed = false;
 	if(args.count("decomp_only")>0 && args.at("decomp_only")=="true") decomp_only = true;
+	if(args.count("test_mode")>0 && args.at("test_mode")=="tar_size") tar_size_only = true;
 	if(args.count("separator_1")>0) separator_1 = args.at("separator_1")[0];
 	if(args.count("separator_2")>0) separator_2 = args.at("separator_2")[0];
 
@@ -221,6 +224,8 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	// Specify dataset and paths
 	std::string folder_suffix = (binary)? "_bin":"_text";
 	output_root = output_root + "/" + file_preffix;
+
+	std::string dir = output_root + "/encoded" + folder_suffix;
 
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_decoded;
 	ged::GED_ABC abc;
@@ -241,12 +246,14 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 	std::cout<<"Working on : "<<file_preffix<<std::endl;
 
+	int sys_ans = 0;
+	std::size_t tar_size;
 
 	for(std::size_t num_t = 0; num_t < num_trials; num_t++){
 		std::cout<<"Trial #"<<num_t+1<< " of "<< num_trials<<std::endl;
 		headers.clear();
 		values.clear();
-		if(!decomp_only){
+		if(!decomp_only && !tar_size_only){
 		if(stdout>0) std::cout<<"**********    COMPRESS   ************"<<std::endl;
 		try{
 			
@@ -277,7 +284,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 		}	
 
-
+		if(!tar_size_only){
 		if(stdout>0) std::cout<<"************    DECOMPRESS   **************"<<std::endl;		
 		try{		
 			
@@ -343,30 +350,39 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 		if(stdout>0) std::cout<<"**********    COMPRESS WITH TAR    ************"<<std::endl;
 
-		std::string dir = output_root + "/encoded" + folder_suffix;
+		
 		std::string folder_to_tar = "tar -cjf " + dir + ".tar.bz --directory=" + output_root + " " +  "encoded" + folder_suffix;
-		int sys_ans = 0;
+
 		std::string remove = "rm " + dir + ".tar.bz";
 		sys_ans = std::system(remove.c_str());
 		if (stdout>0 && sys_ans==0) std::cout<<"Old tar file removed"<<std::endl;
 		sys_ans = std::system(folder_to_tar.c_str());
-		std::size_t tar_size;
+		
 		if (sys_ans==0){
 			if(stdout>0) std::cout<<"Collections compressed"<<std::endl;
+			tar_size = abc.get_file_size(dir + ".tar.bz");
+			headers.emplace_back("tar_compressed_size");
+			values.emplace_back(std::to_string(tar_size));
 		}
 		else{
 			std::cout<<"Possible error while using tar system call. Returned value: "<<sys_ans<<std::endl;
-			//throw(test_exception("Error while compressing encoded folder"));
+			headers.emplace_back("tar_compressed_size");
+			values.emplace_back(std::to_string(-1));
 		}
+
+		}
+
 		tar_size = abc.get_file_size(dir + ".tar.bz");
 		headers.emplace_back("tar_compressed_size");
 		values.emplace_back(std::to_string(tar_size));
+		headers.emplace_back("tar_compressed_sys_ans");
+		values.emplace_back(std::to_string(sys_ans));
 
 
 		if(stdout>0) std::cout<<"**********    WRITE TEST RESULTS    ************"<<std::endl;	
 
 
-		if(decomp_only){
+		if(decomp_only || tar_size_only){
 			headers.emplace_back("dataset");
 			values.emplace_back(file_preffix);
 			headers.emplace_back("sample_size");
@@ -938,13 +954,14 @@ void print_info(std::map<std::string, std::string> &args){
 
 std::string get_graph_dir(std::string ds){
 	std::string base = "../../data/datasets/";
-	if(ds=="acyclic" || ds=="mao" || ds=="pah" || ds=="msts_float_w" || ds=="msts_int_w" || ds=="msts_no_w" || ds=="Lucas"){
-		return base + ds;
+	if(ds=="Letter" ){
+		return base + ds + "/MED";  
 	}
 	if(ds=="AIDS" || ds=="Mutagenicity" ||ds=="Protein"){
 		return base + ds + "/data";
 	}
-	return base + ds + "/MED";  //Letter
+	return base + ds;
+	
 	
 }
 
@@ -980,6 +997,10 @@ int main(int argc, char* argv[]){
 	// "table_sizes" to create the table comparing sizes of original files, abc-compressed files, tar.bz files, etc
 	// WARNING: again, paths and directory names are fixed for the moment
 	// "print_only" to iterate over datasets and show information on the terminal. Does not run the compression algorithm
+	// "tar_size" only looks for the encoded file compressed using tar.bz and gets its size
+	// This was made to overcome the issue of the tar system call not working and thus getting the tar file size of the last and not the current iteration
+	// This also supposes that the test is being executed using a bash file that first call the original compression, then from the bash the tar command is called, and then this part again to get the file size only
+
 	// Any other value results in running the compression and decompression algorithms for all datasets and graph_sample_sizes
 	args.emplace(std::make_pair("test_mode",argv[param++]));
 
