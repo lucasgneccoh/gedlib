@@ -8,6 +8,7 @@ cmake ..
 make
 ```
 	
+
 5. Get one of the bash files from the util_files folder. This files are used to simplify execution. Define parameters, and execute the bash file using `bash run.sh`.
 Yout results will be available in the _compression/data/output_ folder. I also made another kind of files like `run_2.sh`. This file will create two separate files with the results. I made this because I was having trouble with the `tar` system call from the C++ code, so I separated the two parts.
 
