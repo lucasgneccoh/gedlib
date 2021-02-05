@@ -102,35 +102,33 @@ def loadGXL(filename):
 	struct = {'nodes': node_attr, 'edges': edge_attr}
 	return g, struct
 	
+
+def all_match(dict1, dict2, verbose = True):
+	for k in dict1.keys():
+		if dict1[k].strip()=="default":
+			continue
+		if k not in dict2:
+			return False
+		else:
+			if dict1[k].strip() != dict2[k].strip():
+				return False
+	for k in dict2.keys():
+		if dict2[k].strip()=="default":		
+			continue
+		if k not in dict1:
+			return False
+		else:
+			if dict1[k].strip() != dict2[k].strip():
+				return False
+	return True
 		
-def test_iso(filename, original_path, decoded_path, verbose=False):
+def test_iso(filename, original_path, decoded_path):
 	data, y, struct, labels = loadFromXML(filename,original_path)
 	data_decoded, y_decoded, struct, labels = loadFromXML(filename,decoded_path) 
 	iso = False
 	print("Sizes: Orig -> ", len(data), ", compressed -> ", len(data_decoded))
 
-	def all_match(dict1, dict2, verbose = True):
-		for k in dict1.keys():
-			if dict1[k].strip()=="default":
-				continue
-			if k not in dict2:
-				#if(verbose): print(k, " not in dict2")
-				return False
-			else:
-				if dict1[k].strip() != dict2[k].strip():
-					#if(verbose): print(k, " : ", dict1[k], " != ", dict2[k])
-					return False
-		for k in dict2.keys():
-			if dict2[k].strip()=="default":		
-				continue
-			if k not in dict1:
-				#if(verbose): print(k, " not in dict1")
-				return False
-			else:
-				if dict1[k].strip() != dict2[k].strip():
-					#if(verbose): print(k, " : ", dict1[k], " != ", dict2[k])
-					return False
-		return True
+	
 		
 	good = True
 	not_iso = 0
@@ -164,17 +162,20 @@ def get_graph_dir(ds, base):
 
 def get_collection_file(ds, base):
 	return base + ds +".xml"
+	
+import argparse
 
-if __name__ == "__main__":
-	verbose = True
-	base_xml = "../../data/collections/"
-	graph_dir_orig = "../../data/datasets/"
-	graph_dir_decoded = "../data/output/"
-	suffix_decoded = "/decoded_bin"
-	datasets = ["msts_no_w"]
+parser = argparse.ArgumentParser(description="Check every pair of graphs with the same name in two collections are isomorphic.")
+parser.add_argument("--base_xml", help="path to the folder where the original xml collection files", default="../../data/collections/")
+parser.add_argument("--graph_dir_orig", help="path to the folder containig the original data sets with the graphs",default="../../data/datasets/")
+parser.add_argument("--graph_dir_decoded", help="path to the folder containig the decoded data sets with the graphs",default="../data/output/")
+parser.add_argument("--suffix_decoded", help="name of the folder where the decoded files are",default="/decoded_bin")
+parser.add_argument("--datasets", help="names of the datasets. Can be many, separated by spaces",nargs="+")
 
-	for d in datasets:
-		test_iso(get_collection_file(d, base_xml), get_graph_dir(d, graph_dir_orig), graph_dir_decoded + d + suffix_decoded, verbose)
+args = parser.parse_args()
+
+for d in args.datasets:
+	test_iso(get_collection_file(d, args.base_xml), get_graph_dir(d, args.graph_dir_orig), args.graph_dir_decoded + d + args.suffix_decoded)
 
 						
 	

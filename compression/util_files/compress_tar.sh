@@ -1,20 +1,34 @@
-dirs=( "acyclic" "AIDS" "mao" "pah" "Mutagenicity" "Protein" "Letter")
+dirs=( "acyclic" "AIDS" "mao" "pah" "Mutagenicity" "msts_float_w" "msts_int_w" "msts_no_w")
 
-for dir in ${dirs[@]}; do
-	echo $dir;
-	eval "echo compress:";
-	eval "time tar -cjf "$dir".tar.bz "$dir;
-	mv $dir".tar.bz" "compressed/"
-done
+eval "touch tar_times.txt"
 
-eval "cd compressed"
 
-eval "rm -r extract";
-eval "mkdir extract";
+for (( j = 1 ; j <= 1; j++ )) # In case we want to test many times
+do
+	echo "Compressing..."
+	eval "rm -r compressed";
+	eval "mkdir compressed";
 
-for dir in ${dirs[@]}; do
-	echo $dir;
-	eval "time tar -xjf "$dir".tar.bz -C extract";
+	for dir in ${dirs[@]}; do
+		echo $dir
+		eval "echo "$dir" >> tar_times.txt";
+		eval "{ time tar -cjf "$dir".tar.bz "$dir" ; } 2>> tar_times.txt";
+		mv $dir".tar.bz" "compressed/"
+	done
+
+	eval "cd compressed"
+
+	echo "Extracting..."
+	eval "rm -r extract";
+	eval "mkdir extract";
+
+	for dir in ${dirs[@]}; do
+		echo $dir
+		eval "echo "$dir" >> tar_times.txt";
+		eval "{ time tar -xjf "$dir".tar.bz -C extract ; } 2>> tar_times.txt";
+	done
 	
-	eval "echo --------------------------";
+	eval "cd .."
+
 done
+eval "echo Done compressing and timing";

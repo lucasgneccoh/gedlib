@@ -184,6 +184,12 @@ get_dataset_attr_types(std::string dataset){
 		return ans;
 	}
 
+	if(dataset=="msts_no_w" || dataset=="msts_no_w_un"){
+		ans.at("node_attr").emplace(std::make_pair("stock", 's'));
+		ans.at("graph_attr").emplace(std::make_pair("class", 'c'));
+		return ans;
+	}
+
 	return ans;
 		
 }
@@ -208,6 +214,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	bool relaxed = true;
 	bool decomp_only = false;
 	bool tar_size_only = false;
+
 	// WARNING: The choice of separators can impact the execution of the program. 
 	// I suggest \n and ;
 	char separator_1 = ';';
@@ -219,24 +226,27 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	if(args.count("separator_1")>0) separator_1 = args.at("separator_1")[0];
 	if(args.count("separator_2")>0) separator_2 = args.at("separator_2")[0];
 
+
 	std::map<std::string, std::map<std::string, char>> attr_types = get_dataset_attr_types(file_preffix);
 
 	// Specify dataset and paths
 	std::string folder_suffix = (binary)? "_bin":"_text";
 	output_root = output_root + "/" + file_preffix;
-
 	std::string dir = output_root + "/encoded" + folder_suffix;
 
 	ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> env_decoded;
 	ged::GED_ABC abc;
+
 	std::size_t num_trials = std::stoi(args.at("num_trials"));
 
-	double comp_time, decomp_time, write_time;
+	double comp_time, decomp_time, tar_time, write_time;
 	
 	auto start = std::chrono::high_resolution_clock::now();
 	auto end = std::chrono::high_resolution_clock::now();
 	ged::Seconds runtime;
 
+	int sys_ans = 0;
+	std::size_t tar_size;
 
 
 	ged::Options::GXLNodeEdgeType node_type = attr_types.at("node_attr").size()>0 ? ged::Options::GXLNodeEdgeType::LABELED : ged::Options::GXLNodeEdgeType::UNLABELED;
@@ -246,143 +256,149 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 	std::cout<<"Working on : "<<file_preffix<<std::endl;
 
-	int sys_ans = 0;
-	std::size_t tar_size;
-
 	for(std::size_t num_t = 0; num_t < num_trials; num_t++){
 		std::cout<<"Trial #"<<num_t+1<< " of "<< num_trials<<std::endl;
 		headers.clear();
 		values.clear();
 		if(!decomp_only && !tar_size_only){
-		if(stdout>0) std::cout<<"**********    COMPRESS   ************"<<std::endl;
-		try{
-			
-			start = std::chrono::high_resolution_clock::now();
 
-			abc.set_omega(0.2);
+			if(stdout>0) std::cout<<"**********    COMPRESS   ************"<<std::endl;
+			try{
+				
+				start = std::chrono::high_resolution_clock::now();
 
-			abc.compress_collection<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
-				binary, relaxed,
-				args.at("graph_dir"), 
-				args.at("collection_file"), node_type, edge_type, 
-				irrelevant_node_attributes, irrelevant_edge_attributes,
-				attr_types,
-				output_root + "/encoded" + folder_suffix,
-				output_root,
-				file_preffix, args, stdout, headers, values,
-				separator_1, separator_2);
+				abc.set_omega(0.2);
 
-			
-			end = std::chrono::high_resolution_clock::now();
+				abc.compress_collection<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
+					binary, relaxed,
+					args.at("graph_dir"), 
+					args.at("collection_file"), node_type, edge_type, 
+					irrelevant_node_attributes, irrelevant_edge_attributes,
+					attr_types,
+					output_root + "/encoded" + folder_suffix,
+					output_root,
+					file_preffix, args, stdout, headers, values,
+					separator_1, separator_2);
 
-			runtime = end - start;
-			comp_time = runtime.count();
-			std::cout<<"Comp :"<<comp_time<<" , "<<runtime.count()<<std::endl;
+				
+				end = std::chrono::high_resolution_clock::now();
 
-		}
-		catch(const std::exception& e){ throw; }
+				runtime = end - start;
+				comp_time = runtime.count();
+				headers.emplace_back("comp_time");
+				values.emplace_back(std::to_string(comp_time));	
+				std::cout<<"Comp :"<<comp_time<<" , "<<runtime.count()<<std::endl;
+
+			}
+			catch(const std::exception& e){ throw; }
 
 		}	
 
 		if(!tar_size_only){
-		if(stdout>0) std::cout<<"************    DECOMPRESS   **************"<<std::endl;		
-		try{		
-			
-			start = std::chrono::high_resolution_clock::now();
+			if(stdout>0) std::cout<<"************    DECOMPRESS   **************"<<std::endl;		
+			try{		
+				
+				start = std::chrono::high_resolution_clock::now();
 
-			env_decoded = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
-			abc.decode_collection<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
-				binary, relaxed,
-				env_decoded,
-				output_root + "/encoded" + folder_suffix, file_preffix, args, stdout,
-				separator_1, separator_2);
-			
-			end = std::chrono::high_resolution_clock::now();
+				env_decoded = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel> ();
+				abc.decode_collection<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(
+					binary, relaxed,
+					env_decoded,
+					output_root + "/encoded" + folder_suffix, file_preffix, args, stdout,
+					separator_1, separator_2);
+				
+				end = std::chrono::high_resolution_clock::now();
 
-			runtime = end - start;
-			decomp_time = runtime.count();
-			std::cout<<"decomp :"<<decomp_time<<" , "<<runtime.count()<<std::endl;
-		}
-		catch(const std::exception& e){ throw; }
-
-		if(!decomp_only){
-		if(stdout>0) std::cout<<"**********    WRITE GRAPHS    ************"<<std::endl;	
-		
-		try{
-			
-			start = std::chrono::high_resolution_clock::now();
-
-			std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> graph_ids;
-			graph_ids = env_decoded.graph_ids();
-			std::vector<std::string> gxl_file_names, graph_classes;
-			
-			for(std::size_t i=graph_ids.first; i<graph_ids.second; i++){
-				gxl_file_names.emplace_back(env_decoded.get_graph_name(i));
-				graph_classes.emplace_back(env_decoded.get_graph_class(i));
-				env_decoded.save_as_gxl_graph(i,  output_root + "/decoded" + folder_suffix + "/" + env_decoded.get_graph_name(i));	
+				runtime = end - start;
+				decomp_time = runtime.count();
+				headers.emplace_back("decomp_time");
+				values.emplace_back(std::to_string(decomp_time));
+				std::cout<<"decomp :"<<decomp_time<<" , "<<runtime.count()<<std::endl;
 			}
-			env_decoded.save_graph_collection(output_root + "/decoded" + folder_suffix + "/" + file_preffix + ".xml",  gxl_file_names,  graph_classes);
-						
+			catch(const std::exception& e){ throw; }
+
+			if(!decomp_only){
+				if(stdout>0) std::cout<<"**********    WRITE GRAPHS    ************"<<std::endl;	
+				
+				try{
+					
+					start = std::chrono::high_resolution_clock::now();
+
+					std::pair<ged::GEDGraph::GraphID, ged::GEDGraph::GraphID> graph_ids;
+					graph_ids = env_decoded.graph_ids();
+					std::vector<std::string> gxl_file_names, graph_classes;
+					
+					for(std::size_t i=graph_ids.first; i<graph_ids.second; i++){
+						gxl_file_names.emplace_back(env_decoded.get_graph_name(i));
+						graph_classes.emplace_back(env_decoded.get_graph_class(i));
+						env_decoded.save_as_gxl_graph(i,  output_root + "/decoded" + folder_suffix + "/" + env_decoded.get_graph_name(i));	
+					}
+					env_decoded.save_graph_collection(output_root + "/decoded" + folder_suffix + "/" + file_preffix + ".xml",  gxl_file_names,  graph_classes);
+								
+					end = std::chrono::high_resolution_clock::now();
+
+					runtime = end - start;
+					write_time = runtime.count();
+					headers.emplace_back("write_time");
+					values.emplace_back(std::to_string(write_time));
+			
+					std::cout<<"Write :"<<write_time<<" , "<<runtime.count()<<std::endl;
+				}
+				catch(const std::exception& e){throw;}
+
+			}
+
+			
+			
+
+			
+			
+
+			if(stdout>0) std::cout<<"**********    COMPRESS WITH TAR    ************"<<std::endl;
+
+			start = std::chrono::high_resolution_clock::now();
+
+			std::string folder_to_tar = "tar -cjf " + dir + ".tar.bz --directory=" + output_root + " " +  "encoded" + folder_suffix;
+
+			std::string remove = "rm " + dir + ".tar.bz";
+			sys_ans = std::system(remove.c_str());
+			if (stdout>0 && sys_ans==0) std::cout<<"Old tar file removed"<<std::endl;
+			sys_ans = std::system(folder_to_tar.c_str());
 			end = std::chrono::high_resolution_clock::now();
 
+			headers.emplace_back("tar_compressed_size");
+			if (sys_ans==0){
+				if(stdout>0) std::cout<<"Collections compressed"<<std::endl;
+				tar_size = abc.get_file_size(dir + ".tar.bz");				
+				values.emplace_back(std::to_string(tar_size));
+			}
+			else{
+				std::cout<<"Possible error while using tar system call. Returned value: "<<sys_ans<<std::endl;
+				values.emplace_back(std::to_string(-1));
+			}
+
+			
 			runtime = end - start;
-			write_time = runtime.count();
-			std::cout<<"Write :"<<write_time<<" , "<<runtime.count()<<std::endl;
-		}
-		catch(const std::exception& e){
-			throw;
-		}
+			tar_time = runtime.count();
+			headers.emplace_back("tar_time");
+			values.emplace_back(std::to_string(tar_time));
 
 		}
-
-		if(!decomp_only){
-			headers.emplace_back("comp_time");
-			values.emplace_back(std::to_string(comp_time));	
-		}
-		
-		headers.emplace_back("decomp_time");
-		values.emplace_back(std::to_string(decomp_time));
-
-		if(!decomp_only){
-			headers.emplace_back("write_time");
-			values.emplace_back(std::to_string(write_time));
-		}
-
-		if(stdout>0) std::cout<<"**********    COMPRESS WITH TAR    ************"<<std::endl;
-
-		
-		std::string folder_to_tar = "tar -cjf " + dir + ".tar.bz --directory=" + output_root + " " +  "encoded" + folder_suffix;
-
-		std::string remove = "rm " + dir + ".tar.bz";
-		sys_ans = std::system(remove.c_str());
-		if (stdout>0 && sys_ans==0) std::cout<<"Old tar file removed"<<std::endl;
-		sys_ans = std::system(folder_to_tar.c_str());
-		
-		if (sys_ans==0){
-			if(stdout>0) std::cout<<"Collections compressed"<<std::endl;
+		else{ // tar_size_only
 			tar_size = abc.get_file_size(dir + ".tar.bz");
 			headers.emplace_back("tar_compressed_size");
 			values.emplace_back(std::to_string(tar_size));
-		}
-		else{
-			std::cout<<"Possible error while using tar system call. Returned value: "<<sys_ans<<std::endl;
-			headers.emplace_back("tar_compressed_size");
-			values.emplace_back(std::to_string(-1));
-		}
+			headers.emplace_back("tar_compressed_sys_ans");
+			values.emplace_back(std::to_string(sys_ans));
 
 		}
-
-		tar_size = abc.get_file_size(dir + ".tar.bz");
-		headers.emplace_back("tar_compressed_size");
-		values.emplace_back(std::to_string(tar_size));
-		headers.emplace_back("tar_compressed_sys_ans");
-		values.emplace_back(std::to_string(sys_ans));
-
 
 		if(stdout>0) std::cout<<"**********    WRITE TEST RESULTS    ************"<<std::endl;	
 
 
 		if(decomp_only || tar_size_only){
+			// if the compression algorithm was not called, 
+			// include dataset name and sample size in the result
 			headers.emplace_back("dataset");
 			values.emplace_back(file_preffix);
 			headers.emplace_back("sample_size");
@@ -398,7 +414,9 @@ void treat_dataset(std::map<std::string, std::string> &args){
 			
 			if(output_file.is_open()){
 				if(args.at("first_iteration")=="true"){
-					abc.write_to_file<std::string>(output_file, headers);
+					if (!(args.count("write_headers")>0 && args.at("write_headers")=="0")){
+						abc.write_to_file<std::string>(output_file, headers);
+					}					
 					args.at("first_iteration")="false";
 				}
 				abc.write_to_file<std::string>(output_file, values);		
@@ -698,7 +716,7 @@ void get_gxl_sizes(std::vector<std::string> collection_files, std::vector<std::s
 
 */
 void create_table_sizes(std::string gxl_orig_path, std::string separate_files_path_attr, std::string separate_files_path_no_attr, std::string encoded_path,
-	std::vector<std::string> datasets, std::string output_file){
+	std::vector<std::string> datasets, std::string output_file, std::string do_separate_files){
 
 	ged::GED_ABC abc;
 	std::vector<std::string> headers;
@@ -719,20 +737,20 @@ void create_table_sizes(std::string gxl_orig_path, std::string separate_files_pa
 		headers.emplace_back("gxl_orig_tar_bz");
 		values.emplace_back(std::to_string(abc.get_file_size(gxl_orig_path + "/compressed/" + ds + ".tar.bz")));
 
+		if (do_separate_files=="true"){
+			// separate files
+			headers.emplace_back("sep_files_attr");
+			values.emplace_back(std::to_string(get_folder_size(separate_files_path_attr + "/" + ds)));
 
-		// separate files
-		headers.emplace_back("sep_files_attr");
-		values.emplace_back(std::to_string(get_folder_size(separate_files_path_attr + "/" + ds)));
+			headers.emplace_back("sep_files_attr_tar_bz");
+			values.emplace_back(std::to_string(abc.get_file_size(separate_files_path_attr + "/compressed/" + ds + ".tar.bz")));
 
-		headers.emplace_back("sep_files_attr_tar_bz");
-		values.emplace_back(std::to_string(abc.get_file_size(separate_files_path_attr + "/compressed/" + ds + ".tar.bz")));
+			headers.emplace_back("sep_files_no_attr");
+			values.emplace_back(std::to_string(get_folder_size(separate_files_path_no_attr + "/" + ds)));
 
-		headers.emplace_back("sep_files_no_attr");
-		values.emplace_back(std::to_string(get_folder_size(separate_files_path_no_attr + "/" + ds)));
-
-		headers.emplace_back("sep_files_no_attr_tar_bz");
-		values.emplace_back(std::to_string(abc.get_file_size(separate_files_path_no_attr + "/compressed/" + ds + ".tar.bz")));
-
+			headers.emplace_back("sep_files_no_attr_tar_bz");
+			values.emplace_back(std::to_string(abc.get_file_size(separate_files_path_no_attr + "/compressed/" + ds + ".tar.bz")));
+		}
 		// encoded
 		headers.emplace_back("encoded_bin");
 		values.emplace_back(std::to_string(get_folder_size(encoded_path + "/" + ds + "/encoded_bin")));
@@ -993,7 +1011,7 @@ int main(int argc, char* argv[]){
 	// Handle the execution to do other tasks
 	// "dataset_stats" to only compute the descriptive statistics of nodes, edges and attributes
 	// "gxl_sizes" to compute the size of the collections in the original gxl format and its .tar.bz compressed file
-	// "write_separate_files" to trasnform the collections into separate files format. Attention with the directory names that are fixed
+	// "write_separate_files" to transform the collections into separate files format. Attention with the directory names that are fixed
 	// "table_sizes" to create the table comparing sizes of original files, abc-compressed files, tar.bz files, etc
 	// WARNING: again, paths and directory names are fixed for the moment
 	// "print_only" to iterate over datasets and show information on the terminal. Does not run the compression algorithm
@@ -1008,6 +1026,79 @@ int main(int argc, char* argv[]){
 	args.emplace(std::make_pair("stdout",argv[param++]));
 
 	std::vector<std::string> datasets_names = split_string(argv[param++], ":");
+
+
+	std::vector<std::string> collection_files;
+	std::vector<std::string> graph_dirs;
+	for(const auto d : datasets_names) {
+        collection_files.emplace_back(get_collection_file(d));
+        graph_dirs.emplace_back(get_graph_dir(d));
+    }
+
+    // Just to handle output writing
+    args.emplace(std::make_pair("first_iteration", "true"));
+    // Creating entries that will be used
+    args.emplace(std::make_pair("collection_file", "fill"));
+    args.emplace(std::make_pair("graph_dir", "fill"));
+    args.emplace(std::make_pair("file_preffix", "fill"));
+
+
+	// Only get the statistics. No compression
+	if(args.at("test_mode") == "dataset_stats"){
+		args.emplace(std::make_pair("output_root",argv[param++]));	
+		get_statistics(collection_files, graph_dirs, datasets_names, args.at("output_root"));
+		return 0;
+	}
+
+	// get the real size of original datasets
+	if(args.at("test_mode") == "gxl_sizes"){
+		args.emplace(std::make_pair("output_root",argv[param++]));
+		args.emplace(std::make_pair("tar_path",argv[param++]));
+		get_gxl_sizes(collection_files, graph_dirs, datasets_names, args.at("output_root"), args.at("tar_path"));
+		return 0;
+	}
+
+
+	// Write in separate files format
+	if(args.at("test_mode") == "write_separate_files"){
+		args.emplace(std::make_pair("separate_files_path_attr",argv[param++]));
+		args.emplace(std::make_pair("separate_files_path_no_attr",argv[param++]));
+		for(const auto d : datasets_names){
+			std::cout << d << "  attr ..." <<std::flush;
+	        write_in_separate_files(get_collection_file(d), get_graph_dir(d), 
+				d, args.at("separate_files_path_attr"),
+				'\n', ';', true);
+
+	        std::cout <<"  no attr ..." <<std::flush;
+
+	        write_in_separate_files(get_collection_file(d), get_graph_dir(d), 
+				d, args.at("separate_files_path_no_attr"),
+				'\n', ';', false);
+	        std::cout<<" done" <<std::endl;
+	    }		
+		return 0;
+	}
+
+	
+	if(args.at("test_mode") == "table_sizes"){
+		args.emplace(std::make_pair("output_root",argv[param++]));
+		args.emplace(std::make_pair("output_file",argv[param++]));
+		args.emplace(std::make_pair("gxl_orig_path",argv[param++]));
+		args.emplace(std::make_pair("separate_files_path_attr",argv[param++]));
+		args.emplace(std::make_pair("separate_files_path_no_attr",argv[param++]));
+		args.emplace(std::make_pair("do_separate_files",argv[param++]));
+		std::vector<std::string> folders = datasets_names;
+
+		create_table_sizes(args.at("gxl_orig_path"), 
+			args.at("separate_files_path_attr"), args.at("separate_files_path_no_attr"),
+			args.at("output_root"), folders,
+			args.at("output_file"),
+			args.at("do_separate_files"));
+		return 0;
+	}
+	
+
+	// Complete test
 
 	// Number of times each dataset and k_sample will be executed 
 	args.emplace(std::make_pair("num_trials", argv[param++]));
@@ -1068,69 +1159,9 @@ int main(int argc, char* argv[]){
 	// "true" if nodes are uniquely identified and they should be matched according to attributes
 	args.emplace(std::make_pair("match_node_map", argv[param++]));
 	args.emplace(std::make_pair("match_node_map_by", argv[param++]));
-	
 
-
-
-
-    // Just to handle output writing
-    args.emplace(std::make_pair("first_iteration", "true"));
-    // Creating entries that will be used
-    args.emplace(std::make_pair("collection_file", "fill"));
-    args.emplace(std::make_pair("graph_dir", "fill"));
-    args.emplace(std::make_pair("file_preffix", "fill"));
-    
-
-    std::vector<std::string> collection_files;
-	std::vector<std::string> graph_dirs;
-	for(const auto d : datasets_names) {
-        collection_files.emplace_back(get_collection_file(d));
-        graph_dirs.emplace_back(get_graph_dir(d));
-    }
-
-	// Only get the statistics. No compression
-	if(args.at("test_mode") == "dataset_stats"){		
-		get_statistics(collection_files, graph_dirs, datasets_names, args.at("output_root"));
-		return 0;
-	}
-
-	std::string tar_path = "../data/orig_datasets_to_tar/compressed";
-	// get the real size of original datasets
-	if(args.at("test_mode") == "gxl_sizes"){
-		get_gxl_sizes(collection_files, graph_dirs, datasets_names, args.at("output_root"), tar_path);
-		return 0;
-	}
-
-
-	// Write in separate files format
-	if(args.at("test_mode") == "write_separate_files"){
-		for(const auto d : datasets_names){
-			std::cout << d << "  1 ..." <<std::flush;
-	        write_in_separate_files(get_collection_file(d), get_graph_dir(d), 
-				d, args.at("output_root") + "/separate_files",
-				'\n', ';', true);
-
-	        std::cout <<"  1 ..." <<std::flush;
-
-	        write_in_separate_files(get_collection_file(d), get_graph_dir(d), 
-				d, args.at("output_root") + "/separate_files",
-				'\n', ';', false);
-	        std::cout<<" done" <<std::endl;
-	    }		
-		return 0;
-	}
-
-	
-	std::string gxl_orig_path = "../data/orig_datasets_to_tar";
-	std::string separate_files_path_attr = "../data/output/separate_files";
-	std::string separate_files_path_no_attr = "../data/output/separate_files_2";
-	std::string encoded_path = "../data/output";
-	std::string output_file = "../data/output/table_sizes_plus.csv";
-	std::vector<std::string> folders = datasets_names;
-	if(args.at("test_mode") == "table_sizes"){
-		create_table_sizes(gxl_orig_path, separate_files_path_attr, separate_files_path_no_attr, encoded_path, folders,  output_file);
-		return 0;
-	}
+	// parameter to maually control the writing of headers in the output file
+	args.emplace(std::make_pair("write_headers",argv[param++]));
 	
 	// Test compression
     for(std::size_t ds = 0; ds < datasets_names.size(); ds ++) {

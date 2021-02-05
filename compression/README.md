@@ -1,32 +1,35 @@
 ## To make it work:
 1. Install gedlib by runing the install.py file from the gedlib folder
-2. Go to the compression folder and run the create_directories.sh file. If you dont want or cant run it, you will have to create all the folders yourself to avoid problems with the output of the compression method.
-3. Go to gedlib/compression/build
+2. Go to the compression folder and run the setup.py file from the terminal. This will create folders, copy some datasets and compress them using `tar`. This will be usefull to get the original collection sizes and the tar only size to compare the results.
+3. Go to _gedlib/compression/build_.
 4. Open a terminal and execute the following commands:
-	cmake ..
-	make
-5. Get the run.sh file from the util_files folder. This file is used to simplify execution. Define parameters, and execute the bash file using "bash run.sh"
+```
+cmake ..
+make
+```
+	
+5. Get one of the bash files from the util_files folder. This files are used to simplify execution. Define parameters, and execute the bash file using `bash run.sh`.
+Yout results will be available in the _compression/data/output_ folder. I also made another kind of files like `run_2.sh`. This file will create two separate files with the results. I made this because I was having trouble with the `tar` system call from the C++ code, so I separated the two parts.
 
 
-The general structure of the compression folder is the following. Use the create_directories.sh file to create the data folder that has many folders inside
+The general structure of the compression folder is the following.
 ```
 compression
 |
+|-- setup.py			------------------------ file to set up folders
 |-- CMakeLists.txt		------------------------ for building GEDLIB with the compression part
 |-- create_directories.sh	-------------------- helper file to create_directories bin, build and data
-|-- README.txt			------------------------ this file
+|-- README.md			------------------------ this file
 |-- bin
 	|-- abc				------------------------ the executable file to run the compression methods
 |
 |-- build
-	|-- ...				------------------------ files used for building
+	|-- ...				------------------------ files used for building. I run the run.sh file from here
 |-- data
 |   |--output			------------------------ where to write results of tests. One folder for each dataset to be tested
 |	|-- acyclic 	------------------------ folder for the output of the acyclic collection
 |	|-- AIDS
 |	|-- other datasets ...
-|	|-- separate_files   ------------------ folder to store collections in separate files format, and their .tar.bz files
-|	|-- separate_files_2 ------------------ folder to store collections in separate files (2) format, and their .tar.bz files
 |	|-- orig_datasets_to_tar ---------------------- folder to store copies of the collections and compress them using .tar.bz
 |-- ext				----------------------- contains external implementations used in the project
 |	|-- atofigh
@@ -42,10 +45,8 @@ compression
 |-- util_files
 	|-- check_iso.py	----------------------- python file to test isomorphism between collections
 	|-- copy_graphs.py	----------------------- python file to copy graph gxl collections
-	|-- clean_folders.sh	----------------------- bash file used to clean the dataset folders in different situations
-	|-- compress_tar.sh	----------------------- bash file used to compress the
+	|-- clean_folders.sh	--------------------bash file used to clean the dataset folders in different situations
+	|-- compress_tar.sh	----------------------- bash file used to compress the original collections and get reference values
 	|-- run.sh	------------------------------- bash file used to execute
 	|-- run_2.sh	--------------------------- bash file used to execute and avoid system call problems with the tar call
 ```
-
-
