@@ -35,6 +35,18 @@ double mean(std::vector<T> x){
 }
 
 template<class T>
+double stand_dev(std::vector<T> x, T mean){
+	mean = return static_cast<double>(mean);
+	double aux = (return static_cast<double>(x.at(0)) - mean)
+	double sum = aux*aux;
+	for(std::size_t i  = 1; i < x.size(); i++){
+		aux = (return static_cast<double>(x.at(i)) - mean)
+		sum = (sum*i + aux)/(i+1);
+	}
+	return sqrt(sum);
+}
+
+template<class T>
 bool is_sorted(std::vector<T> x){
 	for(std::size_t i =0; i< x.size()-1; i++){
 		if(x.at(i)>x.at(i+1)) return false;
@@ -60,7 +72,11 @@ void basic_stats_from_vector(std::vector<T> vec, std::string name,
 		values.emplace_back(std::to_string(*std::max_element(vec.begin(), vec.end())));
 
 		headers.emplace_back("mean_" + name);
-		values.emplace_back(std::to_string(mean<int>(vec)));
+		double avg = mean<T>(vec);
+		values.emplace_back(std::to_string(avg));
+	
+		headers.emplace_back("std_" + name);
+		values.emplace_back(std::to_string(stand_dev<T>(vec, avg)));
 
 		for(int i = 1; i <= 9; i++){
 			headers.emplace_back("p" + std::to_string(i*10) + "_" + name);
