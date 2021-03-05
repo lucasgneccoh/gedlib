@@ -36,11 +36,11 @@ double mean(std::vector<T> x){
 
 template<class T>
 double stand_dev(std::vector<T> x, T mean){
-	mean = return static_cast<double>(mean);
-	double aux = (return static_cast<double>(x.at(0)) - mean)
+	mean = static_cast<double>(mean);
+	double aux = (static_cast<double>(x.at(0)) - mean)
 	double sum = aux*aux;
 	for(std::size_t i  = 1; i < x.size(); i++){
-		aux = (return static_cast<double>(x.at(i)) - mean)
+		aux = (static_cast<double>(x.at(i)) - mean)
 		sum = (sum*i + aux)/(i+1);
 	}
 	return sqrt(sum);
