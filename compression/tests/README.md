@@ -4,20 +4,20 @@ The tests are divided into two main parts:
  - Part 2: Comparing the method with tar.bz (or tar.gz) on the original files or the "separated files" format.
 	
 	
-*** Part 1 ***
+## Part 1 
 
 For part one the only thing you have to do is to run the compression_test.cpp file with the desired settings.
 
-We used 5 iterations for each step, and k took the values 10%, 20%, 30%, ..., 100%. This was made using binaru encoding, relaxed encoding, traditional costs, branch_uniform as main method, ipfp as refinement method, and a refinement size of 1.
+We used 5 iterations for each step, and k took the values 10%, 20%, 30%, ..., 100%. This was made using binary encoding, relaxed encoding, traditional costs, branch_uniform as main method, ipfp as refinement method, and a refinement size of 1. For the msts, no refinement was made and the path option was added, to include the edges connecting each graph to its successor. Running all this tests can take a lot of time, so I recommend doing it in parts.
 
-The results will be stored in a csv file.
+The results will be stored in a csv file containing information about the time of different steps of the program, the size of the encoded collection after each step (first arborescence found, then after the refinement, then after using tar.bz over the resulting encoded files), some information about the arborescence that was found and about the inputs.
 
 
-*** Part 2 ***
+## Part 2 
 
-Part 2 requires a little more work. First you need to manually organize two folders. One should have the original datasets (xml file + gxl files) and the other one the "separated files" format. We will call them folder_gxl_orig and folder_separate.
+Part 2 uses tar.bz on the original collections in different formats to evaluate their compression ratio compared to the ABC method. It requires a little more work. First you need to manually organize two folders. One should have the original datasets (xml file + gxl files) and the other one the "separated files" format. We will call them folder_gxl_orig and folder_separate.
 
-Important: To be able to compare the sizes of the collections in different formats, each representation should have the same information. From any representation one should be able to recreate the same collection with the same information. 
+Important: To be able to compare the sizes of the collections in different formats, each representation should have the same information. From any representation one should be able to recreate the same collection. 
 
 In my current folder organization, these two folders are located in 
 
