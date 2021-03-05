@@ -1,5 +1,13 @@
 Working with a fork of GEDLIB. I added the *compression* folder with the arborescence based compression method.
 
+Here is a step-by-step example of how to install and use `GEDLIB` in a Linux machine using Google Colab.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/lucasgneccoh/gedlib/blob/master/gedlib_compression_example.ipynb)
+
+
+
+
+
 This is the original GEDLIB documentation.
 
 <!--------------------------------------------------------------------------
