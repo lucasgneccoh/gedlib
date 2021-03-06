@@ -195,7 +195,7 @@ GEDLIB has been used for several research papers. For reproducing the experiment
 <!--
 COMMENTED FOR ANONYMIZATION
 ##### D. B. Blumenthal, S. Bougleux, J. Gamper, and L. Brun. &ldquo;Ring based approximation of graph edit distance&rdquo;, S+SSPR 2018, vol. 11004 of LNCS, pp. 293-303, [https://doi.org/10.1007/978-3-319-97785-0_28](https://doi.org/10.1007/978-3-319-97785-0_28)
---!>
+-->
 
 In order to reproduce the experiments reported in this paper, install GEDLIB with the option `--tests sspr2018`. After installation, open a shell and execute the following commands:
 
@@ -212,7 +212,7 @@ After having executed these commands, the results of the experiments are contain
 <!--
 COMMENTED FOR ANONYMIZATION
 ##### D. B. Blumenthal, N. Boria, J. Gamper, S. Bougleux, and L. Brun. &ldquo;Comparing heuristics for graph edit distance computation&rdquo;, VLDB J. 29(1), pp. 419-458, 2020, [https://doi.org/10.1007/s00778-019-00544-1](https://doi.org/10.1007/s00778-019-00544-1)
---!>
+-->
 
 In order to reproduce the experiments reported in this paper, install GEDLIB with the options `--tests vldbj2020` and `--gurobi <GUROBI_ROOT>`. After installation, open a shell and execute the following commands:
 
@@ -248,7 +248,7 @@ GEDLIB comes with several datassets which contain graphs given in the [GXL file 
       [https://doi.org/10.1007/978-3-319-18224-7\_14](https://doi.org/10.1007/978-3-319-18224-7_14)
 - <b>`acyclic`, `alkane`, `mao`, `pah`:</b> These datasets are taken from [GREYC's Chemistry Dataset](https://brunl01.users.greyc.fr/CHEMISTRY/).
 - <b> `S-MOL`:</b> Synthetically generated graphs with varying number of node labels whose structure is similar to the structure of `pah` graphs.
-- <b> `S-MOL-5`:</b> Synthetically generated graphs with 5 node labels whose structure is similar to the structure of `pah` graphs. --!>
+- <b> `S-MOL-5`:</b> Synthetically generated graphs with 5 node labels whose structure is similar to the structure of `pah` graphs. -->
 
 For each dataset, the directory `data/collections/` contains an XML file which lists the contained graphs' GXL files along with their classes. These files match the document type definition `data/collections/GraphCollection.dtd` and can hence be used as input for `ged::GEDEnv::load_gxl_graphs()`. The Python script `data/collections/sample.py` can be used to generate samples of the datasets.
 
