@@ -1,6 +1,6 @@
 # To make the compression part work:
 
-1. Install gedlib by runing the `install.py` file from the gedlib folder. See the original gedlib **README.md** for details. You may need to use the `--lib gxl` flag.
+1. Install `GEDLIB` by runing the `install.py` file from the gedlib folder. See the original gedlib **README.md** for details. You may need to use the `--lib gxl` flag.
 2. Go to the compression folder and run the `setup.py` file from the terminal. This will create folders, copy some datasets and compress them using `tar`. This will be usefull to get the original collection sizes and the tar only size to compare the results.
 3. Go to _gedlib/compression/build_.
 4. Open a terminal and execute the following commands to compile the code:
