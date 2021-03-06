@@ -1,5 +1,3 @@
-#README
-
 To create the csv from the US Stocks data. Data taken from 
 https://www.kaggle.com/borismarjanovic/price-volume-data-for-all-us-stocks-etfs
 
