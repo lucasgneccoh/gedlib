@@ -231,8 +231,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 	bool decomp_only = false;
 	bool tar_size_only = false;
 
-	// WARNING: The choice of separators can impact the execution of the program. 
-	// I suggest \n and ;
+	// WARNING: The choice of separators can impact the execution of the program. 	
 	char separator_1 = ';';
 	char separator_2 = '@';
 	if(args.count("binary_encoding")>0 && args.at("binary_encoding")=="true") binary = true;
@@ -364,12 +363,6 @@ void treat_dataset(std::map<std::string, std::string> &args){
 
 			}
 
-			
-			
-
-			
-			
-
 			if(stdout>0) std::cout<<"**********    COMPRESS WITH TAR    ************"<<std::endl;
 
 			start = std::chrono::high_resolution_clock::now();
@@ -447,7 +440,7 @@ void treat_dataset(std::map<std::string, std::string> &args){
 }
 
 /*
-	Get statistics of a dataset (mean, min, max, percentiles)
+	Get statistics of a dataset (mean, min, max, std, percentiles)
 		num_nodes per graph
 		num_edges per graph
 		node_degre
@@ -473,16 +466,12 @@ void get_statistics(std::vector<std::string> collection_files, std::vector<std::
 
 	ged::GED_ABC abc;
 
-	
-
 	// Get statistics
 	std::vector<int> num_nodes;
 	std::vector<int> num_edges;
 	std::vector<int> node_degrees;
 	std::vector<int> aux;
 	std::map<std::string,std::map<std::string,std::map<std::string,int>>> attr_freq;
-	
-
 	
 	std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel> edge;
 	typename std::list<std::pair<std::pair<std::size_t, std::size_t>, ged::GXLLabel>>::iterator iter; 
@@ -579,9 +568,7 @@ void get_statistics(std::vector<std::string> collection_files, std::vector<std::
 			
 		}
 		abc.write_to_file(path_datasets, values);
-		
-
-		
+			
 		num_nodes.clear();
 		num_edges.clear();
 		node_degrees.clear();
@@ -717,6 +704,7 @@ void get_gxl_sizes(std::vector<std::string> collection_files, std::vector<std::s
 		abc.write_to_file(path_datasets, values);	
 		
 	}
+	std::cout<<"Results written to "<<path_datasets<<std::endl;
 
 }
 
@@ -839,7 +827,7 @@ void write_in_separate_files(std::string collection_file, std::string graph_dir,
 		// Translate
 		abc.translate_env<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>(encoded_attributes, env, env_coded, fast_node_translate, fast_edge_translate, 0);
 
-		// deallocate first env to save space (is this really deallocating?) The initial env is then "lost"
+		// deallocate first env to save space
 		env = ged::GEDEnv<ged::GXLNodeID, ged::GXLLabel, ged::GXLLabel>();
 
 		std::ofstream node_attr, edge_attr;
@@ -1018,9 +1006,7 @@ std::vector<std::string> split_string(std::string s, std::string d){
 
 
 int main(int argc, char* argv[]){
-
-
-
+	// For now, input of the program depends on the first parameter 'test_mode'.
 	std::map<std::string, std::string> args;
 	short int param = 1; 
 
@@ -1047,9 +1033,9 @@ int main(int argc, char* argv[]){
 	std::vector<std::string> collection_files;
 	std::vector<std::string> graph_dirs;
 	for(const auto d : datasets_names) {
-        collection_files.emplace_back(get_collection_file(d));
-        graph_dirs.emplace_back(get_graph_dir(d));
-    }
+		collection_files.emplace_back(get_collection_file(d));
+		graph_dirs.emplace_back(get_graph_dir(d));
+	}
 
     // Just to handle output writing
     args.emplace(std::make_pair("first_iteration", "true"));
@@ -1162,7 +1148,7 @@ int main(int argc, char* argv[]){
 	args.emplace(std::make_pair("graph_sample_size","100"));
 	std::vector<std::string> graph_sample_sizes = split_string(argv[param++], ":");
 
-	// "%" if the 
+	// "%" if the sample size inserted is a percentage
 	args.emplace(std::make_pair("graph_sample_type", argv[param++]));
 
 	// "true" for compressed files in binary. Any other value leads to compressed files in text mode
