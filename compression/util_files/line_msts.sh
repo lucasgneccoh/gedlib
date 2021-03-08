@@ -9,12 +9,12 @@ test_mode="complete"
 decomp_only="false"
 
 stdout="0"
-datasets_names="acyclic:mao:pah:AIDS:Mutagenicity:msts_no_w:msts_int_w:msts_float_w"
-num_trials="1"
+datasets_names="msts_no_w:msts_int_w:msts_float_w"
+num_trials="5"
 
 # Paths for output
 output_root="../data/output"
-output_results_file="star.csv"
+output_results_file="line_msts.csv"
 
 # GED computation
 ged_method="branch_uniform"
@@ -31,16 +31,16 @@ write_results="true"
 # Type of edit costs/encoding
 edit_cost_type="trad"
 relaxed_compression="true"
-graph_sample_sizes="0"
+graph_sample_sizes="10:20:30:40:50:60:70:80:90:100"
 graph_sample_type="%"
 binary_encoding="true"
 
 # Add ordered induced edges
-path_structure="false"
+path_structure="true"
 
 # Compute node maps using a key attribute
-match_node_map="false"
-match_node_map_by="none"
+match_node_map="true"
+match_node_map_by="stock"
 
 write_headers="1"
 

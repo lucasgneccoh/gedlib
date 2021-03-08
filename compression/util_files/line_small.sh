@@ -3,29 +3,45 @@ exec_path="../bin/"
 exec_name="abc"
 # ------------------
 # PARAMETERS. For arrays, use ":" as separator
+
+# Test mode: "complete" for compression and decompression. See code for other modes
 test_mode="complete"
+decomp_only="false"
+
 stdout="0"
-datasets_names="acyclic:mao:pah:AIDS:Mutagenicity"
+datasets_names="acyclic:mao:pah"
 num_trials="5"
-path_structure="false"
+
+# Paths for output
 output_root="../data/output"
-output_results_file="run_all.csv"
+output_results_file="line_small.csv"
+
+# GED computation
 ged_method="branch_uniform"
 ged_method_options="24"
 ged_method_refinement="ipfp"
 ged_method_refinement_options="24"
 refinement_size="1"
+
+# Handle outputs
 write_ged_matrix="false"
 write_arb="false"
 write_results="true"
+
+# Type of edit costs/encoding
 edit_cost_type="trad"
 relaxed_compression="true"
-graph_sample_sizes="0:10:20:30:40:50:60:70:80:90:100"
+graph_sample_sizes="10:20:30:40:50:60:70:80:90:100"
 graph_sample_type="%"
 binary_encoding="true"
-decomp_only="false"
+
+# Add ordered induced edges
+path_structure="false"
+
+# Compute node maps using a key attribute
 match_node_map="false"
-match_node_map_by="stock"
+match_node_map_by="none"
+
 write_headers="1"
 
 # --- EXECUTION
