@@ -8,8 +8,8 @@
 cmake ..
 make
 ```
-5. Get one of the bash files from the *util_files* folder. I put them in the *build* folder, but you can do it from wherever you want, just update the paths in the files. These files are used to simplify execution. Define parameters, and execute the bash file using `bash run.sh`. There are different ways to run the code, and the tests were made using different execution files.
-Your results will be available in the _compression/data/output_ folder. I also made another kind of files like `run_2.sh`. This file will create two separate files with the results. I made this because I was having trouble with the `tar` system call from the C++ code, so I separated the two parts.
+5. Get one of the bash files from the *util_files* folder. I put them in the *build* folder, but you can do it from wherever you want, just update the paths in the file. These files are used to simplify execution. Define parameters, and execute the bash file using `bash file_name.sh`. There are different ways to run the code, and the tests were made using different execution files. I split the tests in different files because running them all together takes a lot of time.
+Your results will be available in the _compression/data/output_ folder if you leave the parameters as they are.
 
 The general structure of the compression folder is the following.
 
@@ -47,6 +47,5 @@ The general structure of the compression folder is the following.
 		|-- copy_graphs.py	------------------- python file to copy graph gxl collections
 		|-- clean_folders.sh	------------------- bash file used to clean the dataset folders in different situations
 		|-- compress_tar.sh	------------------- bash file used to compress the original collections and get reference values
-		|-- run.sh		------------------- bash file used to execute
-		|-- run_2.sh		------------------- bash file used to execute and avoid system call problems with the tar call
+		|-- line_small.sh		------------------- example of a bash file used to excetude the script
 
