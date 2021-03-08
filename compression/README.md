@@ -47,5 +47,5 @@ The general structure of the compression folder is the following.
 		|-- copy_graphs.py	------------------- python file to copy graph gxl collections
 		|-- clean_folders.sh	------------------- bash file used to clean the dataset folders in different situations
 		|-- compress_tar.sh	------------------- bash file used to compress the original collections and get reference values
-		|-- line_small.sh		------------------- example of a bash file used to excetude the script
+		|-- line_small.sh	------------------- example of a bash file used to excetude the script
 
